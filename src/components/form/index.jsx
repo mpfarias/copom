@@ -139,8 +139,6 @@ export default function FormularioViolenciaDomestica() {
       </RadioGroup>
 
       <FormLabel id="demo-controlled-radio-buttons-group">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
-
-
     </Box>
   );
 }
