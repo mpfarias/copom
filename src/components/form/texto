@@ -1,0 +1,248 @@
+
+
+
+import { useState, useEffect } from 'react';
+
+import {
+  Box,
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormLabel,
+  Checkbox,
+  Select,
+  selectClasses,
+  MenuItem,
+  Grid,
+  IconButton,
+} from '@mui/material';
+
+import { KeyboardArrowDown, FileCopyIcon } from '@mui/icons-material/KeyboardArrowDown';
+
+export default function FormularioViolenciaDomestica() {
+  const [solicitante, setSolicitante] = useState('vitima')
+  const [state, setState] = useState({
+    nomeVitima: '',
+    endereco: '',
+    telefone: '',
+    agressao: '',
+    gritos: '',
+    parentesco: '',
+    medida: false,
+    agressorNoLocal: false,
+    ferida: false,
+    criancas: false,
+    narrativa: ''
+  });
+
+  const { nomeVitima, endereco, telefone, agressao, gritos, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
+
+  const handleChange = (field, value) => {
+    setState(prevState => ({ ...prevState, [field]: value }));
+  };
+
+  useEffect(() => {
+    const text = `
+Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
+
+Solicitante ${nomeVitima}, ${endereco}, ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de agresão' : 'está presenciando uma pessoa sendo agredida'} pelo ${parentesco},
+${ferida ? 'e que está ferida. Precisa de apoio CBMDF' : 'porém, não está ferida.'}
+${medida ? 'Possui medida protetiva' : 'Não possui medida protetiva'} contra o agressor
+O agressor${agressorNoLocal ? ' ' : ' não '}encontra-se no local.
+${criancas ? 'Há crianças no local' : ''}
+
+`;
+    setState(prevState => ({ ...prevState, narrativa: text }));
+  }, [solicitante, nomeVitima, endereco, telefone, agressao, gritos, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa]);
+
+  const handleCopy = () => {
+    const narrativa = state.narrativa;
+    navigator.clipboard.writeText(narrativa);
+  };
+
+  const handleTelefoneChange = (e) => {
+    // Limitando o número de caracteres do campo de telefone para 2
+    const maxLength = 11;
+    if (e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
+    handleChange('telefone', e.target.value);
+  };
+
+
+
+  return (
+    <Box
+      my={3}
+      ml={50}
+      sx={{
+
+        width: 600,
+        maxWidth: '100%',
+        marginTop: 5
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <FormLabel id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
+      <RadioGroup
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        value={solicitante} // Definir o valor selecionado no estado
+        onChange={(e) => setSolicitante(e.target.value)} // Atualizar o estado conforme a seleção do usuário
+        sx={{ marginBottom: 4 }}
+      >
+        <FormControlLabel value="vitima" control={<Radio />} label="Vítima" />
+        <FormControlLabel value="denunciante" control={<Radio />} label="Denunciante" />
+      </RadioGroup>
+      <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
+      <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+      <TextField sx={{ marginBottom: 4 }} type="number" inputProps={{ maxLength: 11 }} onChange={(e) => {
+        handleTelefoneChange(e);
+        handleChange('telefone', e.target.value)
+      }} fullWidth id="outlined-basic" label="Telefone" name="telefone" variant="outlined" />
+      <FormLabel id="demo-controlled-radio-buttons-group">Tipo de agressão:</FormLabel>
+      <Box sx={{ display: 'flex', gap: 3, padding: 3, marginBottom: 3 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={agressao === 'ameaca'}
+              onChange={(e) => handleChange('agressao', e.target.checked ? 'ameaca' : '')}
+            />
+          }
+          label="Ameaça"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={agressao === 'agressaoFisica'}
+              onChange={(e) => handleChange('agressao', e.target.checked ? 'agressaoFisica' : '')}
+            />
+          }
+          label="Agressão física"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={agressao === 'agressaoPsicologica'}
+              onChange={(e) => handleChange('agressao', e.target.checked ? 'agressaoPsicologica' : '')}
+            />
+          }
+          label="Agressão psicológica"
+        />
+      </Box>
+      <FormLabel id="demo-controlled-radio-buttons-group">É possível ouvir:</FormLabel>
+      <Box sx={{ display: 'flex', gap: 3, padding: 3, marginBottom: 3 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={gritos === 'vozMasculinaAoFundo'}
+              onChange={(e) => handleChange('gritos', e.target.checked ? 'vozMasculinaAoFundo' : '')}
+            />
+          }
+          label="Voz masculina ao fundo"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={gritos === 'gritos'}
+              onChange={(e) => handleChange('gritos', e.target.checked ? 'gritos' : '')}
+            />
+          }
+          label="Gritos"
+        />
+      </Box>
+
+      <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
+      <Box sx={{ display: 'flex', gap: 3, padding: 1, marginBottom: 3 }}>
+        <Select
+          placeholder="Parentesco"
+          value={parentesco}
+          onChange={(e) => handleChange('parentesco', e.target.value)}
+          indicator={<KeyboardArrowDown />}
+          sx={{
+            width: 240,
+            marginBottom: 4,
+            [`& .${selectClasses.indicator}`]: {
+              transition: '0.2s',
+              [`&.${selectClasses.expanded}`]: {
+                transform: 'rotate(-180deg)',
+              },
+            },
+          }}
+        >
+          <MenuItem value="Marido">Marido</MenuItem>
+          <MenuItem value="Companheiro">Companheiro</MenuItem>
+          <MenuItem value="Namorado">Namorado</MenuItem>
+          <MenuItem value="Pai">Pai</MenuItem>
+          <MenuItem value="Filho">Filho</MenuItem>
+          <MenuItem value="Irmão">Irmão</MenuItem>
+          <MenuItem value="Tio">Tio</MenuItem>
+        </Select>
+      </Box>
+      <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
+      <RadioGroup
+        value={medida} onChange={(value) => handleChange("medida", value)}
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        sx={{ marginBottom: 4 }}
+      >
+        <FormControlLabel value="true" control={<Radio />} label="Sim" />
+        <FormControlLabel value="false" control={<Radio />} label="Não" />
+      </RadioGroup>
+      <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
+      <RadioGroup
+        value={agressorNoLocal} onChange={(value) => handleChange("agressorNoLocal", value)}
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        sx={{ marginBottom: 4 }}
+      >
+        <FormControlLabel value="true" control={<Radio />} label="Sim" />
+        <FormControlLabel value="false" control={<Radio />} label="Não" />
+      </RadioGroup>
+      <FormLabel id="demo-controlled-radio-buttons-group">Está ferida?</FormLabel>
+      <RadioGroup
+        value={ferida} onChange={(value) => handleChange("ferida", value)}
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        sx={{ marginBottom: 4 }}
+      >
+        <FormControlLabel value="true" control={<Radio />} label="Sim" />
+        <FormControlLabel value="false" control={<Radio />} label="Não" />
+      </RadioGroup>
+
+      <FormLabel id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
+      <RadioGroup
+        value={criancas} onChange={(value) => handleChange("criancas", value)}
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        sx={{ marginBottom: 4 }}
+      >
+        <FormControlLabel value="true" control={<Radio />} label="Sim" />
+        <FormControlLabel value="false" control={<Radio />} label="Não" />
+      </RadioGroup>
+
+
+      <Grid item xs={1} sx={{ mt: 5 }}>
+        <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+        <TextField
+          sx={{
+            backgroundColor: 'rgba(0, 255, 0, 0.1)',
+          }}
+          multiline
+          fullWidth
+          value={narrativa}
+          InputProps={{
+            disabled: true,
+            endAdornment: (
+              <IconButton onClick={handleCopy} aria-label="copy">
+                <FileCopyIcon />
+              </IconButton>
+            ),
+          }}
+        />
+      </Grid>
+    </Box>
+  );
+}
