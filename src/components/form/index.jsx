@@ -23,6 +23,7 @@ export default function FormularioViolenciaDomestica() {
     telefone: '',
     agressao: [],
     gritos: [],
+    armado: '',
     parentesco: '',
     medida: '',
     agressorNoLocal: '',
@@ -34,7 +35,7 @@ export default function FormularioViolenciaDomestica() {
   const [outroParentesco, setOutroParentesco] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
 
-  const { nomeVitima, endereco, telefone, agressao, gritos, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
+  const { nomeVitima, endereco, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
 
   const handleChange = (field, value) => {
     if (field === 'parentesco') {
@@ -65,17 +66,16 @@ export default function FormularioViolenciaDomestica() {
   };
 
   useEffect(() => {
-    const text = `
-Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
+    const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-A pessoa de nome ${nomeVitima}, residente em ${endereco}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sendo agredida'} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+A pessoa de nome ${nomeVitima}, residente em ${endereco}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
 ${medida === 'true' ? 'Possui medida protetiva' : 'Não possui medida protetiva'} contra o agressor.
-O agressor${agressorNoLocal === 'true' ? ' ' : ' não '}encontra-se no local. 
-${gritos.length > 0 ? 'É possível ouvir: ' + gritos.join(', ') : ''}
+O agressor${agressorNoLocal === 'true' ? ' ' : ' não '}encontra-se no local${armado === 'true' ? ', e está armado, equipe agir com cautela' : '.'}
+${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(', ') : ''}
 ${criancas === 'true' ? 'Há crianças no local' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, endereco, telefone, agressao, gritos, parentesco, medida, agressorNoLocal, ferida, criancas, outroParentesco]);
+  }, [solicitante, nomeVitima, endereco, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, outroParentesco]);
 
   const handleCopy = () => {
     const narrativa = state.narrativa;
@@ -161,8 +161,8 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
         <FormControlLabel
           control={
             <Checkbox
-              checked={gritos.includes('vozMasculinaAoFundo')}
-              onChange={(e) => handleCheckboxChange('gritos', 'vozMasculinaAoFundo')}
+              checked={gritos.includes('voz masculina ao fundo')}
+              onChange={(e) => handleCheckboxChange('gritos', 'voz masculina ao fundo')}
             />
           }
           label="Voz masculina ao fundo"
@@ -213,6 +213,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           <MenuItem value="irmão(a)">Irmão(a)</MenuItem>
           <MenuItem value="tio(a)">Tio(a)</MenuItem>
           <MenuItem value="">Outro</MenuItem>
+          <MenuItem value="desconhecido">Desconhecido</MenuItem>
         </Select>
         {showOutroInput && (
           <input
@@ -246,6 +247,18 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
         <FormControlLabel value="true" control={<Radio />} label="Sim" />
         <FormControlLabel value="false" control={<Radio />} label="Não" />
       </RadioGroup>
+      <FormLabel id="demo-controlled-radio-buttons-group">Está armado?</FormLabel>
+      <RadioGroup
+        value={armado}
+        onChange={(e) => handleChange("armado", e.target.value)}
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        sx={{ marginBottom: 4 }}
+      >
+        <FormControlLabel value="true" control={<Radio />} label="Sim" />
+        <FormControlLabel value="false" control={<Radio />} label="Não" />
+      </RadioGroup>
+
       <FormLabel id="demo-controlled-radio-buttons-group">Está ferida?</FormLabel>
       <RadioGroup
         value={ferida}
