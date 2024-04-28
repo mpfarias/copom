@@ -24,7 +24,7 @@ export default function FormularioViolenciaDomestica() {
     agressao: [],
     gritos: [],
     armado: '',
-    parentesco: '',
+    parentesco: 'marido',
     medida: '',
     agressorNoLocal: '',
     ferida: '',
@@ -38,22 +38,24 @@ export default function FormularioViolenciaDomestica() {
   const { nomeVitima, endereco, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
 
   const handleChange = (field, value) => {
-    if (field === 'parentesco') {
-      setShowOutroInput(value === ''); // Mostra o input se o parentesco for "Outro"
-      setState(prevState => ({
-        ...prevState,
-        parentesco: value === '' ? outroParentesco : value // Atualiza parentesco com o valor selecionado ou outroParentesco
-      }));
-    } else if (field === 'outroParentesco') {
+    if (field === 'outroParentesco') {
       setOutroParentesco(value);
       setState(prevState => ({
         ...prevState,
         parentesco: value === '' ? parentesco : value // Atualiza parentesco com o valor selecionado ou outroParentesco
       }));
+    } else if (field === 'parentesco') {
+      setShowOutroInput(value === ''); // Mostra o input se o parentesco for "Outro"
+      setState(prevState => ({
+        ...prevState,
+        parentesco: value === '' ? outroParentesco : value // Atualiza parentesco com o valor selecionado ou outroParentesco
+      }));
     } else {
       setState(prevState => ({ ...prevState, [field]: value }));
     }
   };
+  
+  
 
   const handleCheckboxChange = (field, value) => {
     let updatedValue;
