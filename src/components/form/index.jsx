@@ -130,6 +130,15 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           label="Agressão psicológica"
         />
       </Box>
+      <FormControlLabel
+          control={
+            <Checkbox
+              checked={agressao.includes('violação de medida protetiva')}
+              onChange={(e) => handleCheckboxChange('agressao', 'violação de medida protetiva')}
+            />
+          }
+          label="Violação de medida protetiva"
+        />
       <FormLabel id="demo-controlled-checkbox-group">É possível ouvir:</FormLabel>
       <Box sx={{ display: 'flex', gap: 3, padding: 3, marginBottom: 3 }}>
         <FormControlLabel
@@ -174,8 +183,11 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           }}
         >
           <MenuItem value="marido">Marido</MenuItem>
+          <MenuItem value="ex-marido">Ex-marido</MenuItem>
           <MenuItem value="companheiro">Companheiro</MenuItem>
+          <MenuItem value="ex-companheiro">Ex-companheiro</MenuItem>
           <MenuItem value="namorado">Namorado</MenuItem>
+          <MenuItem value="ex-namorado">Ex-namorado</MenuItem>
           <MenuItem value="pai">Pai</MenuItem>
           <MenuItem value="filho">Filho</MenuItem>
           <MenuItem value="irmão">Irmão</MenuItem>
