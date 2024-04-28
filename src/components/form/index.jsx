@@ -31,10 +31,27 @@ export default function FormularioViolenciaDomestica() {
     narrativa: '',
   });
 
+  const [outroParentesco, setOutroParentesco] = useState('');
+  const [showOutroInput, setShowOutroInput] = useState(false);
+
   const { nomeVitima, endereco, telefone, agressao, gritos, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
 
   const handleChange = (field, value) => {
-    setState(prevState => ({ ...prevState, [field]: value }));
+    if (field === 'parentesco') {
+      setShowOutroInput(value === ''); // Mostra o input se o parentesco for "Outro"
+      setState(prevState => ({
+        ...prevState,
+        parentesco: value === '' ? outroParentesco : value // Atualiza parentesco com o valor selecionado ou outroParentesco
+      }));
+    } else if (field === 'outroParentesco') {
+      setOutroParentesco(value);
+      setState(prevState => ({
+        ...prevState,
+        parentesco: value === '' ? parentesco : value // Atualiza parentesco com o valor selecionado ou outroParentesco
+      }));
+    } else {
+      setState(prevState => ({ ...prevState, [field]: value }));
+    }
   };
 
   const handleCheckboxChange = (field, value) => {
@@ -51,14 +68,14 @@ export default function FormularioViolenciaDomestica() {
     const text = `
 Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-A pessoa de nome ${nomeVitima}, residente em ${endereco}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sendo agredida'} pelo ${parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+A pessoa de nome ${nomeVitima}, residente em ${endereco}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sendo agredida'} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
 ${medida === 'true' ? 'Possui medida protetiva' : 'Não possui medida protetiva'} contra o agressor.
 O agressor${agressorNoLocal === 'true' ? ' ' : ' não '}encontra-se no local. 
 ${gritos.length > 0 ? 'É possível ouvir: ' + gritos.join(', ') : ''}
 ${criancas === 'true' ? 'Há crianças no local' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, endereco, telefone, agressao, gritos, parentesco, medida, agressorNoLocal, ferida, criancas]);
+  }, [solicitante, nomeVitima, endereco, telefone, agressao, gritos, parentesco, medida, agressorNoLocal, ferida, criancas, outroParentesco]);
 
   const handleCopy = () => {
     const narrativa = state.narrativa;
@@ -129,8 +146,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           }
           label="Agressão psicológica"
         />
-      </Box>
-      <FormControlLabel
+        <FormControlLabel
           control={
             <Checkbox
               checked={agressao.includes('violação de medida protetiva')}
@@ -139,6 +155,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           }
           label="Violação de medida protetiva"
         />
+      </Box>
       <FormLabel id="demo-controlled-checkbox-group">É possível ouvir:</FormLabel>
       <Box sx={{ display: 'flex', gap: 3, padding: 3, marginBottom: 3 }}>
         <FormControlLabel
@@ -184,15 +201,28 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
         >
           <MenuItem value="marido">Marido</MenuItem>
           <MenuItem value="ex-marido">Ex-marido</MenuItem>
-          <MenuItem value="companheiro">Companheiro</MenuItem>
-          <MenuItem value="ex-companheiro">Ex-companheiro</MenuItem>
-          <MenuItem value="namorado">Namorado</MenuItem>
-          <MenuItem value="ex-namorado">Ex-namorado</MenuItem>
+          <MenuItem value="esposa">Esposa</MenuItem>
+          <MenuItem value="ex-esposa">Ex-esposa</MenuItem>
+          <MenuItem value="companheiro(a)">Companheiro(a)</MenuItem>
+          <MenuItem value="ex-companheiro(a)">Ex-companheiro(a)</MenuItem>
+          <MenuItem value="namorado">Namorado(a)</MenuItem>
+          <MenuItem value="ex-namorado">Ex-namorado(a)</MenuItem>
           <MenuItem value="pai">Pai</MenuItem>
-          <MenuItem value="filho">Filho</MenuItem>
-          <MenuItem value="irmão">Irmão</MenuItem>
-          <MenuItem value="tio">Tio</MenuItem>
+          <MenuItem value="mãe">Mãe</MenuItem>
+          <MenuItem value="filho(a)">Filho(a)</MenuItem>
+          <MenuItem value="irmão(a)">Irmão(a)</MenuItem>
+          <MenuItem value="tio(a)">Tio(a)</MenuItem>
+          <MenuItem value="">Outro</MenuItem>
         </Select>
+        {showOutroInput && (
+          <input
+            type="text"
+            value={outroParentesco}
+            onChange={(e) => setOutroParentesco(e.target.value)}
+            placeholder="Digite o parentesco"
+            style={{ marginTop: '8px', width: '100%', padding: '8px' }}
+          />
+        )}
       </Box>
       <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
       <RadioGroup
