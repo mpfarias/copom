@@ -1,4 +1,3 @@
-
 import { Box } from '@mui/material';
 
 const Navbar = () => {
@@ -14,7 +13,7 @@ const Navbar = () => {
                     backgroundColor: '#000066',
                     fontFamily: 'Myriad Pro',
                     fontSize: 'calc(10px + 1vw)',
-                    width:'100%',
+                    width: '100%',
                     marginBottom: 0,
                 }}>
                 Polícia Militar do Distrito Federal
@@ -30,7 +29,7 @@ const Navbar = () => {
                     backgroundColor: '#000066',
                     fontFamily: 'Myriad Pro',
                     fontSize: 'calc(20px + 1vw)',
-                    width:'100%',
+                    width: '100%',
                     marginBottom: 0,
                 }}>
                 COPOM Mulher
@@ -38,7 +37,7 @@ const Navbar = () => {
 
             <Box component="section"
                 sx={{
-                    p: 1,
+                    p: 1.5,
                     alignItems: 'center',
                     display: 'flex',
                     justifyContent: 'center',
@@ -46,20 +45,24 @@ const Navbar = () => {
                     backgroundColor: '#000066',
                     fontFamily: 'Myriad Pro',
                     fontSize: 'calc(20px + 1vw)',
-                    width:'100%',
+                    width: '100%',
                     marginBottom: 0,
                 }}>
                 Formulário CAD
             </Box>
-            <img
-                    src={'./src/img/faixa.png'}
-                    style={{
-                        width: '100%', // Garante que a imagem ocupe toda a largura disponível
-                        height: 'auto', // Mantém a proporção da imagem
-                        display: 'block', // Remove espaços em branco abaixo da imagem
-                        margin:0,
-                    }}
-                />
+
+            <Box component="section"
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: 0,
+                    backgroundImage: 'url("./src/img/faixa.png")', // Definindo a imagem de fundo
+                    backgroundRepeat: 'repeat-x', // Repete horizontal e verticalmente
+                    
+                    padding: '19px', // Adiciona espaço em torno da imagem
+                }}>
+
+            </Box>
         </div>
     )
 }

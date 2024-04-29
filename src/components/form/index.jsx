@@ -11,10 +11,10 @@ import {
   Select,
   MenuItem,
   Grid,
-  IconButton,
+  Container, 
   Button
 } from '@mui/material';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
@@ -120,6 +120,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
   };
 
   return (
+    <Container maxWidth="md">
     <Grid container spacing={3}> {/* Adicionando um container Grid */}
       <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
 
@@ -171,7 +172,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <FormLabel id="demo-controlled-checkbox-group" style={{color: '#990000', fontWeight: 'bold'}}>ATENÇÃO, ATENDENTE:</FormLabel>
+        <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
         <Grid container spacing={1}>
           {gritosOptions.map(option => (
             <Grid item key={option} xs={6} sm={4} md={3}>
@@ -192,7 +193,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
         <FormControl fullWidth>
           <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
           <Select
-          sx={{marginBottom:2}}
+            sx={{ marginBottom: 2 }}
             placeholder="Parentesco"
             value={parentesco}
             onChange={(e) => handleChange('parentesco', e.target.value)}
@@ -251,7 +252,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           <FormControlLabel value="true" control={<Radio />} label="Sim" />
           <FormControlLabel value="false" control={<Radio />} label="Não" />
         </RadioGroup>
-        <FormLabel id="demo-controlled-radio-buttons-group">Está armado?</FormLabel>
+        <FormLabel id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
         <RadioGroup
           value={armado}
           onChange={(e) => handleChange("armado", e.target.value)}
@@ -263,7 +264,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           <FormControlLabel value="false" control={<Radio />} label="Não" />
         </RadioGroup>
 
-        <FormLabel id="demo-controlled-radio-buttons-group">Está ferida?</FormLabel>
+        <FormLabel id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
         <RadioGroup
           value={ferida}
           onChange={(e) => handleChange("ferida", e.target.value)}
@@ -281,13 +282,12 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           onChange={(e) => handleChange("criancas", e.target.value)}
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
-          sx={{ marginBottom: 4 }}
         >
           <FormControlLabel value="true" control={<Radio />} label="Sim" />
           <FormControlLabel value="false" control={<Radio />} label="Não" />
         </RadioGroup>
       </Grid>
-      <Grid item xs={12} sx={{ mt: 3 }}>
+      <Grid item xs={12} sx={{ mt: 1 }}>
         <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
         <TextField
           sx={{
@@ -297,21 +297,22 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           fullWidth
           value={narrativa}
           InputProps={{
-            disabled: true,
-            endAdornment: (
-              <IconButton onClick={handleCopy} aria-label="copy">
-                <FileCopyIcon />
-              </IconButton>
-            ),
+            disabled: true
           }}
         />
       </Grid>
-      <Grid item xs={12} sx={{ marginBottom: 8 }} >
+
+      <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
+        <Button variant="contained"
+          color="secondary"
+          onClick={handleCopy}
+          style={{ backgroundColor: '#006600', color: '#FFFFFF', width:'100%', marginBottom:15}}>Copiar texto</Button>
         <Button variant="contained"
           color="secondary"
           onClick={handleResetForm}
           style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
       </Grid>
-    </Grid>
+    </Grid >
+    </Container>
   );
 }
