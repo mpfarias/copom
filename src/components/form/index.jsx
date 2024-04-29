@@ -11,7 +11,7 @@ import {
   Select,
   MenuItem,
   Grid,
-  Container, 
+  Container,
   Button
 } from '@mui/material';
 
@@ -121,198 +121,199 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
 
   return (
     <Container maxWidth="md">
-    <Grid container spacing={3}> {/* Adicionando um container Grid */}
-      <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
+      <Box sx={{ paddingLeft: '25%', paddingRight: '25px' }}>
+        <Grid container spacing={3}> {/* Adicionando um container Grid */}
+          <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
+            <Box
+              sx={{
+                mt: 3
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <FormLabel id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={solicitante}
+                onChange={(e) => setSolicitante(e.target.value)}
+                sx={{ marginBottom: 4 }}
+              >
+                <FormControlLabel value="vitima" control={<Radio />} label="Vítima" />
+                <FormControlLabel value="denunciante" control={<Radio />} label="Denunciante" />
+              </RadioGroup>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField sx={{ marginBottom: 4 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
+          </Grid>
+          <Grid item xs={12}>
+            <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
+            <Grid container spacing={1}>
+              {agressaoOptions.map(option => (
+                <Grid item key={option} xs={6} sm={4} md={3}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={agressao.includes(option)}
+                        onChange={(e) => handleCheckboxChange('agressao', option)}
+                      />
+                    }
+                    label={option.charAt(0).toUpperCase() + option.slice(1)}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
+            <Grid container spacing={1}>
+              {gritosOptions.map(option => (
+                <Grid item key={option} xs={6} sm={4} md={3}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gritos.includes(option)}
+                        onChange={(e) => handleCheckboxChange('gritos', option)}
+                      />
+                    }
+                    label={option.charAt(0).toUpperCase() + option.slice(1)}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
+              <Select
+                sx={{ marginBottom: 2 }}
+                placeholder="Parentesco"
+                value={parentesco}
+                onChange={(e) => handleChange('parentesco', e.target.value)}
+                IconComponent={KeyboardArrowDownIcon}
+                variant="outlined"
+              >
+                <MenuItem value="marido">Marido</MenuItem>
+                <MenuItem value="ex-marido">Ex-marido</MenuItem>
+                <MenuItem value="esposa">Esposa</MenuItem>
+                <MenuItem value="ex-esposa">Ex-esposa</MenuItem>
+                <MenuItem value="companheiro(a)">Companheiro(a)</MenuItem>
+                <MenuItem value="ex-companheiro(a)">Ex-companheiro(a)</MenuItem>
+                <MenuItem value="namorado">Namorado(a)</MenuItem>
+                <MenuItem value="ex-namorado">Ex-namorado(a)</MenuItem>
+                <MenuItem value="pai">Pai</MenuItem>
+                <MenuItem value="mãe">Mãe</MenuItem>
+                <MenuItem value="filho(a)">Filho(a)</MenuItem>
+                <MenuItem value="irmão(a)">Irmão(a)</MenuItem>
+                <MenuItem value="tio(a)">Tio(a)</MenuItem>
+                <MenuItem value="">Outro</MenuItem>
+                <MenuItem value="desconhecido">Desconhecido</MenuItem>
+              </Select>
+            </FormControl>
+            {showOutroInput && (
+              <FormControl fullWidth>
+                <TextField
+                  fullWidth
+                  value={outroParentesco}
+                  onChange={(e) => setOutroParentesco(e.target.value)}
+                  label="Outro Parentesco"
+                  variant="outlined"
+                />
+              </FormControl>
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
+            <RadioGroup
+              value={medida}
+              onChange={(e) => handleChange("medida", e.target.value)}
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              sx={{ marginBottom: 4 }}
+            >
+              <FormControlLabel value="true" control={<Radio />} label="Sim" />
+              <FormControlLabel value="false" control={<Radio />} label="Não" />
+            </RadioGroup>
+            <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
+            <RadioGroup
+              value={agressorNoLocal}
+              onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              sx={{ marginBottom: 4 }}
+            >
+              <FormControlLabel value="true" control={<Radio />} label="Sim" />
+              <FormControlLabel value="false" control={<Radio />} label="Não" />
+            </RadioGroup>
+            <FormLabel id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
+            <RadioGroup
+              value={armado}
+              onChange={(e) => handleChange("armado", e.target.value)}
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              sx={{ marginBottom: 4 }}
+            >
+              <FormControlLabel value="true" control={<Radio />} label="Sim" />
+              <FormControlLabel value="false" control={<Radio />} label="Não" />
+            </RadioGroup>
 
-        <Box
-          sx={{
-            mt: 3
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <FormLabel id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="controlled-radio-buttons-group"
-            value={solicitante}
-            onChange={(e) => setSolicitante(e.target.value)}
-            sx={{ marginBottom: 4 }}
-          >
-            <FormControlLabel value="vitima" control={<Radio />} label="Vítima" />
-            <FormControlLabel value="denunciante" control={<Radio />} label="Denunciante" />
-          </RadioGroup>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField sx={{ marginBottom: 4 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
-      </Grid>
-      <Grid item xs={12}>
-        <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
-        <Grid container spacing={1}>
-          {agressaoOptions.map(option => (
-            <Grid item key={option} xs={6} sm={4} md={3}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={agressao.includes(option)}
-                    onChange={(e) => handleCheckboxChange('agressao', option)}
-                  />
-                }
-                label={option.charAt(0).toUpperCase() + option.slice(1)}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
-        <Grid container spacing={1}>
-          {gritosOptions.map(option => (
-            <Grid item key={option} xs={6} sm={4} md={3}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={gritos.includes(option)}
-                    onChange={(e) => handleCheckboxChange('gritos', option)}
-                  />
-                }
-                label={option.charAt(0).toUpperCase() + option.slice(1)}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <FormControl fullWidth>
-          <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
-          <Select
-            sx={{ marginBottom: 2 }}
-            placeholder="Parentesco"
-            value={parentesco}
-            onChange={(e) => handleChange('parentesco', e.target.value)}
-            IconComponent={KeyboardArrowDownIcon}
-            variant="outlined"
-          >
-            <MenuItem value="marido">Marido</MenuItem>
-            <MenuItem value="ex-marido">Ex-marido</MenuItem>
-            <MenuItem value="esposa">Esposa</MenuItem>
-            <MenuItem value="ex-esposa">Ex-esposa</MenuItem>
-            <MenuItem value="companheiro(a)">Companheiro(a)</MenuItem>
-            <MenuItem value="ex-companheiro(a)">Ex-companheiro(a)</MenuItem>
-            <MenuItem value="namorado">Namorado(a)</MenuItem>
-            <MenuItem value="ex-namorado">Ex-namorado(a)</MenuItem>
-            <MenuItem value="pai">Pai</MenuItem>
-            <MenuItem value="mãe">Mãe</MenuItem>
-            <MenuItem value="filho(a)">Filho(a)</MenuItem>
-            <MenuItem value="irmão(a)">Irmão(a)</MenuItem>
-            <MenuItem value="tio(a)">Tio(a)</MenuItem>
-            <MenuItem value="">Outro</MenuItem>
-            <MenuItem value="desconhecido">Desconhecido</MenuItem>
-          </Select>
-        </FormControl>
-        {showOutroInput && (
-          <FormControl fullWidth>
+            <FormLabel id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
+            <RadioGroup
+              value={ferida}
+              onChange={(e) => handleChange("ferida", e.target.value)}
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              sx={{ marginBottom: 4 }}
+            >
+              <FormControlLabel value="true" control={<Radio />} label="Sim" />
+              <FormControlLabel value="false" control={<Radio />} label="Não" />
+            </RadioGroup>
+
+            <FormLabel id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
+            <RadioGroup
+              value={criancas}
+              onChange={(e) => handleChange("criancas", e.target.value)}
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+            >
+              <FormControlLabel value="true" control={<Radio />} label="Sim" />
+              <FormControlLabel value="false" control={<Radio />} label="Não" />
+            </RadioGroup>
+          </Grid>
+          <Grid item xs={12} sx={{ mt: 1 }}>
+            <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
             <TextField
+              sx={{
+                backgroundColor: 'rgba(0, 200, 0, 0.1)',
+              }}
+              multiline
               fullWidth
-              value={outroParentesco}
-              onChange={(e) => setOutroParentesco(e.target.value)}
-              label="Outro Parentesco"
-              variant="outlined"
+              value={narrativa}
+              InputProps={{
+                disabled: true
+              }}
             />
-          </FormControl>
-        )}
-      </Grid>
-      <Grid item xs={12}>
-        <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
-        <RadioGroup
-          value={medida}
-          onChange={(e) => handleChange("medida", e.target.value)}
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          sx={{ marginBottom: 4 }}
-        >
-          <FormControlLabel value="true" control={<Radio />} label="Sim" />
-          <FormControlLabel value="false" control={<Radio />} label="Não" />
-        </RadioGroup>
-        <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
-        <RadioGroup
-          value={agressorNoLocal}
-          onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          sx={{ marginBottom: 4 }}
-        >
-          <FormControlLabel value="true" control={<Radio />} label="Sim" />
-          <FormControlLabel value="false" control={<Radio />} label="Não" />
-        </RadioGroup>
-        <FormLabel id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
-        <RadioGroup
-          value={armado}
-          onChange={(e) => handleChange("armado", e.target.value)}
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          sx={{ marginBottom: 4 }}
-        >
-          <FormControlLabel value="true" control={<Radio />} label="Sim" />
-          <FormControlLabel value="false" control={<Radio />} label="Não" />
-        </RadioGroup>
+          </Grid>
 
-        <FormLabel id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
-        <RadioGroup
-          value={ferida}
-          onChange={(e) => handleChange("ferida", e.target.value)}
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          sx={{ marginBottom: 4 }}
-        >
-          <FormControlLabel value="true" control={<Radio />} label="Sim" />
-          <FormControlLabel value="false" control={<Radio />} label="Não" />
-        </RadioGroup>
-
-        <FormLabel id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
-        <RadioGroup
-          value={criancas}
-          onChange={(e) => handleChange("criancas", e.target.value)}
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-        >
-          <FormControlLabel value="true" control={<Radio />} label="Sim" />
-          <FormControlLabel value="false" control={<Radio />} label="Não" />
-        </RadioGroup>
-      </Grid>
-      <Grid item xs={12} sx={{ mt: 1 }}>
-        <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
-        <TextField
-          sx={{
-            backgroundColor: 'rgba(0, 200, 0, 0.1)',
-          }}
-          multiline
-          fullWidth
-          value={narrativa}
-          InputProps={{
-            disabled: true
-          }}
-        />
-      </Grid>
-
-      <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
-        <Button variant="contained"
-          color="secondary"
-          onClick={handleCopy}
-          style={{ backgroundColor: '#006600', color: '#FFFFFF', width:'100%', marginBottom:15}}>Copiar texto</Button>
-        <Button variant="contained"
-          color="secondary"
-          onClick={handleResetForm}
-          style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
-      </Grid>
-    </Grid >
+          <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
+            <Button variant="contained"
+              color="secondary"
+              onClick={handleCopy}
+              style={{ backgroundColor: '#006600', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+            <Button variant="contained"
+              color="secondary"
+              onClick={handleResetForm}
+              style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
+          </Grid>
+        </Grid >
+      </Box>
     </Container>
   );
 }
