@@ -1,5 +1,6 @@
 import FormularioViolenciaDomestica from "./components/form";
 import Navbar from "./components/navbar/navbar";
+import Footer from "./components/footer/footer";
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
     <>
       <Navbar />
       <FormularioViolenciaDomestica />
+      <Footer />
     </>
   )
 }
