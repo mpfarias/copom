@@ -56,7 +56,7 @@ const Navbar = () => {
                     display: 'flex',
                     justifyContent: 'center',
                     marginBottom: 0,
-                    backgroundImage: 'url("./src/img/faixa.png")', // Definindo a imagem de fundo
+                    backgroundImage: 'url("https://github.com/mpfarias/copom-mulher/blob/main/src/img/faixa.png?raw=true")', // Definindo a imagem de fundo
                     backgroundRepeat: 'repeat-x', // Repete horizontal e verticalmente
                     
                     padding: '19px', // Adiciona espaço em torno da imagem
