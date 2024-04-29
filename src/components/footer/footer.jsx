@@ -3,14 +3,17 @@ import { Box } from "@mui/material"
 
 function Footer() {
     return (
-        <>
+
+        <Box sx={{
+            margin: 0, // Remover margem de todos os lados
+            padding: 0,
+        }}>
             <Box
                 sx={{
                     width: '100%',
                     backgroundColor: '#000066',
                     margin: 0,
                     color: '#ffffff',
-                    
                     display: 'flex',
                     textAlign: 'center',
                     letterSpacing: 2,
@@ -37,7 +40,7 @@ function Footer() {
                     fontWeight: 'light',
                 }}
             >
-                
+
                 Seção de Tecnologia - COPOM
             </Box>
             <Box
@@ -75,7 +78,7 @@ function Footer() {
 
                 2º Sgt Gadelha
             </Box>
-            </>
+        </Box>
     )
 }
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './style.css';
 import {
   Box,
   TextField,
@@ -120,8 +121,8 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
   };
 
   return (
-    <Container maxWidth="md">
-      <Box sx={{ paddingLeft: '25%', paddingRight: '25px' }}>
+    <Container maxWidth="md" className="main-content">
+      <Box sx={{ paddingLeft: 3}}>
         <Grid container spacing={3}> {/* Adicionando um container Grid */}
           <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
             <Box
@@ -137,7 +138,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
                 name="controlled-radio-buttons-group"
                 value={solicitante}
                 onChange={(e) => setSolicitante(e.target.value)}
-                sx={{ marginBottom: 4 }}
+                sx={{ marginBottom: 0 }}
               >
                 <FormControlLabel value="vitima" control={<Radio />} label="Vítima" />
                 <FormControlLabel value="denunciante" control={<Radio />} label="Denunciante" />
@@ -145,13 +146,13 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
+            <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
           </Grid>
           <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 4 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+            <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
           </Grid>
           <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 4 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
+            <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
           </Grid>
           <Grid item xs={12}>
             <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
@@ -179,6 +180,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
                   <FormControlLabel
                     control={
                       <Checkbox
+                      sx={{width:'100%'}}
                         checked={gritos.includes(option)}
                         onChange={(e) => handleCheckboxChange('gritos', option)}
                       />
