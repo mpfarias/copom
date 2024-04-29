@@ -171,7 +171,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
+        <FormLabel id="demo-controlled-checkbox-group" style={{color: '#990000', fontWeight: 'bold'}}>ATENÇÃO, ATENDENTE:</FormLabel>
         <Grid container spacing={1}>
           {gritosOptions.map(option => (
             <Grid item key={option} xs={6} sm={4} md={3}>
@@ -192,6 +192,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
         <FormControl fullWidth>
           <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
           <Select
+          sx={{marginBottom:2}}
             placeholder="Parentesco"
             value={parentesco}
             onChange={(e) => handleChange('parentesco', e.target.value)}
@@ -215,10 +216,8 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             <MenuItem value="desconhecido">Desconhecido</MenuItem>
           </Select>
         </FormControl>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <FormControl fullWidth>
-          {showOutroInput && (
+        {showOutroInput && (
+          <FormControl fullWidth>
             <TextField
               fullWidth
               value={outroParentesco}
@@ -226,8 +225,8 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
               label="Outro Parentesco"
               variant="outlined"
             />
-          )}
-        </FormControl>
+          </FormControl>
+        )}
       </Grid>
       <Grid item xs={12}>
         <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
