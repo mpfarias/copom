@@ -22,6 +22,7 @@ export default function FormularioViolenciaDomestica() {
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro'];
   const [solicitante, setSolicitante] = useState('vitima');
   const [state, setState] = useState({
+
     nomeVitima: '',
     endereco: '',
     telefone: '',
@@ -99,7 +100,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
 
   const handleResetForm = () => {
     setState({
-      
+      solicitante: 'vitima',
       nomeVitima: '',
       endereco: '',
       telefone: '',
@@ -113,6 +114,8 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
       criancas: '',
       narrativa: '',
     });
+    setOutroParentesco(''); // Resetar o estado de outroParentesco
+    setShowOutroInput(false); // Esconder o input de outroParentesco
     window.scrollTo({ top: 0, behavior: 'smooth' }); // Role até o topo da página
   };
 
@@ -304,11 +307,11 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           }}
         />
       </Grid>
-      <Grid item xs={12} sx={{marginBottom:8}} >
+      <Grid item xs={12} sx={{ marginBottom: 8 }} >
         <Button variant="contained"
           color="secondary"
           onClick={handleResetForm}
-          style={{ backgroundColor: '#000066', color: '#FFFFFF'}}>Limpar Formulário</Button>
+          style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
       </Grid>
     </Grid>
   );
