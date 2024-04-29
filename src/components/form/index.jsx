@@ -5,17 +5,21 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  FormControl,
   FormLabel,
   Checkbox,
   Select,
   MenuItem,
   Grid,
   IconButton,
+  Button
 } from '@mui/material';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
+  const agressaoOptions = ['ameaça', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
+  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro'];
   const [solicitante, setSolicitante] = useState('vitima');
   const [state, setState] = useState({
     nomeVitima: '',
@@ -93,6 +97,24 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
     handleChange('telefone', e.target.value);
   };
 
+  const handleResetForm = () => {
+    setState({
+      nomeVitima: '',
+      endereco: '',
+      telefone: '',
+      agressao: [],
+      gritos: [],
+      armado: '',
+      parentesco: 'marido',
+      medida: '',
+      agressorNoLocal: '',
+      ferida: '',
+      criancas: '',
+      narrativa: '',
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Role até o topo da página
+  };
+
   return (
     <Grid container spacing={3}> {/* Adicionando um container Grid */}
       <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
@@ -128,89 +150,49 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
       </Grid>
       <Grid item xs={12}>
         <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
-        <Box sx={{ display: 'flex', gap: 3, padding: 3, marginBottom: 3 }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={agressao.includes('ameaça')}
-                onChange={(e) => handleCheckboxChange('agressao', 'ameaça')}
+        <Grid container spacing={1}>
+          {agressaoOptions.map(option => (
+            <Grid item key={option} xs={6} sm={4} md={3}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={agressao.includes(option)}
+                    onChange={(e) => handleCheckboxChange('agressao', option)}
+                  />
+                }
+                label={option.charAt(0).toUpperCase() + option.slice(1)}
               />
-            }
-            label="Ameaça"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={agressao.includes('agressão física')}
-                onChange={(e) => handleCheckboxChange('agressao', 'agressão física')}
-              />
-            }
-            label="Agressão física"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={agressao.includes('agressão psicológica')}
-                onChange={(e) => handleCheckboxChange('agressao', 'agressão psicológica')}
-              />
-            }
-            label="Agressão psicológica"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={agressao.includes('violação de medida protetiva')}
-                onChange={(e) => handleCheckboxChange('agressao', 'violação de medida protetiva')}
-              />
-            }
-            label="Violação de medida protetiva"
-          />
-        </Box>
+            </Grid>
+          ))}
+        </Grid>
       </Grid>
       <Grid item xs={12}>
-        <FormLabel id="demo-controlled-checkbox-group">É possível ouvir:</FormLabel>
-        <Box sx={{ display: 'flex', gap: 3, padding: 3, marginBottom: 3 }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={gritos.includes('voz masculina ao fundo')}
-                onChange={(e) => handleCheckboxChange('gritos', 'voz masculina ao fundo')}
+        <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
+        <Grid container spacing={1}>
+          {gritosOptions.map(option => (
+            <Grid item key={option} xs={6} sm={4} md={3}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={gritos.includes(option)}
+                    onChange={(e) => handleCheckboxChange('gritos', option)}
+                  />
+                }
+                label={option.charAt(0).toUpperCase() + option.slice(1)}
               />
-            }
-            label="Voz masculina ao fundo"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={gritos.includes('gritaria')}
-                onChange={(e) => handleCheckboxChange('gritos', 'gritaria')}
-              />
-            }
-            label="Gritos"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={gritos.includes('nada')}
-                onChange={(e) => handleCheckboxChange('gritos', 'nada')}
-              />
-            }
-            label="Nada"
-          />
-        </Box>
+            </Grid>
+          ))}
         </Grid>
-      <Grid item xs={12}>
-        <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
-        <Box sx={{ display: 'flex', gap: 3, padding: 1, marginBottom: 3 }}>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <FormControl fullWidth>
+          <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
           <Select
             placeholder="Parentesco"
             value={parentesco}
             onChange={(e) => handleChange('parentesco', e.target.value)}
             IconComponent={KeyboardArrowDownIcon}
-            sx={{
-              width: 240,
-              marginBottom: 4,
-            }}
+            variant="outlined"
           >
             <MenuItem value="marido">Marido</MenuItem>
             <MenuItem value="ex-marido">Ex-marido</MenuItem>
@@ -228,17 +210,21 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             <MenuItem value="">Outro</MenuItem>
             <MenuItem value="desconhecido">Desconhecido</MenuItem>
           </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <FormControl fullWidth>
           {showOutroInput && (
-            <input
-              type="text"
+            <TextField
+              fullWidth
               value={outroParentesco}
               onChange={(e) => setOutroParentesco(e.target.value)}
-              placeholder="Digite o parentesco"
-              style={{ marginTop: '8px', width: '100%', padding: '8px' }}
+              label="Outro Parentesco"
+              variant="outlined"
             />
           )}
-        </Box>
-        </Grid>
+        </FormControl>
+      </Grid>
       <Grid item xs={12}>
         <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
         <RadioGroup
@@ -297,26 +283,32 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           <FormControlLabel value="true" control={<Radio />} label="Sim" />
           <FormControlLabel value="false" control={<Radio />} label="Não" />
         </RadioGroup>
-        </Grid>
-        <Grid item xs={12} sx={{ mt: 3 }}>
-          <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
-          <TextField
-            sx={{
-              backgroundColor: 'rgba(0, 200, 0, 0.1)',
-            }}
-            multiline
-            fullWidth
-            value={narrativa}
-            InputProps={{
-              disabled: true,
-              endAdornment: (
-                <IconButton onClick={handleCopy} aria-label="copy">
-                  <FileCopyIcon />
-                </IconButton>
-              ),
-            }}
-          />
-        </Grid>
       </Grid>
-      );
+      <Grid item xs={12} sx={{ mt: 3 }}>
+        <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+        <TextField
+          sx={{
+            backgroundColor: 'rgba(0, 200, 0, 0.1)',
+          }}
+          multiline
+          fullWidth
+          value={narrativa}
+          InputProps={{
+            disabled: true,
+            endAdornment: (
+              <IconButton onClick={handleCopy} aria-label="copy">
+                <FileCopyIcon />
+              </IconButton>
+            ),
+          }}
+        />
+      </Grid>
+      <Grid item xs={12} sx={{marginBottom:8}} >
+        <Button variant="contained"
+          color="secondary"
+          onClick={handleResetForm}
+          style={{ backgroundColor: '#000066', color: '#FFFFFF'}}>Limpar Formulário</Button>
+      </Grid>
+    </Grid>
+  );
 }
