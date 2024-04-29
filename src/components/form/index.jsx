@@ -99,6 +99,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
 
   const handleResetForm = () => {
     setState({
+      
       nomeVitima: '',
       endereco: '',
       telefone: '',
