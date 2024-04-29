@@ -6,10 +6,7 @@ function Footer() {
 
         <Box sx={{
             margin: 0, // Remover margem de todos os lados
-            padding: 0,
-            height:60,
-            backgroundColor: '#000066',
-            alignContent:'center'
+            padding: 0
         }}>
             <Box
                 sx={{

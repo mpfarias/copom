@@ -292,6 +292,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           <Grid item xs={12} sx={{ mt: 1 }}>
             <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
             <TextField
+            className="narrativa-text"
               sx={{
                 backgroundColor: 'rgba(0, 200, 0, 0.1)',
               }}
