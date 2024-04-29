@@ -5,7 +5,7 @@ function Footer() {
     return (
 
         <Box sx={{
-            margin: 0, // Remover margem de todos os lados
+            margin: 0,
             padding: 0
         }}>
             <Box
@@ -41,7 +41,7 @@ function Footer() {
                 }}
             >
 
-                Seção de Tecnologia - COPOM
+                Seção de Tecnologia
             </Box>
             <Box
                 sx={{

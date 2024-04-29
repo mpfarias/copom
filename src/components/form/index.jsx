@@ -39,6 +39,7 @@ export default function FormularioViolenciaDomestica() {
   });
 
   const [outroParentesco, setOutroParentesco] = useState('');
+
   const [showOutroInput, setShowOutroInput] = useState(false);
 
   const { nomeVitima, endereco, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
@@ -60,8 +61,6 @@ export default function FormularioViolenciaDomestica() {
       setState(prevState => ({ ...prevState, [field]: value }));
     }
   };
-
-
 
   const handleCheckboxChange = (field, value) => {
     let updatedValue;
@@ -122,7 +121,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
 
   return (
     <Container maxWidth="md" className="main-content">
-      <Box sx={{ paddingLeft: 3}}>
+      <Box sx={{ paddingLeft: 3 }}>
         <Grid container spacing={3}> {/* Adicionando um container Grid */}
           <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
             <Box
@@ -180,7 +179,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
                   <FormControlLabel
                     control={
                       <Checkbox
-                      sx={{width:'100%'}}
+                        sx={{ width: '100%' }}
                         checked={gritos.includes(option)}
                         onChange={(e) => handleCheckboxChange('gritos', option)}
                       />
@@ -292,7 +291,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           <Grid item xs={12} sx={{ mt: 1 }}>
             <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
             <TextField
-            className="narrativa-text"
+              className="narrativa-text"
               sx={{
                 backgroundColor: 'rgba(0, 200, 0, 0.1)',
               }}
