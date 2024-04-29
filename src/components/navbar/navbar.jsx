@@ -1,6 +1,7 @@
 
 import { Box } from '@mui/material';
 
+
 const Navbar = () => {
     return (
         <div>
@@ -22,7 +23,7 @@ const Navbar = () => {
 
             <Box component="section"
                 sx={{
-                    p: 2,
+                    p: 1,
                     alignItems: 'center',
                     display: 'flex',
                     justifyContent: 'center',
@@ -38,7 +39,7 @@ const Navbar = () => {
 
             <Box component="section"
                 sx={{
-                    p: 2,
+                    p: 1,
                     alignItems: 'center',
                     display: 'flex',
                     justifyContent: 'center',
@@ -51,6 +52,16 @@ const Navbar = () => {
                 }}>
                 Formulário CAD
             </Box>
+            <img
+                    src={'./src/img/faixa.png'}
+                    alt="Faixa"
+                    style={{
+                        width: '100%', // Garante que a imagem ocupe toda a largura disponível
+                        height: 'auto', // Mantém a proporção da imagem
+                        display: 'block', // Remove espaços em branco abaixo da imagem
+                        margin:0,
+                    }}
+                />
         </div>
     )
 }
