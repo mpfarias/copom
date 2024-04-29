@@ -22,7 +22,7 @@ const Navbar = () => {
 
             <Box component="section"
                 sx={{
-                    p: 1,
+                    p: 1.5,
                     alignItems: 'center',
                     display: 'flex',
                     justifyContent: 'center',
