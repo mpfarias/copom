@@ -26,6 +26,8 @@ export default function FormularioViolenciaDomestica() {
 
     nomeVitima: '',
     endereco: '',
+    regiaoAdministrativa: '',
+    referencia: '',
     telefone: '',
     agressao: [],
     gritos: [],
@@ -42,7 +44,7 @@ export default function FormularioViolenciaDomestica() {
 
   const [showOutroInput, setShowOutroInput] = useState(false);
 
-  const { nomeVitima, endereco, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
+  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
 
   const handleChange = (field, value) => {
     if (field === 'outroParentesco') {
@@ -75,14 +77,14 @@ export default function FormularioViolenciaDomestica() {
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-A pessoa de nome ${nomeVitima}, residente em ${endereco}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
 ${medida === 'true' ? 'Possui medida protetiva' : 'Não possui medida protetiva'} contra o agressor.
 O agressor${agressorNoLocal === 'true' ? ' ' : ' não '}encontra-se no local${armado === 'true' ? ', e está armado, equipe agir com cautela' : '.'}
 ${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(', ') : ''}
 ${criancas === 'true' ? 'Há crianças no local' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, endereco, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, outroParentesco]);
+  }, [solicitante, nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, outroParentesco]);
 
   const handleCopy = () => {
     const narrativa = state.narrativa;
@@ -103,6 +105,8 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
       solicitante: 'vitima',
       nomeVitima: '',
       endereco: '',
+      regiaoAdministrativa: '',
+      referencia: '',
       telefone: '',
       agressao: [],
       gritos: [],
@@ -149,6 +153,61 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           </Grid>
           <Grid item xs={12}>
             <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+              <Select
+                sx={{ marginBottom: 2 }}
+                placeholder="Cidade:"
+                value={regiaoAdministrativa}
+                onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
+                IconComponent={KeyboardArrowDownIcon}
+                variant="outlined"
+              >
+                <MenuItem value="Plano Piloto">RA I - Plano Piloto</MenuItem>
+                <MenuItem value="Gama">RA II - Gama</MenuItem>
+                <MenuItem value="Taguatinga">RA III - Taguatinga</MenuItem>
+                <MenuItem value="Brazlândia">RA IV - Brazlândia</MenuItem>
+                <MenuItem value="Sobradinho">RA V - Sobradinho</MenuItem>
+                <MenuItem value="Planaltina">RA VI - Planaltina</MenuItem>
+                <MenuItem value="Paranoá">RA VII - Paranoá</MenuItem>
+                <MenuItem value="Núcleo Bandeirante">RA VIII - Núcleo Bandeirante</MenuItem>
+                <MenuItem value="Ceilândia">RA IX - Ceilândia</MenuItem>
+                <MenuItem value="Guará">RA X - Guará</MenuItem>
+                <MenuItem value="Cruzeiro">RA XI - Cruzeiro</MenuItem>
+                <MenuItem value="Samambaia">RA XII - Samambaia</MenuItem>
+                <MenuItem value="Santa Maria">RA XIII - Santa Maria</MenuItem>
+                <MenuItem value="São Sebastião">RA XIV - São Sebastião</MenuItem>
+                <MenuItem value="Recanto das Emas">RA XV - Recanto das Emas</MenuItem>
+                <MenuItem value="Lago Sul">RA XVI - Lago Sul</MenuItem>
+                <MenuItem value="Riacho Fundo">RA XVII - Riacho Fundo</MenuItem>
+                <MenuItem value="Lago Norte">RA XVIII - Lago Norte</MenuItem>
+                <MenuItem value="Candangolândia">RA XIX - Candangolândia</MenuItem>
+                <MenuItem value="Águas Claras">RA XX - Águas Claras</MenuItem>
+                <MenuItem value="Riacho Fundo II">RA XXI - Riacho Fundo 2</MenuItem>
+                <MenuItem value="Sudoeste">RA XXII - Sudoeste</MenuItem>
+                <MenuItem value="Octogonal">RA XXII - Octogonal</MenuItem>
+                <MenuItem value="Varjão">RA XXIII - Varjão</MenuItem>
+                <MenuItem value="Park Way">RA XXIV - Park Way</MenuItem>
+                <MenuItem value="Estrutural">RA XXV - Estrutural</MenuItem>
+                <MenuItem value="SCIA">RA XXV - SCIA</MenuItem>
+                <MenuItem value="Sobradinho II">RA XXVI - Sobradinho II</MenuItem>
+                <MenuItem value="Jardim Botânico">RA XIV - Jardim Botânico</MenuItem>
+                <MenuItem value="Itapoã">RA XIV - Itapoã</MenuItem>
+                <MenuItem value="SIA">RA XIV - SIA</MenuItem>
+                <MenuItem value="Vicente Pires">RA XIV - Vicente Pires</MenuItem>
+                <MenuItem value="Fercal">RA XIV - Fercal</MenuItem>
+                <MenuItem value="Sol Nascente">RA XIV - Sol Nascente</MenuItem>
+                <MenuItem value="Por do Sol">RA XIV - Por do Sol</MenuItem>
+                <MenuItem value="Arniqueira">RA XIV - Arniqueira</MenuItem>
+                <MenuItem value="Arapoanga">RA XIV - Arapoanga</MenuItem>
+                <MenuItem value="Água Quente">RA XIV - Água Quente</MenuItem>
+              </Select>
+            </FormControl>
+            </Grid>
+          <Grid item xs={12}>
+            <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Ponto de referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
           </Grid>
           <Grid item xs={12}>
             <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
