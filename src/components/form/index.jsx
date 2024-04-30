@@ -26,7 +26,7 @@ export default function FormularioViolenciaDomestica() {
 
     nomeVitima: '',
     endereco: '',
-    regiaoAdministrativa: '',
+    regiaoAdministrativa: 'Plano Piloto',
     referencia: '',
     telefone: '',
     agressao: [],
@@ -77,7 +77,7 @@ export default function FormularioViolenciaDomestica() {
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'foi vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'está sendo vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
 ${medida === 'true' ? 'Possui medida protetiva' : 'Não possui medida protetiva'} contra o agressor.
 O agressor${agressorNoLocal === 'true' ? ' ' : ' não '}encontra-se no local${armado === 'true' ? ', e está armado, equipe agir com cautela' : '.'}
 ${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(', ') : ''}
@@ -105,7 +105,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
       solicitante: 'vitima',
       nomeVitima: '',
       endereco: '',
-      regiaoAdministrativa: '',
+      regiaoAdministrativa: 'Plano Piloto',
       referencia: '',
       telefone: '',
       agressao: [],
