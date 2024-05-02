@@ -76,9 +76,11 @@ export default function FormularioViolenciaDomestica() {
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'está sendo vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
-${medida === 'true' ? 'Possui medida protetiva' : 'Não possui medida protetiva'} contra o agressor.
-O agressor${agressorNoLocal === 'true' ? ' ' : ' não '}encontra-se no local${armado === 'true' ? ', e está armado, equipe agir com cautela' : '.'}
+A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'está sendo vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+${medida === 'null' ? 'Não sabe se possui medida' : medida === 'true' ? 'Possui medida protetiva' :
+ 'Não possui medida protetiva'} contra o agressor.
+${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
+ ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
 ${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(', ') : ''}
 ${criancas === 'true' ? 'Há crianças no local' : ''}
 `;
@@ -127,7 +129,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
       <Box>
         <Grid container spacing={3}> {/* Adicionando um container Grid */}
           <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
-          <FormLabel sx={{
+          <FormLabel style={{
             fontWeight:'bold',
             fontSize: 30,
             }} id="demo-controlled-radio-buttons-group">Formulário de Violência Doméstica</FormLabel>
@@ -225,6 +227,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
                       <Checkbox
                         checked={agressao.includes(option)}
                         onChange={(e) => handleCheckboxChange('agressao', option)}
+                        sx={{ fontSize: '1.5vw !important' }}
                       />
                     }
                     label={option.charAt(0).toUpperCase() + option.slice(1)}
@@ -303,6 +306,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             >
               <FormControlLabel value="true" control={<Radio />} label="Sim" />
               <FormControlLabel value="false" control={<Radio />} label="Não" />
+              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
             </RadioGroup>
             <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
             <RadioGroup
@@ -314,6 +318,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             >
               <FormControlLabel value="true" control={<Radio />} label="Sim" />
               <FormControlLabel value="false" control={<Radio />} label="Não" />
+              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
             </RadioGroup>
             <FormLabel id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
             <RadioGroup
@@ -325,6 +330,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             >
               <FormControlLabel value="true" control={<Radio />} label="Sim" />
               <FormControlLabel value="false" control={<Radio />} label="Não" />
+              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
             </RadioGroup>
 
             <FormLabel id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
@@ -337,6 +343,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             >
               <FormControlLabel value="true" control={<Radio />} label="Sim" />
               <FormControlLabel value="false" control={<Radio />} label="Não" />
+              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
             </RadioGroup>
 
             <FormLabel id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
