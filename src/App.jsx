@@ -15,26 +15,27 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   color: theme.palette.text.secondary,
   boxShadow: 'none',
+  padding: 0,
 }));
 
 function App() {
   return (
-    <Box sx={{ flexGrow: 1 }} >
-      <Grid container spacing={3}>
+    <Box sx={{ flexGrow: 1, paddingTop: 0,  paddingLeft: 0}} >
+      <Grid container style={{ margin: 0 }}>
         <Grid item xs={12}>
-          <Item><Navbar /></Item>
+          <Item className="paper-no-margin"><Navbar /></Item>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Item><Menu /></Item>
+          <Item className="paper-no-margin"><Menu /></Item>
         </Grid>
         <Grid item xs={12} md={8}>
-          <Item><FormularioViolenciaDomestica /></Item>
+          <Item className="paper-no-margin"><FormularioViolenciaDomestica /></Item>
         </Grid>
         <Grid item xs={12} md={1}>
           <Item></Item>
         </Grid>
         <Grid item xs={12}>
-          <Item><Footer /></Item>
+          <Item className="paper-no-margin"><Footer /></Item>
         </Grid>
       </Grid>
     </Box>

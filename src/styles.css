@@ -1,3 +1,12 @@
 body {
     margin: 0;
+    padding: 0;
 }
+
+.paper-no-margin {
+    margin: 0;
+  }
+
+  .paper-no-padding {
+    padding: 0;
+  }

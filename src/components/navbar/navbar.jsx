@@ -4,10 +4,7 @@ import { Box } from '@mui/material';
 
 const Navbar = () => {
     return (
-        <Box sx={{
-            margin: 0, // Remover margem de todos os lados
-            padding: 0,
-        }}>
+        <Box >
             <Box component="section"
                 sx={{
                     p: 1.5,
@@ -19,6 +16,7 @@ const Navbar = () => {
                     fontFamily: 'Myriad Pro',
                     fontSize: 'calc(10px + 1vw)',
                     width: '100%',
+                    padding: 0,
                 }}>
                 Polícia Militar do Distrito Federal
             </Box>
@@ -35,6 +33,7 @@ const Navbar = () => {
                     fontSize: 'calc(20px + 1vw)',
                     width: '100%',
                     marginBottom: 0,
+                    padding: 0,
                 }}>
                 COPOM
             </Box>
@@ -51,6 +50,7 @@ const Navbar = () => {
                     fontSize: 'calc(20px + 1vw)',
                     width: '100%',
                     marginBottom: 0,
+                    padding: 0,
                 }}>
                 Formulário de Ocorrência CAD
             </Box>

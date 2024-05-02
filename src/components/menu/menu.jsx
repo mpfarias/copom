@@ -47,7 +47,7 @@ export default function Menu() {
 
   return (
     <div>
-      <Button sx={{marginLeft:3}} onClick={toggleDrawer(true)}>Mudar a Natureza do Registro</Button>
+      <Button sx={{marginLeft:3, marginTop:3}} onClick={toggleDrawer(true)}>Mudar a Natureza do Registro</Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
