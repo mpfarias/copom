@@ -12,7 +12,6 @@ import {
   Select,
   MenuItem,
   Grid,
-  Container,
   Button
 } from '@mui/material';
 
@@ -124,13 +123,17 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
   };
 
   return (
-    <Container maxWidth="md" className="main-content">
-      <Box sx={{ paddingLeft: 3 }}>
+    
+      <Box>
         <Grid container spacing={3}> {/* Adicionando um container Grid */}
           <Grid item xs={12}> {/* Usando Grid item para cada seção do formulário */}
+          <FormLabel sx={{
+            fontWeight:'bold',
+            fontSize: 30,
+            }} id="demo-controlled-radio-buttons-group">Formulário de Violência Doméstica</FormLabel>
             <Box
               sx={{
-                mt: 3
+                mt: 2 
               }}
               noValidate
               autoComplete="off"
@@ -230,11 +233,11 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
               ))}
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
+          <Grid item xs={10}>
+            <FormLabel id="demo-controlled-checkbox-group" style={{color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
             <Grid container spacing={1}>
               {gritosOptions.map(option => (
-                <Grid item key={option} xs={6} sm={4} md={3}>
+                <Grid item key={option} xs={6} sm={2} md={4}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -375,6 +378,6 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
           </Grid>
         </Grid >
       </Box>
-    </Container>
+    
   );
 }

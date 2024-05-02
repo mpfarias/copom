@@ -34,7 +34,7 @@ const Navbar = () => {
                     width: '100%',
                     marginBottom: 0,
                 }}>
-                COPOM Mulher
+                COPOM
             </Box>
 
             <Box component="section"
@@ -50,7 +50,7 @@ const Navbar = () => {
                     width: '100%',
                     marginBottom: 0,
                 }}>
-                Formulário CAD
+                Formulário de Ocorrência CAD
             </Box>
 
             <Box component="section"
@@ -60,7 +60,6 @@ const Navbar = () => {
                     marginBottom: 0,
                     backgroundImage: 'url("https://github.com/mpfarias/copom-mulher/blob/main/src/img/faixa.png?raw=true")', // Definindo a imagem de fundo
                     backgroundRepeat: 'repeat-x', // Repete horizontal e verticalmente
-
                     padding: '19px', // Adiciona espaço em torno da imagem
                 }}>
 

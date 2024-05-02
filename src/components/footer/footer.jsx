@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 
 
-function Footer() {
+export default function Footer() {
     return (
 
         <Box sx={{
@@ -82,4 +82,4 @@ function Footer() {
     )
 }
 
-export default Footer
+
