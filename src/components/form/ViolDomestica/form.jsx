@@ -126,9 +126,9 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
 
   return (
     
-      <Box paddingRight={2}>
+      <Box paddingRight={2} marginTop={4}>
         <Grid container sx={{marginLeft:1, width:'100%'}} spacing={3}> 
-          <Grid item xs={12}>
+          <Grid item style={{paddingTop: 0}}xs={12}>
           <FormLabel style={{
             fontWeight:'bold',
             fontSize: 30,

@@ -1,5 +1,5 @@
 import React from "react";
-import FormularioViolenciaDomestica from "./components/form/form";
+import FormularioViolenciaDomestica from "./components/form/ViolDomestica/form";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
 import Menu from "./components/menu/menu";

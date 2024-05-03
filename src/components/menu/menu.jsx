@@ -12,6 +12,7 @@ import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
 import PetsIcon from '@mui/icons-material/Pets';
 import AlarmIcon from '@mui/icons-material/Alarm';
+import ReportIcon from '@mui/icons-material/Report';
 
 export default function Menu() {
   const [open, setOpen] = React.useState(false);
@@ -21,6 +22,7 @@ export default function Menu() {
   };
 
   const drawerItems = [
+    { text: 'Violência doméstica', icon: <ReportIcon /> },
     { text: 'Som automotivo/ Perturbação', icon: <SpatialAudioIcon /> },
     { text: 'Roubo/Furto', icon: <LocalPoliceIcon /> },
     { text: 'Maus tratos a animais', icon: <PetsIcon /> },
