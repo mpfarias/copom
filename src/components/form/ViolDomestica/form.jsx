@@ -19,7 +19,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
   const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
-  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro'];
+  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro' ];
   const [solicitante, setSolicitante] = useState('vitima');
   const [state, setState] = useState({
 
@@ -36,6 +36,7 @@ export default function FormularioViolenciaDomestica() {
     agressorNoLocal: '',
     ferida: '',
     criancas: '',
+    urgencia: '',
     narrativa: '',
   });
 
@@ -43,7 +44,7 @@ export default function FormularioViolenciaDomestica() {
 
   const [showOutroInput, setShowOutroInput] = useState(false);
 
-  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, narrativa } = state;
+  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa } = state;
 
   const handleChange = (field, value) => {
     if (field === 'outroParentesco') {
@@ -83,9 +84,10 @@ ${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agress
         ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
 ${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(' e ') : '.'}
 ${criancas === 'true' ? 'Há crianças no local' : ''}
+${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, outroParentesco]);
+  }, [solicitante, nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
 
   const handleCopy = () => {
     const narrativa = state.narrativa;
@@ -117,6 +119,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
       agressorNoLocal: '',
       ferida: '',
       criancas: '',
+      urgencia: '',
       narrativa: '',
     });
     setOutroParentesco(''); // Resetar o estado de outroParentesco
@@ -351,10 +354,23 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
             onChange={(e) => handleChange("criancas", e.target.value)}
             aria-labelledby="demo-controlled-radio-buttons-group"
             name="controlled-radio-buttons-group"
+            sx={{ marginBottom: 4 }}
           >
             <FormControlLabel value="true" control={<Radio />} label="Sim" />
             <FormControlLabel value="false" control={<Radio />} label="Não" />
           </RadioGroup>
+
+          <FormLabel id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
+          <RadioGroup
+            value={urgencia}
+            onChange={(e) => handleChange("urgencia", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+          </RadioGroup>
+
         </Grid>
         <Grid item xs={12} sx={{ mt: 1 }}>
           <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
