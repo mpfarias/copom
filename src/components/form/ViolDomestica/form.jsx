@@ -18,7 +18,7 @@ import {
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
-  const agressaoOptions = ['ameaça', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
+  const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro'];
   const [solicitante, setSolicitante] = useState('vitima');
   const [state, setState] = useState({
@@ -244,7 +244,6 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
                   <FormControlLabel
                     control={
                       <Checkbox
-                        sx={{ width: '100%' }}
                         checked={gritos.includes(option)}
                         onChange={(e) => handleCheckboxChange('gritos', option)}
                       />
