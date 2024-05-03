@@ -78,10 +78,10 @@ export default function FormularioViolenciaDomestica() {
 
 A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'está sendo vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
 ${medida === 'null' ? 'Não sabe se possui medida' : medida === 'true' ? 'Possui medida protetiva' :
- 'Não possui medida protetiva'} contra o agressor.
+        'Não possui medida protetiva'} contra o agressor.
 ${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
- ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
-${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(', ') : ''}
+        ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
+${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(' e ') : '.'}
 ${criancas === 'true' ? 'Há crianças no local' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
@@ -125,265 +125,265 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
   };
 
   return (
-    
-      <Box paddingRight={2} marginTop={4}>
-        <Grid container sx={{marginLeft:1, width:'100%'}} spacing={3}> 
-          <Grid item style={{paddingTop: 0}}xs={12}>
+
+    <Box paddingRight={2} marginTop={4}>
+      <Grid container sx={{ marginLeft: 1, width: '100%' }} spacing={3}>
+        <Grid item style={{ paddingTop: 0 }} xs={12}>
           <FormLabel style={{
-            fontWeight:'bold',
+            fontWeight: 'bold',
             fontSize: 30,
-            }} id="demo-controlled-radio-buttons-group">Formulário de Violência Doméstica</FormLabel>
-            <Box
-              sx={{
-                mt: 2 
-              }}
-              noValidate
-              autoComplete="off"
+          }} id="demo-controlled-radio-buttons-group">Formulário de Violência Doméstica</FormLabel>
+          <Box
+            sx={{
+              mt: 2
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <FormLabel id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="controlled-radio-buttons-group"
+              value={solicitante}
+              onChange={(e) => setSolicitante(e.target.value)}
+              sx={{ marginBottom: 0 }}
             >
-              <FormLabel id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={solicitante}
-                onChange={(e) => setSolicitante(e.target.value)}
-                sx={{ marginBottom: 0 }}
-              >
-                <FormControlLabel value="vitima" control={<Radio />} label="Vítima" />
-                <FormControlLabel value="denunciante" control={<Radio />} label="Denunciante" />
-              </RadioGroup>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
-              <Select
-                sx={{ marginBottom: 2 }}
-                placeholder="Cidade:"
-                value={regiaoAdministrativa}
-                onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
-                IconComponent={KeyboardArrowDownIcon}
-                variant="outlined"
-              >
-                <MenuItem value="Plano Piloto">RA I - Plano Piloto</MenuItem>
-                <MenuItem value="Gama">RA II - Gama</MenuItem>
-                <MenuItem value="Taguatinga">RA III - Taguatinga</MenuItem>
-                <MenuItem value="Brazlândia">RA IV - Brazlândia</MenuItem>
-                <MenuItem value="Sobradinho">RA V - Sobradinho</MenuItem>
-                <MenuItem value="Planaltina">RA VI - Planaltina</MenuItem>
-                <MenuItem value="Paranoá">RA VII - Paranoá</MenuItem>
-                <MenuItem value="Núcleo Bandeirante">RA VIII - Núcleo Bandeirante</MenuItem>
-                <MenuItem value="Ceilândia">RA IX - Ceilândia</MenuItem>
-                <MenuItem value="Guará">RA X - Guará</MenuItem>
-                <MenuItem value="Cruzeiro">RA XI - Cruzeiro</MenuItem>
-                <MenuItem value="Samambaia">RA XII - Samambaia</MenuItem>
-                <MenuItem value="Santa Maria">RA XIII - Santa Maria</MenuItem>
-                <MenuItem value="São Sebastião">RA XIV - São Sebastião</MenuItem>
-                <MenuItem value="Recanto das Emas">RA XV - Recanto das Emas</MenuItem>
-                <MenuItem value="Lago Sul">RA XVI - Lago Sul</MenuItem>
-                <MenuItem value="Riacho Fundo">RA XVII - Riacho Fundo</MenuItem>
-                <MenuItem value="Lago Norte">RA XVIII - Lago Norte</MenuItem>
-                <MenuItem value="Candangolândia">RA XIX - Candangolândia</MenuItem>
-                <MenuItem value="Águas Claras">RA XX - Águas Claras</MenuItem>
-                <MenuItem value="Riacho Fundo II">RA XXI - Riacho Fundo 2</MenuItem>
-                <MenuItem value="Sudoeste">RA XXII - Sudoeste</MenuItem>
-                <MenuItem value="Octogonal">RA XXII - Octogonal</MenuItem>
-                <MenuItem value="Varjão">RA XXIII - Varjão</MenuItem>
-                <MenuItem value="Park Way">RA XXIV - Park Way</MenuItem>
-                <MenuItem value="Estrutural">RA XXV - Estrutural</MenuItem>
-                <MenuItem value="SCIA">RA XXV - SCIA</MenuItem>
-                <MenuItem value="Sobradinho II">RA XXVI - Sobradinho II</MenuItem>
-                <MenuItem value="Jardim Botânico">RA XIV - Jardim Botânico</MenuItem>
-                <MenuItem value="Itapoã">RA XIV - Itapoã</MenuItem>
-                <MenuItem value="SIA">RA XIV - SIA</MenuItem>
-                <MenuItem value="Vicente Pires">RA XIV - Vicente Pires</MenuItem>
-                <MenuItem value="Fercal">RA XIV - Fercal</MenuItem>
-                <MenuItem value="Sol Nascente">RA XIV - Sol Nascente</MenuItem>
-                <MenuItem value="Por do Sol">RA XIV - Por do Sol</MenuItem>
-                <MenuItem value="Arniqueira">RA XIV - Arniqueira</MenuItem>
-                <MenuItem value="Arapoanga">RA XIV - Arapoanga</MenuItem>
-                <MenuItem value="Água Quente">RA XIV - Água Quente</MenuItem>
-              </Select>
-            </FormControl>
-            </Grid>
-          <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Ponto de referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
-          </Grid>
-          <Grid item xs={12}>
-            <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
-            <Grid container spacing={1}>
-              {agressaoOptions.map(option => (
-                <Grid item key={option} xs={6} sm={4} md={3}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={agressao.includes(option)}
-                        onChange={(e) => handleCheckboxChange('agressao', option)}
-                        sx={{ fontSize: '1.5vw !important' }}
-                      />
-                    }
-                    label={option.charAt(0).toUpperCase() + option.slice(1)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-          <Grid item xs={10}>
-            <FormLabel id="demo-controlled-checkbox-group" style={{color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
-            <Grid container spacing={1}>
-              {gritosOptions.map(option => (
-                <Grid item key={option} xs={6} sm={2} md={4}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={gritos.includes(option)}
-                        onChange={(e) => handleCheckboxChange('gritos', option)}
-                      />
-                    }
-                    label={option.charAt(0).toUpperCase() + option.slice(1)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
-              <Select
-                sx={{ marginBottom: 2 }}
-                placeholder="Parentesco"
-                value={parentesco}
-                onChange={(e) => handleChange('parentesco', e.target.value)}
-                IconComponent={KeyboardArrowDownIcon}
-                variant="outlined"
-              >
-                <MenuItem value="marido">Marido</MenuItem>
-                <MenuItem value="ex-marido">Ex-marido</MenuItem>
-                <MenuItem value="esposa">Esposa</MenuItem>
-                <MenuItem value="ex-esposa">Ex-esposa</MenuItem>
-                <MenuItem value="companheiro(a)">Companheiro(a)</MenuItem>
-                <MenuItem value="ex-companheiro(a)">Ex-companheiro(a)</MenuItem>
-                <MenuItem value="namorado">Namorado(a)</MenuItem>
-                <MenuItem value="ex-namorado">Ex-namorado(a)</MenuItem>
-                <MenuItem value="pai">Pai</MenuItem>
-                <MenuItem value="mãe">Mãe</MenuItem>
-                <MenuItem value="filho(a)">Filho(a)</MenuItem>
-                <MenuItem value="irmão(a)">Irmão(a)</MenuItem>
-                <MenuItem value="tio(a)">Tio(a)</MenuItem>
-                <MenuItem value="">Outro</MenuItem>
-                <MenuItem value="desconhecido">Desconhecido</MenuItem>
-              </Select>
-            </FormControl>
-            {showOutroInput && (
-              <FormControl fullWidth>
-                <TextField
-                  fullWidth
-                  value={outroParentesco}
-                  onChange={(e) => setOutroParentesco(e.target.value)}
-                  label="Outro Parentesco"
-                  variant="outlined"
+              <FormControlLabel value="vitima" control={<Radio />} label="Vítima" />
+              <FormControlLabel value="denunciante" control={<Radio />} label="Denunciante" />
+            </RadioGroup>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth>
+            <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+            <Select
+              sx={{ marginBottom: 2 }}
+              placeholder="Cidade:"
+              value={regiaoAdministrativa}
+              onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
+              IconComponent={KeyboardArrowDownIcon}
+              variant="outlined"
+            >
+              <MenuItem value="Plano Piloto">RA I - Plano Piloto</MenuItem>
+              <MenuItem value="Gama">RA II - Gama</MenuItem>
+              <MenuItem value="Taguatinga">RA III - Taguatinga</MenuItem>
+              <MenuItem value="Brazlândia">RA IV - Brazlândia</MenuItem>
+              <MenuItem value="Sobradinho">RA V - Sobradinho</MenuItem>
+              <MenuItem value="Planaltina">RA VI - Planaltina</MenuItem>
+              <MenuItem value="Paranoá">RA VII - Paranoá</MenuItem>
+              <MenuItem value="Núcleo Bandeirante">RA VIII - Núcleo Bandeirante</MenuItem>
+              <MenuItem value="Ceilândia">RA IX - Ceilândia</MenuItem>
+              <MenuItem value="Guará">RA X - Guará</MenuItem>
+              <MenuItem value="Cruzeiro">RA XI - Cruzeiro</MenuItem>
+              <MenuItem value="Samambaia">RA XII - Samambaia</MenuItem>
+              <MenuItem value="Santa Maria">RA XIII - Santa Maria</MenuItem>
+              <MenuItem value="São Sebastião">RA XIV - São Sebastião</MenuItem>
+              <MenuItem value="Recanto das Emas">RA XV - Recanto das Emas</MenuItem>
+              <MenuItem value="Lago Sul">RA XVI - Lago Sul</MenuItem>
+              <MenuItem value="Riacho Fundo">RA XVII - Riacho Fundo</MenuItem>
+              <MenuItem value="Lago Norte">RA XVIII - Lago Norte</MenuItem>
+              <MenuItem value="Candangolândia">RA XIX - Candangolândia</MenuItem>
+              <MenuItem value="Águas Claras">RA XX - Águas Claras</MenuItem>
+              <MenuItem value="Riacho Fundo II">RA XXI - Riacho Fundo 2</MenuItem>
+              <MenuItem value="Sudoeste">RA XXII - Sudoeste</MenuItem>
+              <MenuItem value="Octogonal">RA XXII - Octogonal</MenuItem>
+              <MenuItem value="Varjão">RA XXIII - Varjão</MenuItem>
+              <MenuItem value="Park Way">RA XXIV - Park Way</MenuItem>
+              <MenuItem value="Estrutural">RA XXV - Estrutural</MenuItem>
+              <MenuItem value="SCIA">RA XXV - SCIA</MenuItem>
+              <MenuItem value="Sobradinho II">RA XXVI - Sobradinho II</MenuItem>
+              <MenuItem value="Jardim Botânico">RA XIV - Jardim Botânico</MenuItem>
+              <MenuItem value="Itapoã">RA XIV - Itapoã</MenuItem>
+              <MenuItem value="SIA">RA XIV - SIA</MenuItem>
+              <MenuItem value="Vicente Pires">RA XIV - Vicente Pires</MenuItem>
+              <MenuItem value="Fercal">RA XIV - Fercal</MenuItem>
+              <MenuItem value="Sol Nascente">RA XIV - Sol Nascente</MenuItem>
+              <MenuItem value="Por do Sol">RA XIV - Por do Sol</MenuItem>
+              <MenuItem value="Arniqueira">RA XIV - Arniqueira</MenuItem>
+              <MenuItem value="Arapoanga">RA XIV - Arapoanga</MenuItem>
+              <MenuItem value="Água Quente">RA XIV - Água Quente</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Ponto de referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
+        </Grid>
+        <Grid item xs={12}>
+          <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
+          <Grid container spacing={1}>
+            {agressaoOptions.map(option => (
+              <Grid item key={option} xs={6} sm={4} md={3}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={agressao.includes(option)}
+                      onChange={(e) => handleCheckboxChange('agressao', option)}
+                      sx={{ fontSize: '1.5vw !important' }}
+                    />
+                  }
+                  label={option.charAt(0).toUpperCase() + option.slice(1)}
                 />
-              </FormControl>
-            )}
+              </Grid>
+            ))}
           </Grid>
-          <Grid item xs={12}>
-            <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
-            <RadioGroup
-              value={medida}
-              onChange={(e) => handleChange("medida", e.target.value)}
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              sx={{ marginBottom: 4 }}
+        </Grid>
+        <Grid item xs={10}>
+          <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
+          <Grid container spacing={1}>
+            {gritosOptions.map(option => (
+              <Grid item key={option} xs={6} sm={2} md={4}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={gritos.includes(option)}
+                      onChange={(e) => handleCheckboxChange('gritos', option)}
+                    />
+                  }
+                  label={option.charAt(0).toUpperCase() + option.slice(1)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth>
+            <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
+            <Select
+              sx={{ marginBottom: 2 }}
+              placeholder="Parentesco"
+              value={parentesco}
+              onChange={(e) => handleChange('parentesco', e.target.value)}
+              IconComponent={KeyboardArrowDownIcon}
+              variant="outlined"
             >
-              <FormControlLabel value="true" control={<Radio />} label="Sim" />
-              <FormControlLabel value="false" control={<Radio />} label="Não" />
-              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
-            </RadioGroup>
-            <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
-            <RadioGroup
-              value={agressorNoLocal}
-              onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              sx={{ marginBottom: 4 }}
-            >
-              <FormControlLabel value="true" control={<Radio />} label="Sim" />
-              <FormControlLabel value="false" control={<Radio />} label="Não" />
-              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
-            </RadioGroup>
-            <FormLabel id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
-            <RadioGroup
-              value={armado}
-              onChange={(e) => handleChange("armado", e.target.value)}
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              sx={{ marginBottom: 4 }}
-            >
-              <FormControlLabel value="true" control={<Radio />} label="Sim" />
-              <FormControlLabel value="false" control={<Radio />} label="Não" />
-              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
-            </RadioGroup>
+              <MenuItem value="marido">Marido</MenuItem>
+              <MenuItem value="ex-marido">Ex-marido</MenuItem>
+              <MenuItem value="esposa">Esposa</MenuItem>
+              <MenuItem value="ex-esposa">Ex-esposa</MenuItem>
+              <MenuItem value="companheiro(a)">Companheiro(a)</MenuItem>
+              <MenuItem value="ex-companheiro(a)">Ex-companheiro(a)</MenuItem>
+              <MenuItem value="namorado">Namorado(a)</MenuItem>
+              <MenuItem value="ex-namorado">Ex-namorado(a)</MenuItem>
+              <MenuItem value="pai">Pai</MenuItem>
+              <MenuItem value="mãe">Mãe</MenuItem>
+              <MenuItem value="filho(a)">Filho(a)</MenuItem>
+              <MenuItem value="irmão(a)">Irmão(a)</MenuItem>
+              <MenuItem value="tio(a)">Tio(a)</MenuItem>
+              <MenuItem value="">Outro</MenuItem>
+              <MenuItem value="desconhecido">Desconhecido</MenuItem>
+            </Select>
+          </FormControl>
+          {showOutroInput && (
+            <FormControl fullWidth>
+              <TextField
+                fullWidth
+                value={outroParentesco}
+                onChange={(e) => setOutroParentesco(e.target.value)}
+                label="Outro Parentesco"
+                variant="outlined"
+              />
+            </FormControl>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
+          <RadioGroup
+            value={medida}
+            onChange={(e) => handleChange("medida", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            sx={{ marginBottom: 4 }}
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+            <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
+          </RadioGroup>
+          <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
+          <RadioGroup
+            value={agressorNoLocal}
+            onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            sx={{ marginBottom: 4 }}
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+            <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
+          </RadioGroup>
+          <FormLabel id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
+          <RadioGroup
+            value={armado}
+            onChange={(e) => handleChange("armado", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            sx={{ marginBottom: 4 }}
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+            <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
+          </RadioGroup>
 
-            <FormLabel id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
-            <RadioGroup
-              value={ferida}
-              onChange={(e) => handleChange("ferida", e.target.value)}
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              sx={{ marginBottom: 4 }}
-            >
-              <FormControlLabel value="true" control={<Radio />} label="Sim" />
-              <FormControlLabel value="false" control={<Radio />} label="Não" />
-              <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
-            </RadioGroup>
+          <FormLabel id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
+          <RadioGroup
+            value={ferida}
+            onChange={(e) => handleChange("ferida", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            sx={{ marginBottom: 4 }}
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+            <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
+          </RadioGroup>
 
-            <FormLabel id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
-            <RadioGroup
-              value={criancas}
-              onChange={(e) => handleChange("criancas", e.target.value)}
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-            >
-              <FormControlLabel value="true" control={<Radio />} label="Sim" />
-              <FormControlLabel value="false" control={<Radio />} label="Não" />
-            </RadioGroup>
-          </Grid>
-          <Grid item xs={12} sx={{ mt: 1 }}>
-            <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
-            <TextField
-              className="narrativa-text"
-              sx={{
-                backgroundColor: 'rgba(0, 200, 0, 0.1)',
-              }}
-              multiline
-              fullWidth
-              value={narrativa}
-              InputProps={{
-                disabled: true
-              }}
-            />
-          </Grid>
+          <FormLabel id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
+          <RadioGroup
+            value={criancas}
+            onChange={(e) => handleChange("criancas", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+          </RadioGroup>
+        </Grid>
+        <Grid item xs={12} sx={{ mt: 1 }}>
+          <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+          <TextField
+            className="narrativa-text"
+            sx={{
+              backgroundColor: 'rgba(0, 200, 0, 0.1)',
+            }}
+            multiline
+            fullWidth
+            value={narrativa}
+            InputProps={{
+              disabled: true
+            }}
+          />
+        </Grid>
 
-          <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
-            <Button variant="contained"
-              color="secondary"
-              onClick={handleCopy}
-              style={{ backgroundColor: '#006600', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
-            <Button variant="contained"
-              color="secondary"
-              onClick={handleResetForm}
-              style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
-          </Grid>
-        </Grid >
-      </Box>
-    
+        <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
+          <Button variant="contained"
+            color="secondary"
+            onClick={handleCopy}
+            style={{ backgroundColor: '#006600', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+          <Button variant="contained"
+            color="secondary"
+            onClick={handleResetForm}
+            style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
+        </Grid>
+      </Grid >
+    </Box>
+
   );
 }

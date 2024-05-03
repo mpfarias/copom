@@ -1,18 +1,23 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import {
+  Box,
+  Drawer,
+  Button,
+  List,
+  Divider,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText
+} from '@mui/material/';
+
+
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
 import PetsIcon from '@mui/icons-material/Pets';
 import AlarmIcon from '@mui/icons-material/Alarm';
 import ReportIcon from '@mui/icons-material/Report';
+import HomeIcon from '@mui/icons-material/Home';
 
 export default function Menu() {
   const [open, setOpen] = React.useState(false);
@@ -22,6 +27,7 @@ export default function Menu() {
   };
 
   const drawerItems = [
+    { text: 'Home', icon: <HomeIcon /> },
     { text: 'Violência doméstica', icon: <ReportIcon /> },
     { text: 'Som automotivo/ Perturbação', icon: <SpatialAudioIcon /> },
     { text: 'Roubo/Furto', icon: <LocalPoliceIcon /> },
@@ -49,7 +55,7 @@ export default function Menu() {
 
   return (
     <div>
-      <Button sx={{marginLeft:3, marginTop:3}} onClick={toggleDrawer(true)}>Mudar a Natureza do Registro</Button>
+      <Button sx={{ marginLeft: 3, marginTop: 3 }} onClick={toggleDrawer(true)}>Mudar a Natureza do Registro</Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
