@@ -10,3 +10,7 @@ body {
   .paper-no-padding {
     padding: 0;
   }
+
+  .remove-left-margin {
+    margin-left: 0 !important;
+  }

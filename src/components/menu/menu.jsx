@@ -18,6 +18,7 @@ import PetsIcon from '@mui/icons-material/Pets';
 import AlarmIcon from '@mui/icons-material/Alarm';
 import ReportIcon from '@mui/icons-material/Report';
 import HomeIcon from '@mui/icons-material/Home';
+import { Link } from 'react-router-dom';
 
 export default function Menu() {
   const [open, setOpen] = React.useState(false);
@@ -27,12 +28,12 @@ export default function Menu() {
   };
 
   const drawerItems = [
-    { text: 'Home', icon: <HomeIcon /> },
-    { text: 'Violência doméstica', icon: <ReportIcon /> },
-    { text: 'Som automotivo/ Perturbação', icon: <SpatialAudioIcon /> },
-    { text: 'Roubo/Furto', icon: <LocalPoliceIcon /> },
-    { text: 'Maus tratos a animais', icon: <PetsIcon /> },
-    { text: 'Alarme acionado', icon: <AlarmIcon /> }
+    { text: 'Home', icon: <HomeIcon />, link: '/' },
+    { text: 'Violência doméstica', icon: <ReportIcon />, link: '/ViolenciaDomestica'},
+    { text: 'Som automotivo/ Perturbação', icon: <SpatialAudioIcon />, link: '/SomAlto' },
+    { text: 'Roubo/Furto', icon: <LocalPoliceIcon />, link: '/RouboFurto' },
+    { text: 'Maus tratos a animais', icon: <PetsIcon />, link: '/MausTratos' },
+    { text: 'Alarme acionado', icon: <AlarmIcon />, link: '/AlarmeAcionado' }
   ];
 
   const DrawerList = (
@@ -40,7 +41,7 @@ export default function Menu() {
       <List>
         {drawerItems.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <ListItemButton>
+            <ListItemButton component={Link} to={item.link}>
               <ListItemIcon>
                 {item.icon}
               </ListItemIcon>
