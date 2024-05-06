@@ -36,7 +36,7 @@ export default function Footer() {
                     textAlign: 'center',
                     justifyContent: 'center',
                     fontFamily: 'Myriad Pro',
-                    fontSize: 'calc(5px + 1vw)',
+                    fontSize: 'calc(.1px + 1vw)',
                     fontWeight: 'light',
                 }}
             >
@@ -53,7 +53,7 @@ export default function Footer() {
                     textAlign: 'center',
                     justifyContent: 'center',
                     fontFamily: 'Myriad Pro',
-                    fontSize: 'calc(5px + 1vw)',
+                    fontSize: 'calc(.1px + 1vw)',
                     fontWeight: 'light',
                 }}
             >
@@ -71,7 +71,7 @@ export default function Footer() {
                     textAlign: 'center',
                     justifyContent: 'center',
                     fontFamily: 'Myriad Pro',
-                    fontSize: 'calc(5px + 1vw)',
+                    fontSize: 'calc(.1px + 1vw)',
                     fontWeight: 'light',
                 }}
             >
