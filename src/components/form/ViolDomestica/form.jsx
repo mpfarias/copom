@@ -82,7 +82,7 @@ ${medida === 'null' ? 'Não sabe se possui medida' : medida === 'true' ? 'Possui
         'Não possui medida protetiva'} contra o agressor.
 ${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
         ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
-${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(' e ') : '.'}
+${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(' e ') : ''}
 ${criancas === 'true' ? 'Há crianças no local' : ''}
 ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
 `;

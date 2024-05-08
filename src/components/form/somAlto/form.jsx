@@ -1,11 +1,9 @@
 import React from 'react'
-
-const SomAlto = () => {
+export default function somAlto() {
+  
   return (
-    <div>
-      Som Alto
-    </div>
-  )
+    <>
+    Som alto
+    </>
+  );
 }
-
-export default SomAlto
