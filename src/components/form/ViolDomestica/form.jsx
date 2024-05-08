@@ -19,7 +19,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
   const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
-  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro' ];
+  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
   const [state, setState] = useState({
 
@@ -124,6 +124,11 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
     });
     setOutroParentesco(''); // Resetar o estado de outroParentesco
     setShowOutroInput(false); // Esconder o input de outroParentesco
+    document.getElementById('outlined-basic-nome').value = '';
+    document.getElementById('outlined-basic-endereco').value = '';
+    document.getElementById('outlined-basic-telefone').value = '';
+    document.getElementById('outlined-basic-referencia').value = '';
+    setSolicitante('vitima');
     window.scrollTo({ top: 0, behavior: 'smooth' }); // Role até o topo da página
   };
 
@@ -145,6 +150,7 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
           >
             <FormLabel id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
             <RadioGroup
+              id="solicitante"
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={solicitante}
@@ -215,7 +221,7 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Ponto de referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
+          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-referencia" label="Ponto de Referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
         </Grid>
         <Grid item xs={12}>
           <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
