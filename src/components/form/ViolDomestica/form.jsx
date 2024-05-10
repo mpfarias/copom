@@ -15,86 +15,38 @@ import {
   Button
 } from '@mui/material';
 
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
-  const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
-  const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
-  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
-  const [solicitante, setSolicitante] = useState('vitima');
-  const [state, setState] = useState({
-
-    nomeVitima: '',
-    endereco: '',
-    regiaoAdministrativa: 'Plano Piloto',
-    referencia: '',
-    telefone: '',
-    agressao: [],
-    gritos: [],
-    armado: '',
-    parentesco: 'marido',
-    medida: '',
-    agressorNoLocal: '',
-    ferida: '',
-    criancas: '',
-    urgencia: '',
-    narrativa: '',
-  });
-  const [outroParentesco, setOutroParentesco] = useState('');
-
-  const [showOutroInput, setShowOutroInput] = useState(false);
-
-  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa } = state;
-
-  const handleChange = (field, value) => {
-    if (field === 'outroParentesco') {
-      setOutroParentesco(value);
-      setState(prevState => ({
-        ...prevState,
-        parentesco: value === '' ? parentesco : value // Atualiza parentesco com o valor selecionado ou outroParentesco
-      }));
-    } else if (field === 'parentesco') {
-      setShowOutroInput(value === ''); // Mostra o input se o parentesco for "Outro"
-      setState(prevState => ({
-        ...prevState,
-        parentesco: value === '' ? outroParentesco : value // Atualiza parentesco com o valor selecionado ou outroParentesco
-      }));
-    } else {
-      setState(prevState => ({ ...prevState, [field]: value }));
-    }
-  };
-
-  const handleCheckboxChange = (field, value) => {
-    let updatedValue;
-    if (state[field].includes(value)) {
-      updatedValue = state[field].filter(item => item !== value); // Remove o valor se já estiver selecionado
-    } else {
-      updatedValue = [...state[field], value]; // Adiciona o valor se ainda não estiver selecionado
-    }
-    setState(prevState => ({ ...prevState, [field]: updatedValue }));
-  };
-
-  useEffect(() => {
-    const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
-
-    ${enderecoDenunciante}
-
-    A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'está sendo vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
-${medida === 'null' ? 'Não sabe se possui medida' : medida === 'true' ? 'Possui medida protetiva' :
-        'Não possui medida protetiva'} contra o agressor.
-${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
-        ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
-${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(' e ') : ''}
-${criancas === 'true' ? 'Há crianças no local' : ''}
-${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
-`;
-    setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, endereco, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
-
   const handleCopy = () => {
     const narrativa = state.narrativa;
     navigator.clipboard.writeText(narrativa);
   };
+
+  const handleCopyNome = () => {
+    const nomeVitima = state.nomeVitima;
+    navigator.clipboard.writeText(nomeVitima);
+  };
+
+
+  const handleCopyEndereco = () => {
+    const endereco = state.endereco;
+    navigator.clipboard.writeText(endereco);
+  };
+
+
+  const handleCopyReferencia = () => {
+    const referencia = state.referencia;
+    navigator.clipboard.writeText(referencia);
+  };
+
+  const handleCopyTelefone = () => {
+    const telefone = state.telefone;
+    navigator.clipboard.writeText(telefone);
+  };
+
+
 
   const handleTelefoneChange = (e) => {
     // Limitando o número de caracteres do campo de telefone para 11
@@ -134,6 +86,61 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
     window.scrollTo({ top: 0, behavior: 'smooth' }); // Role até o topo da página
   };
 
+
+  const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
+  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
+  const [solicitante, setSolicitante] = useState('vitima');
+  const [state, setState] = useState({ nomeVitima: '',  endereco: '',  regiaoAdministrativa: 'Plano Piloto',  referencia: '',  telefone: '',  agressao: [],  gritos: [],  armado: '',  parentesco: 'marido',  medida: '',  agressorNoLocal: '',  ferida: '',  criancas: '',  urgencia: '',  narrativa: ''});
+  const [outroParentesco, setOutroParentesco] = useState('');
+  const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
+  const [showOutroInput, setShowOutroInput] = useState(false);
+  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa } = state;
+  const handleChange = (field, value) => {
+    if (field === 'outroParentesco') {
+      setOutroParentesco(value);
+      setState(prevState => ({
+        ...prevState,
+        parentesco: value === '' ? parentesco : value
+      }));
+    } else if (field === 'parentesco') {
+      setShowOutroInput(value === '');
+      setState(prevState => ({
+        ...prevState,
+        parentesco: value === '' ? outroParentesco : value
+      }));
+    } else {
+      setState(prevState => ({ ...prevState, [field]: value }));
+    }
+  };
+  const handleCheckboxChange = (field, value) => {
+    let updatedValue;
+    if (state[field].includes(value)) {
+      updatedValue = state[field].filter(item => item !== value); // Remove o valor se já estiver selecionado
+    } else {
+      updatedValue = [...state[field], value]; // Adiciona o valor se ainda não estiver selecionado
+    }
+    setState(prevState => ({ ...prevState, [field]: updatedValue }));
+  };
+
+  useEffect(() => {
+    const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
+
+    A pessoa de nome ${nomeVitima},${solicitante === 'vitima' ? ' residente em ' + endereco + ', ' + regiaoAdministrativa + ', ' + referencia + ', telefone: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
+
+        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' residente em ' + endereco + ', ' + regiaoAdministrativa + ', ' + referencia + ', telefone: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de ' + agressao.join(', ') :
+          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? ' informa que uma pessoa está sendo vítima de ' + agressao.join(', ') + ', e que reside em ' + endereco + ', ' + regiaoAdministrativa + ', ' + referencia + ', telefone: ' + telefone + ", possivelmente" :
+            ''} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+${medida === 'null' ? 'Não sabe se possui medida' : medida === 'true' ? 'Possui medida protetiva' :
+        'Não possui medida protetiva'} contra o agressor.
+${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
+        ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
+${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(' e ') : ''}
+${criancas === 'true' ? 'Há crianças no local' : ''}
+${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
+`;
+    setState(prevState => ({ ...prevState, narrativa: text }));
+  }, [solicitante, nomeVitima, endereco, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
+
   return (
 
     <Box paddingRight={2} marginTop={4}>
@@ -165,7 +172,12 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} placeholder="Nome solicitante/vitima" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" variant="outlined" />
+          <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Nome solicitante/vitima" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" variant="outlined" />
+          <Button variant="contained"
+            color="secondary"
+            onClick={handleCopyNome}
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+          </Button>
         </Grid>
         <Grid item xs={12} >
           {solicitante === 'denunciante' && (
@@ -183,7 +195,14 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
                 <FormControlLabel value="endereço da vítima" control={<Radio />} label="Vítima" />
               </RadioGroup>
             </>)}
-          <TextField sx={{ marginBottom: 0 }} placeholder="Endereço" fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+
+          <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Endereço" id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+
+          <Button variant="contained"
+            color="secondary"
+            onClick={handleCopyEndereco}
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+          </Button>
         </Grid>
 
 
@@ -240,10 +259,20 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} placeholder="Ponto de referência" fullWidth id="outlined-basic-referencia" label="Ponto de Referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
+          <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Ponto de referência" fullWidth id="outlined-basic-referencia" label="Ponto de Referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
+          <Button variant="contained"
+            color="secondary"
+            onClick={handleCopyReferencia}
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+          </Button>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
+          <TextField sx={{ marginBottom: 1, marginRight: 2, width: '80%' }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
+          <Button variant="contained"
+            color="secondary"
+            onClick={handleCopyTelefone}
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
@@ -417,7 +446,7 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
           <Button variant="contained"
             color="secondary"
             onClick={handleCopy}
-            style={{ backgroundColor: '#006600', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
           <Button variant="contained"
             color="secondary"
             onClick={handleResetForm}
