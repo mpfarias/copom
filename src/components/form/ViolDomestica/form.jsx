@@ -18,6 +18,7 @@ import {
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
+  const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
@@ -39,7 +40,6 @@ export default function FormularioViolenciaDomestica() {
     urgencia: '',
     narrativa: '',
   });
-
   const [outroParentesco, setOutroParentesco] = useState('');
 
   const [showOutroInput, setShowOutroInput] = useState(false);
@@ -77,7 +77,9 @@ export default function FormularioViolenciaDomestica() {
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'está sendo vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+    ${enderecoDenunciante}
+
+    A pessoa de nome ${nomeVitima}, residente em ${endereco}, ${regiaoAdministrativa}, ${referencia}, telefone: ${telefone} informa que ${solicitante === 'vitima' ? 'está sendo vítima de ' + agressao.join(', ') : 'está presenciando uma pessoa sofrendo ' + agressao.join(', ')} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
 ${medida === 'null' ? 'Não sabe se possui medida' : medida === 'true' ? 'Possui medida protetiva' :
         'Não possui medida protetiva'} contra o agressor.
 ${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
@@ -87,7 +89,7 @@ ${criancas === 'true' ? 'Há crianças no local' : ''}
 ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
+  }, [solicitante, nomeVitima, endereco, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
 
   const handleCopy = () => {
     const narrativa = state.narrativa;
@@ -163,11 +165,28 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" name="nomeVitima" variant="outlined" />
+          <TextField sx={{ marginBottom: 0 }} placeholder="Nome solicitante/vitima" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima" variant="outlined" />
         </Grid>
-        <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+        <Grid item xs={12} >
+          {solicitante === 'denunciante' && (
+            <>
+              <FormLabel id="demo-row-radio-buttons-group-label">Endereço próprio ou da vítima:</FormLabel>
+              <RadioGroup
+                id="enderecoDenunciante"
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={enderecoDenunciante}
+                onChange={(e) => setEnderecoDenunciante(e.target.value)}
+                sx={{ marginBottom: 2 }}
+              >
+                <FormControlLabel value="endereço próprio" control={<Radio />} label="Próprio" />
+                <FormControlLabel value="endereço da vítima" control={<Radio />} label="Vítima" />
+              </RadioGroup>
+            </>)}
+          <TextField sx={{ marginBottom: 0 }} placeholder="Endereço" fullWidth id="outlined-basic-endereco" label="Endereço" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
         </Grid>
+
+
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
@@ -221,7 +240,7 @@ ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-referencia" label="Ponto de Referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
+          <TextField sx={{ marginBottom: 0 }} placeholder="Ponto de referência" fullWidth id="outlined-basic-referencia" label="Ponto de Referência" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
         </Grid>
         <Grid item xs={12}>
           <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone" name="telefone" variant="outlined" />
