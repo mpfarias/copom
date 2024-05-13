@@ -17,6 +17,7 @@ import {
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import InputMask from 'react-input-mask';
 
 export default function FormularioViolenciaDomestica() {
 
@@ -62,36 +63,15 @@ export default function FormularioViolenciaDomestica() {
   } = state;
 
   //Copiar campos texfield
-  const handleCopy = () => {
-    const narrativa = state.narrativa;
-    navigator.clipboard.writeText(narrativa);
-  };
 
-  const handleCopyNome = () => {
-    const nomeVitima = state.nomeVitima;
-    navigator.clipboard.writeText(nomeVitima);
-  };
-
-
-  const handleCopyEndereco = () => {
-    const endereco = state.endereco;
-    navigator.clipboard.writeText(endereco);
-  };
-
-
-  const handleCopyReferencia = () => {
-    const referencia = state.referencia;
-    navigator.clipboard.writeText(referencia);
-  };
-
-  const handleCopyTelefone = () => {
-    const telefone = state.telefone;
-    navigator.clipboard.writeText(telefone);
+  const handleCopyField = (fieldName) => {
+    const fieldValue = state[fieldName];
+    navigator.clipboard.writeText(fieldValue);
   };
 
   // Limitando o número de caracteres do campo de telefone para 11
   const handleTelefoneChange = (e) => {
-    const maxLength = 11;
+    const maxLength = 14;
     if (e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
     }
@@ -142,6 +122,47 @@ export default function FormularioViolenciaDomestica() {
     'gritos de socorro',
     'choro'
   ];
+
+  const regioesAdministrativas = [
+    { value: 'Plano Piloto', label: 'RA I - Plano Piloto' },
+    { value: 'Gama', label: 'RA II - Gama' },
+    { value: 'Taguatinga', label: 'RA III - Taguatinga' },
+    { value: 'Brazlândia', label: 'RA IV - Brazlândia' },
+    { value: 'Sobradinho', label: 'RA V - Sobradinho' },
+    { value: 'Planaltina', label: 'RA VI - Planaltina' },
+    { value: 'Paranoá', label: 'RA VII - Paranoá' },
+    { value: 'Núcleo Bandeirante', label: 'RA VIII - Núcleo Bandeirante' },
+    { value: 'Ceilândia', label: 'RA IX - Ceilândia' },
+    { value: 'Guará', label: 'RA X - Guará' },
+    { value: 'Cruzeiro', label: 'RA XI - Cruzeiro' },
+    { value: 'Samambaia', label: 'RA XII - Samambaia' },
+    { value: 'Santa Maria', label: 'RA XIII - Santa Maria' },
+    { value: 'São Sebastião', label: 'RA XIV - São Sebastião' },
+    { value: 'Recanto das Emas', label: 'RA XV - Recanto das Emas' },
+    { value: 'Lago Sul', label: 'RA XVI - Lago Sul' },
+    { value: 'Riacho Fundo', label: 'RA XVII - Riacho Fundo' },
+    { value: 'Lago Norte', label: 'RA XVIII - Lago Norte' },
+    { value: 'Candangolândia', label: 'RA XIX - Candangolândia' },
+    { value: 'Águas Claras', label: 'RA XX - Águas Claras' },
+    { value: 'Riacho Fundo 2', label: 'RA XXI - Riacho Fundo 2' },
+    { value: 'Sudoeste', label: 'RA XXII - Sudoeste' },
+    { value: 'Octogonal', label: 'RA XXII - Octogonal' },
+    { value: 'Varjão', label: 'RA XXIII - Varjão' },
+    { value: 'Park Way', label: 'RA XXIV - Park Way' },
+    { value: 'Estrutural', label: 'RA XXV - Estrutural' },
+    { value: 'SCIA', label: 'RA XXV - SCIA' },
+    { value: 'Sobradinho II', label: 'RA XXVI - Sobradinho II' },
+    { value: 'Jardim Botânico', label: 'RA XXVII - Jardim Botânico' },
+    { value: 'Itapoã', label: 'RA XXVIII - Itapoã' },
+    { value: 'SIA', label: 'RA XXIX - SIA' },
+    { value: 'Vicente Pires', label: 'RA XXX - Vicente Pires' },
+    { value: 'Fercal', label: 'RA XXXI - Fercal' },
+    { value: 'Sol Nascente', label: 'RA XXXII - Sol Nascente' },
+    { value: 'Pôr do Sol', label: 'RA XXXII - Pôr do Sol' },
+    { value: 'Arniqueira', label: 'RA XXXIII - Arniqueira' },
+    { value: 'Arapoanga', label: 'RA XXXIV - Arapoanga' },
+    { value: 'Água Quente', label: 'RA XXXV - Água Quente' },
+  ]
 
   //Inserir Textfield no Select "Outros"
   const handleChange = (field, value) => {
@@ -218,14 +239,8 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             fontWeight: 'bold',
             fontSize: 30,
           }} id="demo-controlled-radio-buttons-group">Violência Doméstica</FormLabel>
-          <Box
-            sx={{
-              mt: 2
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <FormLabel id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
+          <Box sx={{ mt: 2 }} noValidate autoComplete="off">
+            <FormLabel id="demo-controlled-radio-buttons-group">Solicitante:</FormLabel>
             <RadioGroup
               id="solicitante"
               aria-labelledby="demo-controlled-radio-buttons-group"
@@ -243,7 +258,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
           <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Nome solicitante/vitima" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima ?" variant="outlined" />
           <Button variant="contained"
             color="secondary"
-            onClick={handleCopyNome}
+            onClick={(e) => handleCopyField('nomeVitima')}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
@@ -268,7 +283,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
 
           <Button variant="contained"
             color="secondary"
-            onClick={handleCopyEndereco}
+            onClick={(e) => handleCopyField('endereco')}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
@@ -285,44 +300,11 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
               IconComponent={KeyboardArrowDownIcon}
               variant="outlined"
             >
-              <MenuItem value="Plano Piloto">RA I - Plano Piloto</MenuItem>
-              <MenuItem value="Gama">RA II - Gama</MenuItem>
-              <MenuItem value="Taguatinga">RA III - Taguatinga</MenuItem>
-              <MenuItem value="Brazlândia">RA IV - Brazlândia</MenuItem>
-              <MenuItem value="Sobradinho">RA V - Sobradinho</MenuItem>
-              <MenuItem value="Planaltina">RA VI - Planaltina</MenuItem>
-              <MenuItem value="Paranoá">RA VII - Paranoá</MenuItem>
-              <MenuItem value="Núcleo Bandeirante">RA VIII - Núcleo Bandeirante</MenuItem>
-              <MenuItem value="Ceilândia">RA IX - Ceilândia</MenuItem>
-              <MenuItem value="Guará">RA X - Guará</MenuItem>
-              <MenuItem value="Cruzeiro">RA XI - Cruzeiro</MenuItem>
-              <MenuItem value="Samambaia">RA XII - Samambaia</MenuItem>
-              <MenuItem value="Santa Maria">RA XIII - Santa Maria</MenuItem>
-              <MenuItem value="São Sebastião">RA XIV - São Sebastião</MenuItem>
-              <MenuItem value="Recanto das Emas">RA XV - Recanto das Emas</MenuItem>
-              <MenuItem value="Lago Sul">RA XVI - Lago Sul</MenuItem>
-              <MenuItem value="Riacho Fundo">RA XVII - Riacho Fundo</MenuItem>
-              <MenuItem value="Lago Norte">RA XVIII - Lago Norte</MenuItem>
-              <MenuItem value="Candangolândia">RA XIX - Candangolândia</MenuItem>
-              <MenuItem value="Águas Claras">RA XX - Águas Claras</MenuItem>
-              <MenuItem value="Riacho Fundo II">RA XXI - Riacho Fundo 2</MenuItem>
-              <MenuItem value="Sudoeste">RA XXII - Sudoeste</MenuItem>
-              <MenuItem value="Octogonal">RA XXII - Octogonal</MenuItem>
-              <MenuItem value="Varjão">RA XXIII - Varjão</MenuItem>
-              <MenuItem value="Park Way">RA XXIV - Park Way</MenuItem>
-              <MenuItem value="Estrutural">RA XXV - Estrutural</MenuItem>
-              <MenuItem value="SCIA">RA XXV - SCIA</MenuItem>
-              <MenuItem value="Sobradinho II">RA XXVI - Sobradinho II</MenuItem>
-              <MenuItem value="Jardim Botânico">RA XIV - Jardim Botânico</MenuItem>
-              <MenuItem value="Itapoã">RA XIV - Itapoã</MenuItem>
-              <MenuItem value="SIA">RA XIV - SIA</MenuItem>
-              <MenuItem value="Vicente Pires">RA XIV - Vicente Pires</MenuItem>
-              <MenuItem value="Fercal">RA XIV - Fercal</MenuItem>
-              <MenuItem value="Sol Nascente">RA XIV - Sol Nascente</MenuItem>
-              <MenuItem value="Por do Sol">RA XIV - Por do Sol</MenuItem>
-              <MenuItem value="Arniqueira">RA XIV - Arniqueira</MenuItem>
-              <MenuItem value="Arapoanga">RA XIV - Arapoanga</MenuItem>
-              <MenuItem value="Água Quente">RA XIV - Água Quente</MenuItem>
+              {regioesAdministrativas.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -330,15 +312,31 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
           <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Ponto de referência" fullWidth id="outlined-basic-referencia" label="Ponto de Referência ?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
           <Button variant="contained"
             color="secondary"
-            onClick={handleCopyReferencia}
+            onClick={(e) => handleCopyField('referencia')}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 1, marginRight: 2, width: '80%' }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone ?" name="telefone" variant="outlined" />
+          <InputMask
+            mask="(99)99999-9999"
+            value={telefone}
+            onChange={e => handleTelefoneChange(e, 'telefone')}
+          >
+            {(inputProps) => (
+              <TextField
+                {...inputProps}
+                sx={{ marginBottom: 1, marginRight: 2, width: '80%' }}
+                fullWidth
+                id="outlined-basic-telefone"
+                label="Telefone ?"
+                name="telefone"
+                variant="outlined"
+              />
+            )}
+          </InputMask>
           <Button variant="contained"
             color="secondary"
-            onClick={handleCopyTelefone}
+            onClick={(e) => handleCopyField('telefone')}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
@@ -503,6 +501,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             }}
             multiline
             fullWidth
+            name="narrativa"
             value={narrativa}
             InputProps={{
               disabled: true
@@ -513,7 +512,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
         <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
           <Button variant="contained"
             color="secondary"
-            onClick={handleCopy}
+            onClick={(e) => handleCopyField('narrativa')}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
           <Button variant="contained"
             color="secondary"
