@@ -65,6 +65,21 @@ export const caracteristicasOption = [
     'bigode',
     'cicatriz',
     'tatuagem',
-    'sinal no rosto',
-    'outro'
+    'sinal no rosto'
 ]
+
+
+export const opcoesParteDeCima = [
+    { value: 'camiseta', label: 'Camiseta' },
+    { value: 'camisa', label: 'Camisa' },
+    { value: 'regata', label: 'Regata' },
+    { value: 'casaco', label: 'Casaco' },
+    { value: 'sem camisa', label: 'Sem camisa/camiseta' },
+    { value: 'não sabe', label: 'Não sabe' },
+  ];
+
+export const opcoesParteDeBaixo = [
+    { value: 'bermuda', label: 'Bermuda' },
+    { value: 'calça', label: 'Calça' },
+    { value: 'não sabe', label: 'Não sabe' },
+  ];

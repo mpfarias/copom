@@ -21,7 +21,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import InputMask from 'react-input-mask';
 
-import { cores, qtdeIndividuos, regioesAdministrativas, caracteristicasOption } from './Consts';
+import { cores, qtdeIndividuos, regioesAdministrativas, caracteristicasOption, opcoesParteDeBaixo, opcoesParteDeCima } from './Consts';
 import { handleCopy, handleTelefoneChange, handleResetForm } from './Functions';
 
 export default function RouboFurto() {
@@ -29,7 +29,9 @@ export default function RouboFurto() {
   const [objeto, setObjeto] = useState('');
   const [solicitante, setSolicitante] = useState('vitima');
   const [showOutraCaracteristica, setShowOutraCaracteristica] = useState(false);
-  const [caracteristicasIndividuos, setCaracteristicasIndividuos] = useState(Array.from({ length: parseInt(individuos) }, () => []));
+  const [caracteristicasIndividuos, setCaracteristicasIndividuos] = useState([]);
+  const [selectedOptionBaixo, setSelectedOptionBaixo] = useState('');
+  const [selectedOptionCima, setSelectedOptionCima] = useState('');
 
 
   const [state, setState] = useState({
@@ -84,9 +86,7 @@ export default function RouboFurto() {
     }));
   };
 
-
   useEffect(() => {
-
 
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
@@ -102,7 +102,8 @@ export default function RouboFurto() {
     const coresText = coresIndividuos.join('\n\n');
     const finalText = `${text}\n\n${coresText}`;
 
-    setState(prevState => ({ ...prevState, narrativa: finalText }));
+    setState(prevState => ({ ...prevState, narrativa: finalText }));  
+    setShowOutraCaracteristica(Array.from({ length: parseInt(individuos) }, () => false));
   },
     [
       solicitante,
@@ -117,16 +118,34 @@ export default function RouboFurto() {
     ]
   );
 
+  const handleChangeCima = (event) => {
+    setSelectedOptionCima(event.target.value);
+  };
+
+  const handleChangeBaixo = (event) => {
+    setSelectedOptionBaixo(event.target.value);
+  };
+
+  const handleOutraCaracteristicaCheckboxChange = (individuoIndex) => {
+    const updatedShowOutraCaracteristica = [...showOutraCaracteristica];
+    updatedShowOutraCaracteristica[individuoIndex] = !updatedShowOutraCaracteristica[individuoIndex];
+    setShowOutraCaracteristica(updatedShowOutraCaracteristica);
+  };
   const handleCheckboxChange = (individuoIndex, value) => {
+    // Verifica se o array de características do indivíduo já existe
     const updatedCaracteristicas = [...caracteristicasIndividuos];
-    let updatedValue;
-  
-    if (updatedCaracteristicas[individuoIndex].includes(value)) {
-      updatedValue = updatedCaracteristicas[individuoIndex].filter(item => item !== value); // Remove o valor se já estiver selecionado
-    } else {
-      updatedValue = [...updatedCaracteristicas[individuoIndex], value]; // Adiciona o valor se ainda não estiver selecionado
+    if (!updatedCaracteristicas[individuoIndex]) {
+      updatedCaracteristicas[individuoIndex] = [];
     }
-  
+
+    let updatedValue;
+
+    if (updatedCaracteristicas[individuoIndex].includes(value)) {
+      updatedValue = updatedCaracteristicas[individuoIndex].filter(item => item !== value);
+    } else {
+      updatedValue = [...updatedCaracteristicas[individuoIndex], value];
+    }
+
     updatedCaracteristicas[individuoIndex] = updatedValue;
     setCaracteristicasIndividuos(updatedCaracteristicas);
   };
@@ -292,16 +311,22 @@ export default function RouboFurto() {
                 </Grid>
 
                 <FormControl>
-                  <FormLabel id="demo-row-radio-buttons-group-label">Tipo de roupa:</FormLabel>
+                  <FormLabel sx={{ marginBottom: 2, fontWeight:'bold', textDecoration:'underline', fontStyle:'italic' }} id="demo-row-radio-buttons-group-label">Tipo de roupa:</FormLabel>
                   <RadioGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
+                    value={selectedOptionCima}
+                    onChange={handleChangeCima}
                   >
-                    <FormControlLabel value="bermuda" control={<Radio />} label="Camiseta" />
-                    <FormControlLabel value="calça" control={<Radio />} label="Camisa" />
-                    <FormControlLabel value="sem camisa" control={<Radio />} label="Sem camisa" />
-                    <FormControlLabel value="não sabe" control={<Radio />} label="Não sabe" />
+                    {opcoesParteDeCima.map((opcao) => (
+                      <FormControlLabel
+                        key={opcao.value}
+                        value={opcao.value}
+                        control={<Radio />}
+                        label={opcao.label}
+                      />
+                    ))}
                   </RadioGroup>
                 </FormControl>
 
@@ -310,89 +335,101 @@ export default function RouboFurto() {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
+                    value={selectedOptionBaixo}
+                    onChange={handleChangeBaixo}
                   >
-                    <FormControlLabel value="bermuda" control={<Radio />} label="Bermuda" />
-                    <FormControlLabel value="calça" control={<Radio />} label="Calça" />
-                    <FormControlLabel value="não sabe" control={<Radio />} label="Não sabe" />
+                    {opcoesParteDeBaixo.map((opcao) => (
+                      <FormControlLabel
+                        key={opcao.value}
+                        value={opcao.value}
+                        control={<Radio />}
+                        label={opcao.label}
+                      />
+                    ))}
                   </RadioGroup>
                 </FormControl>
-                {Array.from({ length: parseInt(individuos) }).map((_, index) => (
-                  <React.Fragment key={index}>
-                    <Grid sx={{
-                      display: 'grid',
-                      gridTemplateColumns: { sm: '2fr 2fr' },
-                      gap: 0,
-                    }}>
-                      <Grid item xs={10}>
-                        <FormControl>
-                          <FormLabel sx={{ marginBottom: 2 }} id={`corCamiseta-label-${index}`}>Cor da camiseta/camisa/regata do indivíduo {index + 1}:</FormLabel>
-                          <Select
-                            value={corCamisetas[index]}
-                            onChange={(e) => handleCorRoupaChange(index, e.target.value, 'camiseta')} // Atualiza a corRoupa para o índice correspondente
-                            IconComponent={KeyboardArrowDownIcon}
-                            variant="outlined"
-                          >
-                            {cores.map(option => (
-                              <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={10}>
-                        <FormControl fullWidth>
-                          <FormLabel sx={{ marginBottom: 2 }} id={`corCalca-label-${index}`}>Cor da calça/bermuda do indivíduo {index + 1}:</FormLabel>
-                          <Select
-                            sx={{ marginBottom: 2 }}
-                            value={corCalcas[index]}
-                            onChange={(e) => handleCorRoupaChange(index, e.target.value, 'calca')} // Atualiza a corRoupa para o índice correspondente
-                            IconComponent={KeyboardArrowDownIcon}
-                            variant="outlined"
-                          >
-                            {cores.map(option => (
-                              <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      {Array.from({ length: parseInt(individuos) }).map((_, individuoIndex) => (
-                      <FormGroup row key={individuoIndex}>
-                        {caracteristicasOption.map(option => (
-                          <FormControlLabel
-                            key={option}
-                            control={
-                              <Checkbox
-                              checked={caracteristicasIndividuos[individuoIndex].includes(option)}
-                              onChange={(e) => handleCheckboxChange(individuoIndex, option)}
-                              />
-                            } label={option.charAt(0).toUpperCase() + option.slice(1)}
-                          />
-                        ))}
-                      </FormGroup>
-                      ))}
-                      {showOutraCaracteristica && (
-                        <Box
-                          component="form"
-                          sx={{
-                            '& > :not(style)': { width: '80%' },
-                          }}
-                          noValidate
-                          autoComplete="off"
+
+                {Array.from({ length: parseInt(individuos) }).map((_, individuoIndex) => (
+                  <Grid key={individuoIndex} sx={{ display: 'grid', gridTemplateColumns: { sm: '2fr 2fr' }, gap: 0 }}>
+                    <Grid item xs={10}>
+                      <FormControl>
+                        <FormLabel  sx={{ marginBottom: 2, fontWeight:'bold', textDecoration:'underline', fontStyle:'italic' }}  id={`corCamiseta-label-${individuoIndex}`}>Cor da camiseta/camisa/regata do indivíduo {individuoIndex + 1}:</FormLabel>
+                        <Select
+                          value={corCamisetas[individuoIndex]}
+                          onChange={(e) => handleCorRoupaChange(individuoIndex, e.target.value, 'camiseta')}
+                          IconComponent={KeyboardArrowDownIcon}
+                          variant="outlined"
                         >
-                          <TextField
-                            id="outlined-basic"
-                            value={outraCaracteristica}
-                            label="Outra característica"
-                            variant="outlined"
-                            onChange={(e) => handleChange('outraCaracteristica', e.target.value)}
-                          />
-                        </Box>
-                      )}
+                          {cores.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </Grid>
-                  </React.Fragment>
+                    <Grid item xs={10}>
+                      <FormControl fullWidth>
+                        <FormLabel  sx={{ marginBottom: 2, fontWeight:'bold', textDecoration:'underline', fontStyle:'italic' }}  id={`corCalca-label-${individuoIndex}`}>Cor da calça/bermuda do indivíduo {individuoIndex + 1}:</FormLabel>
+                        <Select
+                          sx={{ marginBottom: 2 }}
+                          value={corCalcas[individuoIndex]}
+                          onChange={(e) => handleCorRoupaChange(individuoIndex, e.target.value, 'calca')}
+                          IconComponent={KeyboardArrowDownIcon}
+                          variant="outlined"
+                        >
+                          {cores.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <FormGroup row>
+                      {caracteristicasOption.map(option => (
+                        <FormControlLabel
+                          key={`${option}-${individuoIndex}`} // Use uma chave única para cada checkbox
+                          control={
+                            <Checkbox
+                              checked={(caracteristicasIndividuos[individuoIndex] || []).includes(option)}
+                              onChange={(e) => handleCheckboxChange(individuoIndex, option)}
+                            />
+                          }
+                          label={option.charAt(0).toUpperCase() + option.slice(1)}
+                        />
+                      ))}
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={(caracteristicasIndividuos[individuoIndex] || []).includes('outro')}
+                            onChange={() => handleOutraCaracteristicaCheckboxChange(individuoIndex)}
+                          />
+                        }
+                        label="Outro"
+                      />
+                    </FormGroup>
+                    {showOutraCaracteristica[individuoIndex] && (
+                      <Box
+                        component="form"
+                        sx={{
+                          '& > :not(style)': { width: '80%' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                      >
+                        
+                        <TextField
+                          id={`outraCaracteristica-${individuoIndex}`}
+                          value={outraCaracteristica}
+                          label="Outra característica"
+                          variant="outlined"
+                          onChange={(e) => handleChange('outraCaracteristica', e.target.value)}
+                        />
+                      </Box>
+                    )}
+
+                  </Grid>
                 ))}
                 <Grid item xs={12} sx={{ mt: 1 }}>
                   <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
