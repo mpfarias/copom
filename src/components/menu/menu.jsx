@@ -12,6 +12,7 @@ import {
   ListItemText
 } from '@mui/material/';
 
+
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -30,14 +31,14 @@ export default function Menu() {
   const drawerItems = [
     { text: 'Home', icon: <HomeIcon />, link: '/' },
     { text: 'Violência doméstica', icon: <ReportIcon />, link: '/ViolenciaDomestica'},
-    { text: 'Som automotivo/ Perturbação do sossego', icon: <SpatialAudioIcon />, link: '/SomAlto' },
+    { text: 'Som automotivo/ Perturbação', icon: <SpatialAudioIcon />, link: '/SomAlto' },
     { text: 'Roubo/Furto', icon: <LocalPoliceIcon />, link: '/RouboFurto' },
     { text: 'Maus tratos a animais', icon: <PetsIcon />, link: '/MausTratos' },
     { text: 'Alarme acionado', icon: <AlarmIcon />, link: '/AlarmeAcionado' }
   ];
 
   const DrawerList = (
-    <Box sx={{ width: 265 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         {drawerItems.map((item) => (
           <ListItem key={item.text} disablePadding>
@@ -56,7 +57,7 @@ export default function Menu() {
 
   return (
     <div>
-      <Button variant="contained" endIcon={<SendIcon />} sx={{ marginLeft: 3, marginTop: 3 }} onClick={toggleDrawer(true)}>Mudar a Natureza</Button>
+      <Button variant="contained" endIcon={<SendIcon />} sx={{ marginLeft:20, marginTop: 3 }} onClick={toggleDrawer(true)}>Menu</Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>

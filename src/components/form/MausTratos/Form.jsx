@@ -94,14 +94,14 @@ export default function MausTratos() {
     const text = 
 `${solicitante === 'vitima' && solicitante !== '' ? '* Tipo de solicitante: Vítima' : '* Tipo de solicitante: Denunciante'}
  
-${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal : ''} 
+ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal : ''} 
  ${nomeSolicitante !== 'null' && nomeSolicitante !== '' ? '* Nome do Solicitante:: '+nomeSolicitante : ''}
  ${nomeAgressor !== 'null' && nomeAgressor !== '' ? '* Nome do agressor: '+nomeAgressor : ''}
  ${endereco !== 'null' && endereco !== '' ? '* Residente em: '+endereco : ''}
  ${regiaoAdministrativa !== 'null' && regiaoAdministrativa !== '' ? '* RA: '+regiaoAdministrativa : ''}
  ${referencia !== 'null' && referencia !== '' ? '* Local de Referência: '+referencia : ''}
  ${telefone !== 'null' && telefone !== '' ? '* Telefone: '+telefone : ''}
- ${agressao.join(', ') !== 'null' && agressao.join(', ') > 0 ? '* Informa que o animal está sendo vítima de: '+agressao.join(', ') : ''}
+ ${agressao.join(', ') !== 'null' ? '* Informa que o animal está sendo vítima de: '+agressao.join(', ') : ''}
  ${tempoAgressao !== 'null' && tempoAgressao !== '' ? '* Tempo de agressão do animal: '+tempoAgressao : ''} 
  ${localAgressao !== 'null' && tempoAgressao !== '' ? '* Local da agressão do animal: '+localAgressao : ''}
  ${agressorNoLocal !== 'null' && agressorNoLocal === 'true' ? '* O agressor encontra-se no local' : ''}
@@ -174,7 +174,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
           <FormLabel style={{
             fontWeight: 'bold',
             fontSize: 30,
-          }} id="demo-controlled-radio-buttons-group">Maus Tratos de Animais</FormLabel>
+          }} id="demo-controlled-radio-buttons-group">MAUS TRATOS DE ANIMAIS</FormLabel>
           <Box
             sx={{
               mt: 2
@@ -182,7 +182,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
             noValidate
             autoComplete="off"
           >
-            <FormLabel id="demo-controlled-radio-buttons-group">Tipo de solicitante:</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Tipo de solicitante:</FormLabel>
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
@@ -197,7 +197,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FormLabel id="demo-controlled-radio-buttons-group">Tipo de Animal:</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Tipo de Animal:</FormLabel>
             <Select
               sx={{ marginBottom: 2 }}
               placeholder="Tipo de Animal:"
@@ -226,7 +226,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
             <Select
               sx={{ marginBottom: 2 }}
               placeholder="Cidade:"
@@ -289,10 +289,10 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
           <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-localAgressao" label="Onde ocorre os maus tratos ?" name="localAgressao" onChange={e => handleChange('localAgressao', e.target.value)} variant="outlined" />
         </Grid>
         <Grid item xs={12}>
-          <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
-          <Grid container spacing={1}>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
+          <Grid container spacing={0}>
             {agressaoOptions.map(option => (
-              <Grid item key={option} xs={6} sm={4} md={3}>
+              <Grid item key={option} xs={6} sm={4} md={5}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -310,7 +310,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
         
         
         <Grid item xs={12}>
-        <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local ?</FormLabel>
+        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Agressor encontra-se no local ?</FormLabel>
           <RadioGroup
             value={agressorNoLocal}
             onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
@@ -321,8 +321,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
             <FormControlLabel value="true" control={<Radio />} label="Sim" />
             <FormControlLabel value="false" control={<Radio />} label="Não" />
           </RadioGroup>
-
-          <FormLabel id="demo-controlled-radio-buttons-group">Possui filmagens/imagens?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Possui filmagens/imagens?</FormLabel>
           <RadioGroup
             value={filmagenImagem}
             onChange={(e) => handleChange("filmagenImagem", e.target.value)}
@@ -334,7 +333,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
             <FormControlLabel value="false" control={<Radio />} label="Não" />
           </RadioGroup>
 
-          <FormLabel id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
           <RadioGroup
             value={urgencia}
             onChange={(e) => handleChange("urgencia", e.target.value)}
@@ -347,7 +346,7 @@ ${tipoAnimal !== 'null' && tipoAnimal !== '' ? '* Tipo de animal: '+tipoAnimal :
 
         </Grid>
         <Grid item xs={12} sx={{ mt: 1 }}>
-          <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
           <TextField
             className="narrativa-text"
             sx={{

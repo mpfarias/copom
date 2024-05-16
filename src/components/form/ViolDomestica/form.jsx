@@ -17,68 +17,46 @@ import {
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import InputMask from 'react-input-mask';
 
 export default function FormularioViolenciaDomestica() {
-
-  const [outroParentesco, setOutroParentesco] = useState('');
-  const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
-  const [showOutroInput, setShowOutroInput] = useState(false);
-  const [solicitante, setSolicitante] = useState('vitima');
-
-  const [state, setState] = useState({
-    nomeVitima: '',
-    endereco: '',
-    regiaoAdministrativa: 'Plano Piloto',
-    referencia: '',
-    telefone: '',
-    agressao: [],
-    gritos: [],
-    armado: '',
-    parentesco: 'marido',
-    medida: '',
-    agressorNoLocal: '',
-    ferida: '',
-    criancas: '',
-    urgencia: '',
-    narrativa: ''
-  });
-
-  const {
-    nomeVitima,
-    endereco,
-    referencia,
-    regiaoAdministrativa,
-    telefone,
-    agressao,
-    gritos,
-    armado,
-    parentesco,
-    medida,
-    agressorNoLocal,
-    ferida,
-    criancas,
-    urgencia,
-    narrativa
-  } = state;
-
-  //Copiar campos texfield
-
-  const handleCopyField = (fieldName) => {
-    const fieldValue = state[fieldName];
-    navigator.clipboard.writeText(fieldValue);
+  const handleCopy = () => {
+    const narrativa = state.narrativa;
+    navigator.clipboard.writeText(narrativa);
   };
 
-  // Limitando o número de caracteres do campo de telefone para 11
+  const handleCopyNome = () => {
+    const nomeVitima = state.nomeVitima;
+    navigator.clipboard.writeText(nomeVitima);
+  };
+
+
+  const handleCopyEndereco = () => {
+    const endereco = state.endereco;
+    navigator.clipboard.writeText(endereco);
+  };
+
+
+  const handleCopyReferencia = () => {
+    const referencia = state.referencia;
+    navigator.clipboard.writeText(referencia);
+  };
+
+  const handleCopyTelefone = () => {
+    const telefone = state.telefone;
+    navigator.clipboard.writeText(telefone);
+  };
+
+
+
   const handleTelefoneChange = (e) => {
-    const maxLength = 14;
+    // Limitando o número de caracteres do campo de telefone para 11
+    const maxLength = 11;
     if (e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
     }
     handleChange('telefone', e.target.value);
   };
 
-  //Resetando o formulário
   const handleResetForm = () => {
     setState({
       solicitante: 'vitima',
@@ -108,63 +86,15 @@ export default function FormularioViolenciaDomestica() {
     window.scrollTo({ top: 0, behavior: 'smooth' }); // Role até o topo da página
   };
 
-  //Array dos selects
-  const agressaoOptions = [
-    'ameaça',
-    'xingamentos',
-    'agressão física',
-    'agressão psicológica',
-    'violação de zona de proteção'
-  ];
 
-  const gritosOptions = [
-    'voz masculina ao fundo',
-    'gritos de socorro',
-    'choro'
-  ];
-
-  const regioesAdministrativas = [
-    { value: 'Plano Piloto', label: 'RA I - Plano Piloto' },
-    { value: 'Gama', label: 'RA II - Gama' },
-    { value: 'Taguatinga', label: 'RA III - Taguatinga' },
-    { value: 'Brazlândia', label: 'RA IV - Brazlândia' },
-    { value: 'Sobradinho', label: 'RA V - Sobradinho' },
-    { value: 'Planaltina', label: 'RA VI - Planaltina' },
-    { value: 'Paranoá', label: 'RA VII - Paranoá' },
-    { value: 'Núcleo Bandeirante', label: 'RA VIII - Núcleo Bandeirante' },
-    { value: 'Ceilândia', label: 'RA IX - Ceilândia' },
-    { value: 'Guará', label: 'RA X - Guará' },
-    { value: 'Cruzeiro', label: 'RA XI - Cruzeiro' },
-    { value: 'Samambaia', label: 'RA XII - Samambaia' },
-    { value: 'Santa Maria', label: 'RA XIII - Santa Maria' },
-    { value: 'São Sebastião', label: 'RA XIV - São Sebastião' },
-    { value: 'Recanto das Emas', label: 'RA XV - Recanto das Emas' },
-    { value: 'Lago Sul', label: 'RA XVI - Lago Sul' },
-    { value: 'Riacho Fundo', label: 'RA XVII - Riacho Fundo' },
-    { value: 'Lago Norte', label: 'RA XVIII - Lago Norte' },
-    { value: 'Candangolândia', label: 'RA XIX - Candangolândia' },
-    { value: 'Águas Claras', label: 'RA XX - Águas Claras' },
-    { value: 'Riacho Fundo 2', label: 'RA XXI - Riacho Fundo 2' },
-    { value: 'Sudoeste', label: 'RA XXII - Sudoeste' },
-    { value: 'Octogonal', label: 'RA XXII - Octogonal' },
-    { value: 'Varjão', label: 'RA XXIII - Varjão' },
-    { value: 'Park Way', label: 'RA XXIV - Park Way' },
-    { value: 'Estrutural', label: 'RA XXV - Estrutural' },
-    { value: 'SCIA', label: 'RA XXV - SCIA' },
-    { value: 'Sobradinho II', label: 'RA XXVI - Sobradinho II' },
-    { value: 'Jardim Botânico', label: 'RA XXVII - Jardim Botânico' },
-    { value: 'Itapoã', label: 'RA XXVIII - Itapoã' },
-    { value: 'SIA', label: 'RA XXIX - SIA' },
-    { value: 'Vicente Pires', label: 'RA XXX - Vicente Pires' },
-    { value: 'Fercal', label: 'RA XXXI - Fercal' },
-    { value: 'Sol Nascente', label: 'RA XXXII - Sol Nascente' },
-    { value: 'Pôr do Sol', label: 'RA XXXII - Pôr do Sol' },
-    { value: 'Arniqueira', label: 'RA XXXIII - Arniqueira' },
-    { value: 'Arapoanga', label: 'RA XXXIV - Arapoanga' },
-    { value: 'Água Quente', label: 'RA XXXV - Água Quente' },
-  ]
-
-  //Inserir Textfield no Select "Outros"
+  const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
+  const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
+  const [solicitante, setSolicitante] = useState('vitima');
+  const [state, setState] = useState({ nomeVitima: '',  endereco: '',  regiaoAdministrativa: 'Plano Piloto',  referencia: '',  telefone: '',  agressao: [],  gritos: [],  armado: '',  parentesco: 'marido',  medida: '',  agressorNoLocal: '',  ferida: '',  criancas: '',  urgencia: '',  narrativa: ''});
+  const [outroParentesco, setOutroParentesco] = useState('');
+  const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
+  const [showOutroInput, setShowOutroInput] = useState(false);
+  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa } = state;
   const handleChange = (field, value) => {
     if (field === 'outroParentesco') {
       setOutroParentesco(value);
@@ -182,8 +112,6 @@ export default function FormularioViolenciaDomestica() {
       setState(prevState => ({ ...prevState, [field]: value }));
     }
   };
-
-  //Incluir mais de uma opção na narrativa para cada checkbox selecionado
   const handleCheckboxChange = (field, value) => {
     let updatedValue;
     if (state[field].includes(value)) {
@@ -194,53 +122,42 @@ export default function FormularioViolenciaDomestica() {
     setState(prevState => ({ ...prevState, [field]: updatedValue }));
   };
 
-
-  //Texto da narrativa
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
 * A pessoa de NOME: ${nomeVitima}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
-        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de: ' + agressao.join(', ') :
+
+          solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de: ' + agressao.join(', ') :
           solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'informa que uma pessoa está sendo vítima de: ' + agressao.join(', ') + ', e que reside em: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ", possivelmente" :
             ''} pelo(a): ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
 * ${medida === 'null' ? 'Não sabe se possui medida' : medida === 'true' ? 'Possui medida protetiva' :
         'Não possui medida protetiva'} contra o agressor.
 * ${agressorNoLocal === 'null' ? 'Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
         ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
-${gritos.length > 0 ? '* É possível ouvir ' + gritos.join(' e ') : ''}
-${criancas === 'true' ? '* Há crianças no local' : ''}
-${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
+* ${gritos.length > 0 ? 'É possível ouvir ' + gritos.join(' e ') : ''}
+* ${criancas === 'true' ? 'Há crianças no local' : ''}
+* ${urgencia === 'true' ? 'ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [
-    solicitante,
-    nomeVitima,
-    endereco,
-    enderecoDenunciante,
-    referencia,
-    regiaoAdministrativa,
-    telefone,
-    agressao,
-    gritos,
-    armado,
-    parentesco,
-    medida,
-    agressorNoLocal,
-    ferida,
-    criancas,
-    urgencia,
-    outroParentesco]);
+  }, [solicitante, nomeVitima, endereco, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
 
   return (
+
     <Box paddingRight={2} marginTop={4}>
       <Grid container sx={{ marginLeft: 1, width: '100%' }} spacing={3}>
         <Grid item style={{ paddingTop: 0 }} xs={12}>
           <FormLabel style={{
             fontWeight: 'bold',
             fontSize: 30,
-          }} id="demo-controlled-radio-buttons-group">Violência Doméstica</FormLabel>
-          <Box sx={{ mt: 2 }} noValidate autoComplete="off">
-            <FormLabel id="demo-controlled-radio-buttons-group">Solicitante:</FormLabel>
+          }} id="demo-controlled-radio-buttons-group">VIOLÊNCIA DOMÉSTICA</FormLabel>
+          <Box
+            sx={{
+              mt: 2
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Solicitante</FormLabel>
             <RadioGroup
               id="solicitante"
               aria-labelledby="demo-controlled-radio-buttons-group"
@@ -258,14 +175,14 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
           <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Nome solicitante/vitima" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Nome solicitante/vítima ?" variant="outlined" />
           <Button variant="contained"
             color="secondary"
-            onClick={(e) => handleCopyField('nomeVitima')}
+            onClick={handleCopyNome}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
         <Grid item xs={12} >
           {solicitante === 'denunciante' && (
             <>
-              <FormLabel id="demo-row-radio-buttons-group-label">Endereço próprio ou da vítima:</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-row-radio-buttons-group-label">Endereço próprio ou da vítima:</FormLabel>
               <RadioGroup
                 id="enderecoDenunciante"
                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -283,7 +200,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
 
           <Button variant="contained"
             color="secondary"
-            onClick={(e) => handleCopyField('endereco')}
+            onClick={handleCopyEndereco}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
@@ -291,7 +208,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
 
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
             <Select
               sx={{ marginBottom: 2 }}
               placeholder="Cidade:"
@@ -300,11 +217,44 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
               IconComponent={KeyboardArrowDownIcon}
               variant="outlined"
             >
-              {regioesAdministrativas.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
+              <MenuItem value="Plano Piloto">RA I - Plano Piloto</MenuItem>
+              <MenuItem value="Gama">RA II - Gama</MenuItem>
+              <MenuItem value="Taguatinga">RA III - Taguatinga</MenuItem>
+              <MenuItem value="Brazlândia">RA IV - Brazlândia</MenuItem>
+              <MenuItem value="Sobradinho">RA V - Sobradinho</MenuItem>
+              <MenuItem value="Planaltina">RA VI - Planaltina</MenuItem>
+              <MenuItem value="Paranoá">RA VII - Paranoá</MenuItem>
+              <MenuItem value="Núcleo Bandeirante">RA VIII - Núcleo Bandeirante</MenuItem>
+              <MenuItem value="Ceilândia">RA IX - Ceilândia</MenuItem>
+              <MenuItem value="Guará">RA X - Guará</MenuItem>
+              <MenuItem value="Cruzeiro">RA XI - Cruzeiro</MenuItem>
+              <MenuItem value="Samambaia">RA XII - Samambaia</MenuItem>
+              <MenuItem value="Santa Maria">RA XIII - Santa Maria</MenuItem>
+              <MenuItem value="São Sebastião">RA XIV - São Sebastião</MenuItem>
+              <MenuItem value="Recanto das Emas">RA XV - Recanto das Emas</MenuItem>
+              <MenuItem value="Lago Sul">RA XVI - Lago Sul</MenuItem>
+              <MenuItem value="Riacho Fundo">RA XVII - Riacho Fundo</MenuItem>
+              <MenuItem value="Lago Norte">RA XVIII - Lago Norte</MenuItem>
+              <MenuItem value="Candangolândia">RA XIX - Candangolândia</MenuItem>
+              <MenuItem value="Águas Claras">RA XX - Águas Claras</MenuItem>
+              <MenuItem value="Riacho Fundo II">RA XXI - Riacho Fundo 2</MenuItem>
+              <MenuItem value="Sudoeste">RA XXII - Sudoeste</MenuItem>
+              <MenuItem value="Octogonal">RA XXII - Octogonal</MenuItem>
+              <MenuItem value="Varjão">RA XXIII - Varjão</MenuItem>
+              <MenuItem value="Park Way">RA XXIV - Park Way</MenuItem>
+              <MenuItem value="Estrutural">RA XXV - Estrutural</MenuItem>
+              <MenuItem value="SCIA">RA XXV - SCIA</MenuItem>
+              <MenuItem value="Sobradinho II">RA XXVI - Sobradinho II</MenuItem>
+              <MenuItem value="Jardim Botânico">RA XIV - Jardim Botânico</MenuItem>
+              <MenuItem value="Itapoã">RA XIV - Itapoã</MenuItem>
+              <MenuItem value="SIA">RA XIV - SIA</MenuItem>
+              <MenuItem value="Vicente Pires">RA XIV - Vicente Pires</MenuItem>
+              <MenuItem value="Fercal">RA XIV - Fercal</MenuItem>
+              <MenuItem value="Sol Nascente">RA XIV - Sol Nascente</MenuItem>
+              <MenuItem value="Por do Sol">RA XIV - Por do Sol</MenuItem>
+              <MenuItem value="Arniqueira">RA XIV - Arniqueira</MenuItem>
+              <MenuItem value="Arapoanga">RA XIV - Arapoanga</MenuItem>
+              <MenuItem value="Água Quente">RA XIV - Água Quente</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -312,39 +262,23 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
           <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Ponto de referência" fullWidth id="outlined-basic-referencia" label="Ponto de Referência ?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
           <Button variant="contained"
             color="secondary"
-            onClick={(e) => handleCopyField('referencia')}
+            onClick={handleCopyReferencia}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <InputMask
-            mask="(99)99999-9999"
-            value={telefone}
-            onChange={e => handleTelefoneChange(e, 'telefone')}
-          >
-            {(inputProps) => (
-              <TextField
-                {...inputProps}
-                sx={{ marginBottom: 1, marginRight: 2, width: '80%' }}
-                fullWidth
-                id="outlined-basic-telefone"
-                label="Telefone ?"
-                name="telefone"
-                variant="outlined"
-              />
-            )}
-          </InputMask>
+          <TextField sx={{ marginBottom: 1, marginRight: 2, width: '80%' }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone ?" name="telefone" variant="outlined" />
           <Button variant="contained"
             color="secondary"
-            onClick={(e) => handleCopyField('telefone')}
+            onClick={handleCopyTelefone}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <FormLabel id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
-          <Grid container spacing={1}>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-checkbox-group">Tipo de agressão:</FormLabel>
+          <Grid container spacing={0}>
             {agressaoOptions.map(option => (
-              <Grid item key={option} xs={6} sm={4} md={3}>
+              <Grid item key={option} xs={6} sm={4} md={5}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -360,8 +294,8 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
           </Grid>
         </Grid>
         <Grid item xs={10}>
-          <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' }}>ATENÇÃO, ATENDENTE:</FormLabel>
-          <Grid container spacing={1}>
+          <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' , fontSize: 16 }}>ATENÇÃO, ATENDENTE:</FormLabel>
+          <Grid container spacing={0}>
             {gritosOptions.map(option => (
               <Grid item key={option} xs={6} sm={2} md={4}>
                 <FormControlLabel
@@ -379,7 +313,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FormLabel id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Grau de parentesco:</FormLabel>
             <Select
               sx={{ marginBottom: 2 }}
               placeholder="Parentesco"
@@ -418,7 +352,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
           )}
         </Grid>
         <Grid item xs={12}>
-          <FormLabel id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Possui medida protetiva?</FormLabel>
           <RadioGroup
             value={medida}
             onChange={(e) => handleChange("medida", e.target.value)}
@@ -430,7 +364,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             <FormControlLabel value="false" control={<Radio />} label="Não" />
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
-          <FormLabel id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Agressor encontra-se no local?</FormLabel>
           <RadioGroup
             value={agressorNoLocal}
             onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
@@ -442,7 +376,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             <FormControlLabel value="false" control={<Radio />} label="Não" />
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
-          <FormLabel id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Está armado com arma de fogo/faca?</FormLabel>
           <RadioGroup
             value={armado}
             onChange={(e) => handleChange("armado", e.target.value)}
@@ -455,7 +389,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
 
-          <FormLabel id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">A vítima está ferida?</FormLabel>
           <RadioGroup
             value={ferida}
             onChange={(e) => handleChange("ferida", e.target.value)}
@@ -468,7 +402,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
 
-          <FormLabel id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Criança envolvida?</FormLabel>
           <RadioGroup
             value={criancas}
             onChange={(e) => handleChange("criancas", e.target.value)}
@@ -480,7 +414,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             <FormControlLabel value="false" control={<Radio />} label="Não" />
           </RadioGroup>
 
-          <FormLabel id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
           <RadioGroup
             value={urgencia}
             onChange={(e) => handleChange("urgencia", e.target.value)}
@@ -493,7 +427,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
 
         </Grid>
         <Grid item xs={12} sx={{ mt: 1 }}>
-          <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
           <TextField
             className="narrativa-text"
             sx={{
@@ -501,7 +435,6 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
             }}
             multiline
             fullWidth
-            name="narrativa"
             value={narrativa}
             InputProps={{
               disabled: true
@@ -512,7 +445,7 @@ ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''
         <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
           <Button variant="contained"
             color="secondary"
-            onClick={(e) => handleCopyField('narrativa')}
+            onClick={handleCopy}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
           <Button variant="contained"
             color="secondary"

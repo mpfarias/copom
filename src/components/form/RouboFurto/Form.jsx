@@ -152,9 +152,9 @@ export default function RouboFurto() {
 
   return (
     <Box paddingRight={2} marginTop={4}>
-      <Grid container sx={{ marginLeft: 1, width: '100%' }} spacing={2}>
+      <Grid container sx={{ marginLeft: 1, width: '100%' }} spacing={3}>
         <Grid item style={{ paddingTop: 0 }} xs={12}>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 30 }} id="demo-controlled-radio-buttons-group">Roubo/Furto</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 30 }} id="demo-controlled-radio-buttons-group">ROUBO/FURTO</FormLabel>
           <Box sx={{ mt: 2 }} noValidate autoComplete="off">
             <FormLabel id="demo-controlled-radio-buttons-group">Solicitante:</FormLabel>
             <RadioGroup

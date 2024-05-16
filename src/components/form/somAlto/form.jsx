@@ -185,7 +185,7 @@ export default function SomAlto() {
         </Button>
       </Grid>
       <FormControl fullWidth>
-        <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
         <Select
           id="regiaoAdministrativa"
           sx={{ marginBottom: 2, width: '50%' }}
@@ -248,7 +248,7 @@ export default function SomAlto() {
         </Button>
       </Grid>
       <Grid item xs={12} sx={{ mt: 1 }}>
-        <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
         <TextField
           sx={{
             backgroundColor: 'rgba(0, 200, 0, 0.1)',
@@ -285,10 +285,13 @@ export default function SomAlto() {
     <Box paddingRight={2} marginTop={4} marginBottom={8}>
       <Grid container sx={{ marginLeft: 1, width: '100%' }} spacing={3}>
         <Grid item style={{ paddingTop: 0 }} xs={12}>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 30 }} id="demo-controlled-radio-buttons-group">Perturbação do Sossego</FormLabel>
+        <FormLabel style={{
+            fontWeight: 'bold',
+            fontSize: 30,
+          }} id="demo-controlled-radio-buttons-group">PERTURBAÇÃO DO SOSSEGO</FormLabel>
           <Box sx={{ mt: 2 }} noValidate autoComplete="off">
             <FormControl>
-              <FormLabel id="demo-row-radio-buttons-group-label">Local:</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-row-radio-buttons-group-label">Local:</FormLabel>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -311,7 +314,7 @@ export default function SomAlto() {
           {local === 'residência' && (
             <>
               <Alert severity="warning">{text02}</Alert>
-              <FormLabel id="demo-row-radio-buttons-group-label">Solicitante deseja assinar?</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}}id="demo-row-radio-buttons-group-label">Solicitante deseja assinar ?</FormLabel>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -329,7 +332,7 @@ export default function SomAlto() {
                     <>
                       <Alert severity="warning">{text03}</Alert>
                       <Grid item xs={12} sx={{ mt: 1 }}>
-                        <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+                        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
                         <TextField
                           sx={{
                             backgroundColor: 'rgba(0, 200, 0, 0.1)',
@@ -369,7 +372,7 @@ export default function SomAlto() {
               <Alert severity="warning">{aviso01}</Alert>
 
               <Grid item xs={12} sx={{ mt: 1 }}>
-                <FormLabel id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+                <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
                 <TextField
                   sx={{
                     backgroundColor: 'rgba(0, 200, 0, 0.1)',
