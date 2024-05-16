@@ -39,7 +39,7 @@ export const handleCopy = async (fieldId = null, fieldValue = null) => {
       placa: '',
       modelo: '',
       individuos: '1',
-      corCamisetas: ['clara'],
+      //corCamisetas: ['clara'],
       corCalcas: ['clara'],
       caracteristicas: [],
       narrativa: ''

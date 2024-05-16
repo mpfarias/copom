@@ -480,7 +480,7 @@ export default function RouboFurto() {
                           <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id={`corCamiseta-label-${individuoIndex}`}>Cor da camiseta/camisa/regata do indivíduo {individuoIndex + 1}:</FormLabel>
                           <Select
                             sx={{ marginBottom: 5 }}
-                            value={corCamisetas[individuoIndex]}
+                            //value={corCamisetas[individuoIndex]}
                             onChange={(e) => handleCorRoupaChange(individuoIndex, e.target.value, 'camiseta')}
                             IconComponent={KeyboardArrowDownIcon}
                             variant="outlined"
