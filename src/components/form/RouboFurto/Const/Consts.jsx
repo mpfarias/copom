@@ -65,7 +65,8 @@ export const caracteristicasOption = [
     'bigode',
     'cicatriz',
     'tatuagem',
-    'sinal no rosto'
+    'sinal no rosto',
+    'não sabe'
 ]
 
 
@@ -83,3 +84,28 @@ export const opcoesParteDeBaixo = [
     { value: 'calça', label: 'Calça' },
     { value: 'não sabe', label: 'Não sabe' },
   ];
+
+  export const opcoesCalcado = [
+    { value: 'tênis', label: 'Tênis' },
+    { value: 'sapato', label: 'Sapato' },
+    { value: 'chinelo', label: 'Chinelo' },
+    { value: 'descalço', label: 'Descalço' },
+    { value: 'não sabe', label: 'Não sabe' },
+  ];
+
+
+  export const opcoesArma = [
+    { value: 'arma de fogo', label: 'Arma de fogo'},
+    { value: 'arma branca', label: 'Arma branca'},
+    { value: 'não sabe', label: 'Não sabe'},
+    { value: 'não estava armado', label: 'Não estava armado'},
+  ];
+
+  export const opcoesCabelo = [
+    { value: 'crespo', label: 'Crespo'},
+    { value: 'liso', label: 'Liso'},
+    { value: 'grisalho', label: 'Grisalho'},
+    { value: 'longo', label: 'Longo'},
+    { value: 'curto', label: 'Curto'},
+    { value: 'não sabe', label: 'Não sabe'},
+  ]
