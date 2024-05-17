@@ -33,6 +33,7 @@ export default function RouboFurto() {
 
 
   const [state, setState] = useState({
+    solicitante:'Vítima',
     nome: '',
     tipo: '',
     endereco: '',
@@ -41,7 +42,7 @@ export default function RouboFurto() {
     telefone: '',
     placa: '',
     modelo: '',
-    individuos: '1',
+    individuos: 'não sabe',
     corCamisetas: ['clara'],
     corCalcas: ['clara'],
     caracteristicas: [],
@@ -213,11 +214,13 @@ export default function RouboFurto() {
   };*/
 
   const generateNarrative = () => {
-    let text = `Tipo: ${tipo}\nNome do Solicitante: ${nome}\nEndereço: ${endereco}\nRegião Administrativa: ${regiaoAdministrativa}\nReferência: ${referencia}\nTelefone: ${telefone}\nPlaca do Veículo: ${placa}\nModelo do Veículo: ${modelo}\nNúmero de Indivíduos: ${individuosData.length}\n`;
+    let text = `${solicitante}
+    Solicitante ${nome}, endereço: ${endereco}, ${regiaoAdministrativa}, ${referencia}, Telefone: ${telefone}, informa que teve seu veículo ${tipo === 'roubado' ? 'tomado de ASSALTO (ROUBO)' : 'furtado'}, trata-se de um ${modelo}, ${placa ==='' ? 'não soube informar a placa' : 'placa: ' + placa}, ${individuosData.length === 1 ? 'por 1 indivíduo.' : individuosData.length === 0 ? '' : 'por ' + individuosData.length + ' indivíduos.'}`;
 
     for (let i = 0; i < individuosData.length; i++) {
       const individuo = individuosData[i];
-      text += `\nIndivíduo ${i + 1}:\n`;
+
+      text += ` \n\nIndivíduo ${i + 1}:\n`;
       text += ` - Parte de Cima: ${opcoesParteDeCima[individuo.parteDeCima] || 'Não selecionado'}\n`;
       text += ` - Parte de Baixo: ${opcoesParteDeBaixo[individuo.parteDeBaixo] || 'Não selecionado'}\n`;
       text += ` - Cor da Camiseta/Camisa/Regata: ${cores[individuo.corCamiseta]?.label || 'Não selecionado'}\n`;
@@ -229,8 +232,9 @@ export default function RouboFurto() {
       if (individuo.showOutraCaracteristica && individuo.outraCaracteristica.trim() !== '') { // Verifica se a outra característica está visível e preenchida
         text += ` - Outra Característica: ${individuo.outraCaracteristica}\n`;
       }
+      
     }
-
+    text += `\nPede divulgação na rede rádio, foi orientado a comparecer à DP para registro.`;
     return text;
   };
 
@@ -238,7 +242,7 @@ export default function RouboFurto() {
     const updatedNarrative = generateNarrative();
     setState(prevState => ({ ...prevState, narrativa: updatedNarrative }));
   }, [
-    tipo, nome, endereco, regiaoAdministrativa, referencia, telefone, placa, modelo,
+    solicitante, tipo, nome, endereco, regiaoAdministrativa, referencia, telefone, placa, modelo,
     individuosData, selectedOptionCima, selectedOptionBaixo, selectedOptionCalcadoIndividuos,
     selectedOptionCabelo, selectedOptionArma, outrasCaracteristicas, showOutraCaracteristica,
     caracteristicasIndividuos, //corCamisetas, corCalcas
@@ -261,8 +265,8 @@ export default function RouboFurto() {
               onChange={(e) => setSolicitante(e.target.value)}
               sx={{ marginBottom: 0 }}
             >
-              <FormControlLabel value="vitima" control={<Radio />} label="Vítima" />
-              <FormControlLabel value="denunciante" control={<Radio />} label="Denunciante" />
+              <FormControlLabel value="Vítima" control={<Radio />} label="Vítima" />
+              <FormControlLabel value="Denunciante" control={<Radio />} label="Denunciante" />
             </RadioGroup>
           </Box>
           <Box sx={{ mt: 2 }} noValidate autoComplete="off">
@@ -321,8 +325,8 @@ export default function RouboFurto() {
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Grid container spacing={2} alignItems="center"> {/* Adiciona um Grid container */}
-                    <Grid item xs={8}> {/* O Select ocupa 8/12 do espaço */}
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={8}>
                       <FormControl fullWidth>
                         <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
                         <Select
@@ -369,7 +373,7 @@ export default function RouboFurto() {
                   />
                   <Button variant="contained"
                     color="secondary"
-                    onClick={() => handleCopy('referencia')} // Certifique-se que o ID está correto
+                    onClick={() => handleCopy('referencia')}
                     style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
                   </Button>
                 </Grid>
@@ -377,7 +381,7 @@ export default function RouboFurto() {
                   <InputMask
                     mask="(99)99999-9999"
                     value={telefone}
-                    onChange={(e) => handleTelefoneChange(e.target.value, 'telefone')} // Passando a função corretamente
+                    onChange={(e) => handleTelefoneChange(e.target.value, 'telefone')}
                   >
                     {() => (
                       <TextField
@@ -407,7 +411,7 @@ export default function RouboFurto() {
                   </Button>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Modelo do veículo" fullWidth id="outlined-basic-nome" onChange={e => handleChange('modelo', e.target.value)} label="Modelo do veículo ?" variant="outlined" />
+                  <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Marca/Modelo do veículo" fullWidth id="outlined-basic-nome" onChange={e => handleChange('modelo', e.target.value)} label="Marca/Modelo do veículo ?" variant="outlined" />
                   <Button variant="contained"
                     color="secondary"
                     onClick={() => handleCopy('modelo')}
