@@ -20,7 +20,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function FormularioViolenciaDomestica() {
   const handleCopy = () => {
-    const narrativa = state.narrativa;
+    const narrativa = state.narrativa || '';
     navigator.clipboard.writeText(narrativa);
   };
 
