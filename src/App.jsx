@@ -9,12 +9,13 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import "./styles/styles.css";
 
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
   paddingTop: 0,
   paddingLeft: 0,
-  paddingRight: theme.spacing(2),
+  paddingRight: 0,
   paddingBottom: 0,
   color: theme.palette.text.secondary,
   boxShadow: 'none',

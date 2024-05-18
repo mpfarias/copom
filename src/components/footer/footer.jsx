@@ -1,10 +1,41 @@
-import { Box } from "@mui/material"
+import Sheet from '@mui/joy/Sheet';
+import Stack from '@mui/joy/Stack';
+import Box from '@mui/joy/Box';
+import { styled } from '@mui/joy/styles';
+
+const Item = styled(Sheet)(({ theme }) => ({
+    bottom:0,
+    paddingTop:5,
+    bottom: 0,
+    width: '100%',
+    height: '2rem',
+    backgroundColor: '#000066',
+    textAlign: 'center',
+    fontWeight: theme.fontWeight.md,
+    color: '#ffffff',
+    fontSize:12
+}));
 
 
 export default function Footer() {
     return (
 
-        <Box sx={{
+        <Box sx={{ width: '100%' }}>
+            <Stack spacing={0}>
+                <Item>Copom
+                    <Item>Desenvolvimento de Sistemas
+                        <Item>2º Sgt M. Farias
+                            <Item>2º Sgt Gadelha</Item>
+                        </Item>
+                    </Item>
+
+                </Item>
+            </Stack>
+        </Box>
+
+
+
+        /*<Box sx={{
             margin: 0,
             padding: 0
         }}>
@@ -78,7 +109,7 @@ export default function Footer() {
 
                 2º Sgt Gadelha
             </Box>
-        </Box>
+        </Box>*/
     )
 }
 
