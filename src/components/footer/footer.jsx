@@ -6,9 +6,9 @@ import { styled } from '@mui/joy/styles';
 const Item = styled(Sheet)(({ theme }) => ({
     bottom:0,
     paddingTop:5,
-    bottom: 0,
+    paddingBottom: 0,
     width: '100%',
-    height: '2rem',
+    height: '1.5rem',
     backgroundColor: '#000066',
     textAlign: 'center',
     fontWeight: theme.fontWeight.md,
@@ -24,7 +24,7 @@ export default function Footer() {
             <Stack spacing={0}>
                 <Item>Copom
                     <Item>Desenvolvimento de Sistemas
-                        <Item>2º Sgt M. Farias
+                        <Item>2º Sgt M. Farias  
                             <Item>2º Sgt Gadelha</Item>
                         </Item>
                     </Item>

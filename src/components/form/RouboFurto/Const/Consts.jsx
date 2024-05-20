@@ -39,13 +39,13 @@ export const regioesAdministrativas = [
     { value: 'Água Quente', label: 'RA XXXV - Água Quente' }]
 
 export const qtdeIndividuos = [
-    { value: 'não sabe', label: 'Não sabe' },
+    { value: '-1', label: 'Não sabe' },
     { value: '1', label: '1 indivíduo' },
     { value: '2', label: '2 indivíduos' },
     { value: '3', label: '3 indivíduos' },
     { value: '4', label: '4 indivíduos' },
     { value: '5', label: '5 indivíduos' },
-    { value: 'mais de 5', label: 'Mais de 5 indivíduos' }
+    { value: '6', label: 'Mais de 5 indivíduos' }
 ]
 
 export const cores = [
@@ -66,7 +66,7 @@ export const caracteristicasOption = [
     'cicatriz',
     'tatuagem',
     'sinal no rosto',
-    'não sabe'
+    'não sabe',
 ]
 
 
@@ -109,3 +109,12 @@ export const opcoesParteDeBaixo = [
     { value: 'curto', label: 'Curto'},
     { value: 'não sabe', label: 'Não sabe'},
   ]
+
+  export const opcoesCorVeiculo = [
+    { value: 'branco', label: 'Branco' },
+    { value: 'preto', label: 'Preto' },
+    { value: 'prata', label: 'Prata' },
+    { value: 'cinza', label: 'Cinza/Grafite' },
+    { value: 'outra', label: 'Outra cor' },
+    { value: 'não soube informar a cor', label: 'Não sabe' },
+  ];

@@ -19,14 +19,7 @@ export const handleCopy = async (fieldId = null, fieldValue = null) => {
     alert('Falha ao copiar texto.');
   }
 };
-  
-  export const handleTelefoneChange = (event, field, setState) => {
-    // Obtenha o valor do input (com a máscara)
-    const maskedValue = event.target.value;
-  
-    // Atualize o estado do componente com o valor formatado
-    setState(prevState => ({ ...prevState, [field]: maskedValue }));
-  };
+
 
   export const handleResetForm = (setState) => {
     setState({
@@ -39,11 +32,9 @@ export const handleCopy = async (fieldId = null, fieldValue = null) => {
       placa: '',
       modelo: '',
       individuos: '1',
-      //corCamisetas: ['clara'],
+      corCamisetas: ['clara'],
       corCalcas: ['clara'],
       caracteristicas: [],
       narrativa: ''
     });
   };
-  
-  
