@@ -307,9 +307,6 @@ export default function SomAlto() {
             </FormControl>
           </Box>
         </Grid>
-        {
-                        console.log(local)
-                      }
         <Stack sx={{ width: '100%' }} spacing={2}>
           {local === 'residência' && (
             <>

@@ -13,7 +13,8 @@ import {
   Button,
   Stack,
   Checkbox,
-  FormGroup
+  FormGroup,
+  Alert
 } from '@mui/material';
 
 import Divider from '@mui/joy/Divider';
@@ -48,14 +49,17 @@ export default function RouboFurto() {
     placa: '',
     modelo: '',
     corVeiculo: 'branco',
-    outraCor:'',
+    outraCor: '',
     individuos: -1,
-    calcado:'',
+    calcado: '',
     corCamiseta: ['clara'],
     corCalca: ['clara'],
     caracteristicas: [],
-    outraCaracteristica:'',
-    narrativa: ''
+    outraCaracteristica: '',
+    usoArma: '',
+    narrativa: '',
+    text01: "Informe ao solicitante para registrar ocorrência direto na Delegacia, ou poderá fazer o registro na DELEGACIA ONLINE, pelo site da Polícia Civil. VIATURA NÃO DEVE SER ACIONADA.",
+
   });
 
   const {
@@ -74,7 +78,9 @@ export default function RouboFurto() {
     corCamiseta,
     corCalca,
     outraCaracteristica,
-    narrativa
+    usoArma,
+    narrativa,
+    text01
   } = state;
 
   const [outrasCaracteristicas, setOutrasCaracteristicas] = useState(Array.from({ length: parseInt(individuos || 0) }, () => ''));
@@ -109,34 +115,42 @@ export default function RouboFurto() {
     ));
   };
 
-  const handleChangeCabelo = (individuoIndex, event) => {
+  const handleChangeCabelo = (individuoIndex, value) => {
     const newOptions = [...selectedOptionCabelo];
-    newOptions[individuoIndex] = event.target.value;
+    newOptions[individuoIndex] = value;
     setSelectedOptionCabelo(newOptions);
-    setIndividuosData(prevIndividuos => prevIndividuos.map((individuo, index) =>
-      index === individuoIndex ? { ...individuo, tipoCabelo: event.target.value } : individuo
-    ));
+    setIndividuosData(prevIndividuos =>
+      prevIndividuos.map((individuo, index) =>
+        index === individuoIndex ? { ...individuo, tipoCabelo: value } : individuo
+      )
+    );
   };
 
-  const handleChangeArma = (individuoIndex, event) => {
+
+  const handleChangeArma = (individuoIndex, value) => {
     const newOptions = [...selectedOptionArma];
-    newOptions[individuoIndex] = event.target.value;
+    newOptions[individuoIndex] = value;
     setSelectedOptionArma(newOptions);
-    setIndividuosData(prevIndividuos => prevIndividuos.map((individuo, index) =>
-      index === individuoIndex ? { ...individuo, usoArma: event.target.value } : individuo
-    ));
+    setIndividuosData(prevIndividuos =>
+      prevIndividuos.map((individuo, index) =>
+        index === individuoIndex ? { ...individuo, usoArma: value } : individuo
+      )
+    );
   };
 
   const [selectedOptionCalcadoIndividuos, setSelectedOptionCalcadoIndividuos] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
 
-  const handleCalcadoChange = (individuoIndex, event) => {
+  const handleCalcadoChange = (individuoIndex, value) => {
     const newOptions = [...selectedOptionCalcadoIndividuos];
-    newOptions[individuoIndex] = event.target.value;
+    newOptions[individuoIndex] = value;
     setSelectedOptionCalcadoIndividuos(newOptions);
-    setIndividuosData(prevIndividuos => prevIndividuos.map((individuo, index) =>
-      index === individuoIndex ? { ...individuo, calcado: event.target.value } : individuo
-    ));
+    setIndividuosData(prevIndividuos =>
+      prevIndividuos.map((individuo, index) =>
+        index === individuoIndex ? { ...individuo, calcado: value } : individuo
+      )
+    );
   };
+
 
   const handleOutraCaracteristicaCheckboxChange = (individuoIndex) => {
     const updatedShowOutraCaracteristica = [...showOutraCaracteristica];
@@ -171,7 +185,7 @@ export default function RouboFurto() {
     setIndividuosData(prevIndividuos => prevIndividuos.map((individuo, index) =>
       index === individuoIndex ? { ...individuo, outraCaracteristica: value } : individuo
     ));
-  };  
+  };
 
   const [individuosData, setIndividuosData] = useState(
     Array.from({ length: 5 }, () => ({
@@ -194,7 +208,7 @@ export default function RouboFurto() {
     const numIndividuos = parseInt(e.target.value, 10);
 
     const novosIndividuos = Array.from({ length: numIndividuos }, (_, index) => {
-      const existingIndividuo = individuosData[index] || {}; 
+      const existingIndividuo = individuosData[index] || {};
       return {
         parteDeCima: selectedOptionCima[index] || '',
         parteDeBaixo: selectedOptionBaixo[index] || '',
@@ -223,8 +237,15 @@ export default function RouboFurto() {
 
   const generateNarrative = () => {
     const corExibida = corVeiculo === 'outra' ? outraCor.toUpperCase() : opcoesCorVeiculo.find(op => op.value === corVeiculo)?.value.toUpperCase();
-    let text = `${solicitante}
-    Solicitante ${nome.toUpperCase()}, endereço: ${endereco.toUpperCase()}, ${regiaoAdministrativa}, ${referencia.toUpperCase()}, Telefone: ${telefone}, informa que teve seu veículo ${tipo === 'roubado' ? 'tomado de ASSALTO (ROUBO)' : 'furtado'}, trata-se de um ${modelo.toUpperCase()} ${corExibida.toUpperCase() || 'COR NÃO INFORMADA'}, ${placa === '' ? 'não soube informar a placa' : 'placa: ' + placa.toUpperCase()}, `;
+
+    let text = `${solicitante.toUpperCase()}
+     Solicitante ${nome.toUpperCase()}, endereço: ${endereco.toUpperCase()}, ${regiaoAdministrativa}, ${referencia.toUpperCase()}, Telefone: ${telefone},`
+
+    if (objeto === 'veículo') {
+      text += `informa que teve seu veículo ${tipo === 'roubado' ? 'tomado de ASSALTO (ROUBO)' : 'furtado'}, trata-se de um ${modelo.toUpperCase()} ${corExibida.toUpperCase() || 'COR NÃO INFORMADA'}, ${placa === '' ? 'não soube informar a placa' : 'placa: ' + placa.toUpperCase()}, `;
+    } else if (objeto === 'transeunte') {
+      text += `informa que foi vítima de  ${tipo === 'roubado' ? 'ROUBO, e ' : 'FURTO, e '}`;
+    }
 
     if (individuos === -1) {
       text += 'não sabe quantos indivíduos participaram do crime.';
@@ -233,9 +254,9 @@ export default function RouboFurto() {
     } else if (individuos > 0) {
       text += `${individuosData.length === 1 ? 'por 1 indivíduo.' : 'por ' + individuosData.length + ' indivíduos.'}`;
 
-      
       for (let i = 0; i < individuosData.length && i < 5; i++) {
         const individuo = individuosData[i];
+
         text += ` \n\nIndivíduo ${i + 1}:\n`;
         text += ` - Parte de Cima: ${individuo.parteDeCima.toUpperCase() || 'Não selecionado'}\n`;
         text += ` - Parte de Baixo: ${individuo.parteDeBaixo.toUpperCase() || 'Não selecionado'}\n`;
@@ -243,12 +264,13 @@ export default function RouboFurto() {
         text += ` - Cor da calça/bermuda: ${individuo.corCalca?.label.toUpperCase() || 'NÃO SELECIONADO'}\n`;
         text += ` - Características: ${individuo.caracteristicas.length > 0 ? individuo.caracteristicas.join(', ').toUpperCase() : 'NENHUMA CARACTERÍSTICA SELECIONADA'}\n`;
         text += ` - Calçado: ${individuo.calcado.toUpperCase() || 'Não selecionado'}\n`;
-        text += ` - Tipo de Cabelo: ${opcoesCabelo[individuo.tipoCabelo] || 'Não selecionado'}\n`;
-        text += ` - Uso de Arma: ${opcoesArma[individuo.usoArma] || 'Não selecionado'}\n`;
+        { console.log(calcado) }
+        text += ` - Tipo de Cabelo: ${individuo.tipoCabelo.toUpperCase() || 'Não selecionado'}\n`;
+        text += ` - Uso de Arma: ${individuo.usoArma.toUpperCase() || 'Não selecionado'}\n`;
         if (individuo.caracteristicas.includes('Outro') && individuo.outraCaracteristica.trim() !== '') {
-          text += ` - Outra Característica: ${individuo.outraCaracteristica}\n`; // Acessa diretamente outraCaracteristica
+          text += ` - Outra Característica: ${individuo.outraCaracteristica}\n`;
         }
-        
+
       }
     }
 
@@ -257,11 +279,12 @@ export default function RouboFurto() {
   };
 
 
+
   useEffect(() => {
 
     const updatedNarrative = generateNarrative();
     setState(prevState => ({ ...prevState, narrativa: updatedNarrative }));
-  }, [nome, endereco, regiaoAdministrativa, telefone, modelo, placa, individuosData,outraCor , parteDeCima, parteDeBaixo, calcado, corVeiculo, corCamiseta, corCalca, caracteristicasIndividuos,outraCaracteristica ]);
+  }, [solicitante, objeto, tipo, nome, endereco, regiaoAdministrativa, telefone, modelo, placa, individuosData, outraCor, parteDeCima, parteDeBaixo, calcado, corVeiculo, corCamiseta, corCalca, caracteristicasIndividuos, outraCaracteristica, usoArma]);
 
 
   const handleCorRoupaChange = (individuoIndex, value, type) => {
@@ -339,7 +362,7 @@ export default function RouboFurto() {
         </Grid>
         <Grid item xs={12} >
           <Stack sx={{ width: '100%' }} spacing={2}>
-            {objeto === 'veículo' && (
+            {(objeto === 'veículo' || objeto === 'transeunte') && (
               <>
                 <Grid item xs={12}>
                   <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Nome solicitante" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nome', e.target.value)} label="Nome solicitante ?" variant="outlined" />
@@ -418,52 +441,56 @@ export default function RouboFurto() {
                     </Button>
                   </CopyToClipboard>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Placa do veículo" fullWidth id="outlined-basic-nome" onChange={e => handleChange('placa', e.target.value)} label="Placa do veículo ?" variant="outlined" />
-                  <CopyToClipboard text={placa} onCopy={() => console.log('Placa copiada!')}>
-                    <Button variant="contained"
-                      color="secondary"
-                      style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                    </Button>
-                  </CopyToClipboard>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Marca/Modelo do veículo" fullWidth id="outlined-basic-nome" onChange={e => handleChange('modelo', e.target.value)} label="Marca/Modelo do veículo ?" variant="outlined" />
-                  <CopyToClipboard text={modelo} onCopy={() => console.log('Veículo copiado!')}>
-                    <Button variant="contained"
-                      color="secondary"
-                      style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                    </Button>
-                  </CopyToClipboard>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl>
-                    <FormLabel id="cor-veiculo-label">Cor do veículo</FormLabel>
-                    <RadioGroup
-                      row
-                      aria-labelledby="cor-veiculo-label"
-                      name="corVeiculo"
-                      value={corVeiculo}
-                      onChange={(e) => {
-                        setCorVeiculo(e.target.value);
-                        if (e.target.value !== 'outra') {
-                          setOutraCor('');
-                        }
-                      }}
-                    >
-                      {opcoesCorVeiculo.map((option) => (
-                        <FormControlLabel key={option.value} value={option.value} control={<Radio />} label={option.label} />
-                      ))}
-                    </RadioGroup>
-                    {corVeiculo === 'outra' && (
-                      <TextField
-                        label="Outra cor"
-                        value={outraCor}
-                        onChange={(e) => setOutraCor(e.target.value)}
-                      />
-                    )}
-                  </FormControl>
-                </Grid>
+                {objeto === 'veículo' && (
+                  <>
+                    <Grid item xs={12}>
+                      <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Placa do veículo" fullWidth id="outlined-basic-nome" onChange={e => handleChange('placa', e.target.value)} label="Placa do veículo ?" variant="outlined" />
+                      <CopyToClipboard text={placa} onCopy={() => console.log('Placa copiada!')}>
+                        <Button variant="contained"
+                          color="secondary"
+                          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                        </Button>
+                      </CopyToClipboard>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Marca/Modelo do veículo" fullWidth id="outlined-basic-nome" onChange={e => handleChange('modelo', e.target.value)} label="Marca/Modelo do veículo ?" variant="outlined" />
+                      <CopyToClipboard text={modelo} onCopy={() => console.log('Veículo copiado!')}>
+                        <Button variant="contained"
+                          color="secondary"
+                          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                        </Button>
+                      </CopyToClipboard>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl>
+                        <FormLabel id="cor-veiculo-label">Cor do veículo</FormLabel>
+                        <RadioGroup
+                          row
+                          aria-labelledby="cor-veiculo-label"
+                          name="corVeiculo"
+                          value={corVeiculo}
+                          onChange={(e) => {
+                            setCorVeiculo(e.target.value);
+                            if (e.target.value !== 'outra') {
+                              setOutraCor('');
+                            }
+                          }}
+                        >
+                          {opcoesCorVeiculo.map((option) => (
+                            <FormControlLabel key={option.value} value={option.value} control={<Radio />} label={option.label} />
+                          ))}
+                        </RadioGroup>
+                        {corVeiculo === 'outra' && (
+                          <TextField
+                            label="Outra cor"
+                            value={outraCor}
+                            onChange={(e) => setOutraCor(e.target.value)}
+                          />
+                        )}
+                      </FormControl>
+                    </Grid>
+                  </>
+                )}
                 <Grid item xs={12}>
                   <FormControl sx={{ width: '80%' }}>
                     <FormLabel sx={{ marginBottom: 2 }} id="demo-controlled-radio-buttons-group">Indivíduos:</FormLabel>
@@ -631,12 +658,13 @@ export default function RouboFurto() {
                         <FormControl>
                           <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id="demo-row-radio-buttons-group-label">Tipo de cabelo:</FormLabel>
                           <RadioGroup
-                            sx={{ marginBottom: 5 }}
                             row
+                            sx={{ marginBottom: 5 }}
                             aria-labelledby="demo-row-radio-buttons-group-label"
-                            name={`row-radio-buttons-group-cima-${individuoIndex}`}
+                            name={`row-radio-buttons-group-cabelo-${individuoIndex}`}
                             value={selectedOptionCabelo[individuoIndex]}
-                            onChange={(e) => handleChangeCabelo(individuoIndex, e)}>
+                            onChange={(e) => handleChangeCabelo(individuoIndex, e.target.value)}
+                          >
                             {opcoesCabelo.map((opcao) => (
                               <FormControlLabel
                                 key={opcao.value}
@@ -650,12 +678,13 @@ export default function RouboFurto() {
                         <FormControl>
                           <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id="demo-row-radio-buttons-group-label">Uso de arma:</FormLabel>
                           <RadioGroup
-                            sx={{ marginBottom: 5 }}
                             row
+                            sx={{ marginBottom: 5 }}
                             aria-labelledby="demo-row-radio-buttons-group-label"
-                            name={`row-radio-buttons-group-cima-${individuoIndex}`}
+                            name={`row-radio-buttons-group-arma-${individuoIndex}`}
                             value={selectedOptionArma[individuoIndex]}
-                            onChange={(e) => handleChangeArma(individuoIndex, e)}>
+                            onChange={(e) => handleChangeArma(individuoIndex, e.target.value)}
+                          >
                             {opcoesArma.map((opcao) => (
                               <FormControlLabel
                                 key={opcao.value}
@@ -700,6 +729,12 @@ export default function RouboFurto() {
                 </Grid>
               </>
 
+            )}
+            {objeto === 'celular' && (
+
+              <Box >
+                <Alert sx={{marginBottom:10}} severity="warning">{text01}</Alert>
+              </Box>
             )}
           </Stack>
         </Grid>
