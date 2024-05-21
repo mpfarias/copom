@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import {
   Box,
@@ -20,45 +20,49 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 export default function SomAlto() {
+  
+  
+  
   const regioesAdministrativas = [
-    { value: 'Plano Piloto', label: 'RA I - Plano Piloto' },
-    { value: 'Gama', label: 'RA II - Gama' },
-    { value: 'Taguatinga', label: 'RA III - Taguatinga' },
-    { value: 'Brazlândia', label: 'RA IV - Brazlândia' },
-    { value: 'Sobradinho', label: 'RA V - Sobradinho' },
-    { value: 'Planaltina', label: 'RA VI - Planaltina' },
-    { value: 'Paranoá', label: 'RA VII - Paranoá' },
-    { value: 'Núcleo Bandeirante', label: 'RA VIII - Núcleo Bandeirante' },
-    { value: 'Ceilândia', label: 'RA IX - Ceilândia' },
-    { value: 'Guará', label: 'RA X - Guará' },
-    { value: 'Cruzeiro', label: 'RA XI - Cruzeiro' },
-    { value: 'Samambaia', label: 'RA XII - Samambaia' },
-    { value: 'Santa Maria', label: 'RA XIII - Santa Maria' },
-    { value: 'São Sebastião', label: 'RA XIV - São Sebastião' },
-    { value: 'Recanto das Emas', label: 'RA XV - Recanto das Emas' },
-    { value: 'Lago Sul', label: 'RA XVI - Lago Sul' },
-    { value: 'Riacho Fundo', label: 'RA XVII - Riacho Fundo' },
-    { value: 'Lago Norte', label: 'RA XVIII - Lago Norte' },
-    { value: 'Candangolândia', label: 'RA XIX - Candangolândia' },
-    { value: 'Águas Claras', label: 'RA XX - Águas Claras' },
-    { value: 'Riacho Fundo 2', label: 'RA XXI - Riacho Fundo 2' },
-    { value: 'Sudoeste', label: 'RA XXII - Sudoeste' },
-    { value: 'Octogonal', label: 'RA XXII - Octogonal' },
-    { value: 'Varjão', label: 'RA XXIII - Varjão' },
-    { value: 'Park Way', label: 'RA XXIV - Park Way' },
-    { value: 'Estrutural', label: 'RA XXV - Estrutural' },
-    { value: 'SCIA', label: 'RA XXV - SCIA' },
-    { value: 'Sobradinho II', label: 'RA XXVI - Sobradinho II' },
-    { value: 'Jardim Botânico', label: 'RA XXVII - Jardim Botânico' },
-    { value: 'Itapoã', label: 'RA XXVIII - Itapoã' },
-    { value: 'SIA', label: 'RA XXIX - SIA' },
-    { value: 'Vicente Pires', label: 'RA XXX - Vicente Pires' },
-    { value: 'Fercal', label: 'RA XXXI - Fercal' },
-    { value: 'Sol Nascente', label: 'RA XXXII - Sol Nascente' },
-    { value: 'Pôr do Sol', label: 'RA XXXII - Pôr do Sol' },
-    { value: 'Arniqueira', label: 'RA XXXIII - Arniqueira' },
-    { value: 'Arapoanga', label: 'RA XXXIV - Arapoanga' },
-    { value: 'Água Quente', label: 'RA XXXV - Água Quente' }]
+    { value: 'Água Quente', label: 'Água Quente' },
+    { value: 'Águas Claras', label: 'Águas Claras' },
+    { value: 'Arapoanga', label: 'Arapoanga' },
+    { value: 'Arniqueira', label: 'Arniqueira' },
+    { value: 'Brazlândia', label: 'Brazlândia' },
+    { value: 'Candangolândia', label: 'Candangolândia' },
+    { value: 'Ceilândia', label: 'Ceilândia' },
+    { value: 'Cruzeiro', label: 'Cruzeiro' },
+    { value: 'Estrutural', label: 'Estrutural' },
+    { value: 'Fercal', label: 'Fercal' },
+    { value: 'Gama', label: 'Gama' },
+    { value: 'Guará', label: 'Guará' },
+    { value: 'Itapoã', label: 'Itapoã' },
+    { value: 'Jardim Botânico', label: 'Jardim Botânico' },
+    { value: 'Lago Norte', label: 'Lago Norte' },
+    { value: 'Lago Sul', label: 'Lago Sul' },
+    { value: 'Núcleo Bandeirante', label: 'Núcleo Bandeirante' },
+    { value: 'Octogonal', label: 'Octogonal' },
+    { value: 'Paranoá', label: 'Paranoá' },
+    { value: 'Park Way', label: 'Park Way' },
+    { value: 'Planaltina', label: 'Planaltina' },
+    { value: 'Por do Sol', label: 'Por do Sol' },
+    { value: 'Recanto das Emas', label: 'Recanto das Emas' },
+    { value: 'Riacho Fundo', label: 'Riacho Fundo' },
+    { value: 'Riacho Fundo II', label: 'Riacho Fundo II' },
+    { value: 'Samambaia', label: 'Samambaia' },
+    { value: 'Santa Maria', label: 'Santa Maria' },
+    { value: 'São Sebastião', label: 'São Sebastião' },
+    { value: 'SCIA', label: 'SCIA' },
+    { value: 'SIA', label: 'SIA' },
+    { value: 'Sobradinho', label: 'Sobradinho' },
+    { value: 'Sobradinho II', label: 'Sobradinho II' },
+    { value: 'Sol Nascente', label: 'Sol Nascente' },
+    { value: 'Sudoeste', label: 'Sudoeste' },
+    { value: 'Taguatinga', label: 'Taguatinga' },
+    { value: 'Varjão', label: 'Varjão' },
+    { value: 'Vicente Pires', label: 'Vicente Pires' },
+    { value: 'Plano Piloto', label: 'Plano Piloto' }]
+    
   const [local, setLocal] = useState('');
   const [assinatura, setAssinatura] = useState('');
 
@@ -66,7 +70,7 @@ export default function SomAlto() {
     assinatura: '',
     nome: '',
     endereco: '',
-    regiaoAdministrativa: 'Plano Piloto',
+    regiaoAdministrativa: '',
     referencia: '',
     telefone: '',
     text01: 'Solicitante informa perturbação do sossego, porém não quis se identificar. Foi orientado a ligar para a Ouvidora Geral do GDF (162).',
@@ -74,14 +78,16 @@ export default function SomAlto() {
     text02: 'Informe ao solicitante que o som alto em residência é infração do artigo 42 da Lei de Contravenções Penais, e que para que a Polícia Militar possa atuar, é necessária a assinatura do Termo Circunstanciado de Ocorrência, de acordo com o TJDFT (ACÓRDÃO Nº 1425679). Pergunte se o solicitante deseja assinar o Termo Circunstanciado de Ocorrência.',
     text03: 'Informe ao solicitante que a Polícia Militar somente pode agir na responsabilização criminal do autor, e para isso precisa de vítima. Se o solicitante não quiser assinar o TCO, peça para ligar 162 (OUVIDORIA GDF). Clique no botão "COPIAR TEXTO" e cole (CTRL + V) no campo "Narrativa" do CAD.',
     text04: 'RESPONSABILIDADE DO DETRAN - FAÇA O REGISTRO NORMALMENTE - A OCORRÊNCIA SERÁ ENCAMINHADA AO DETRAN PELO DESPACHANTE.',
-    text05: "Informe ao solicitante que a denúncia deverá ser feita no telefone 162, pois a responsabilidade para atuar em estabelecimento comercial é do IBRAM.",
-    text06: "Solicitante informa som alto em estabelecimento comercial. Foi orientado a ligar na Ouvidora do GDF (162).",
-    text07: "Solicitante informa som alto no local, pede PMDF no local pois TEM INTERESSE EM ASSINAR O TCO.",
+    text05: 'Informe ao solicitante que a denúncia deverá ser feita no telefone 162, pois a responsabilidade para atuar em estabelecimento comercial é do IBRAM.',
+    text06: 'Solicitante informa som alto em estabelecimento comercial. Foi orientado a ligar na Ouvidora do GDF (162).',
+    text07: '',
     text08: "Solicitante informa que veículo está incomodando com o sol alto. Pede apoio do DETRAN."
   });
 
   const {
+    nome,
     telefone,
+    endereco,
     regiaoAdministrativa,
     text01,
     aviso01,
@@ -146,16 +152,28 @@ export default function SomAlto() {
     document.getElementById('outlined-basic-referencia').value = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    setState(prevState => ({
+      ...prevState,
+      text07:` Solicitante${nome === '' ? '' : ': '+nome}, 
+${endereco === '' ? '' : ', Endereço: '+endereco} 
+${telefone === '' ? '' : ', Telefone: '+telefone} 
+${regiaoAdministrativa === null ? '' : ', RA: '+regiaoAdministrativa}
+, informa som alto no local, pede PMDF no local pois TEM INTERESSE EM ASSINAR O TCO.`,
+    }));
+  }, [nome, endereco]);
+
   const renderOpcoesAssinatura = () => (
     <>
       <Grid item xs={12}>
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
-          placeholder="Nome solicitante"
+          placeholder="Qual o nome do solicitante ?"
           fullWidth
           id="outlined-basic-nome"
           onChange={(e) => handleChange('nome', e.target.value)}
-          label="Nome solicitante ?"
+          label="Qual o nome do solicitante ?"
           variant="outlined"
         />
         <Button
@@ -167,13 +185,39 @@ export default function SomAlto() {
         </Button>
       </Grid>
       <Grid item xs={12}>
+        <InputMask
+          mask="(99)99999-9999"
+          value={telefone}
+          onChange={(e) => handleTelefoneChange(e, 'telefone')}
+        >
+          {(inputProps) => (
+            <TextField
+              {...inputProps}
+              sx={{ marginBottom: 1, marginRight: 2, width: '80%' }}
+              fullWidth
+              id="outlined-basic-telefone"
+              label="Qual o telefone do solicitante ?"
+              name="telefone"
+              variant="outlined"
+            />
+          )}
+        </InputMask>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => handleCopyField('telefone')}
+          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
+          <FileCopyIcon />
+        </Button>
+      </Grid>
+      <Grid item xs={12}>
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
-          placeholder="Endereço"
-          fullWidth
+          placeholder="Qual endereço do solicitante ?"
+          fullWidth 
           id="outlined-basic-endereco"
           onChange={(e) => handleChange('endereco', e.target.value)}
-          label="Endereço ?"
+          label="Qual endereço do solicitante ?"
           variant="outlined"
         />
         <Button
@@ -185,7 +229,7 @@ export default function SomAlto() {
         </Button>
       </Grid>
       <FormControl fullWidth>
-        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Qual a cidade da perturbação ?</FormLabel>
         <Select
           id="regiaoAdministrativa"
           sx={{ marginBottom: 2, width: '50%' }}
@@ -205,10 +249,10 @@ export default function SomAlto() {
       <Grid item xs={12}>
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
-          placeholder="Ponto de referência"
+          placeholder="Qual o ponto de referência ?"
           fullWidth
           id="outlined-basic-referencia"
-          label="Ponto de Referência ?"
+          label="Qual o ponto de referência ?"
           name="referencia"
           onChange={(e) => handleChange('referencia', e.target.value)}
           variant="outlined"
@@ -221,32 +265,7 @@ export default function SomAlto() {
           <FileCopyIcon />
         </Button>
       </Grid>
-      <Grid item xs={12}>
-        <InputMask
-          mask="(99)99999-9999"
-          value={telefone}
-          onChange={(e) => handleTelefoneChange(e, 'telefone')}
-        >
-          {(inputProps) => (
-            <TextField
-              {...inputProps}
-              sx={{ marginBottom: 1, marginRight: 2, width: '80%' }}
-              fullWidth
-              id="outlined-basic-telefone"
-              label="Telefone ?"
-              name="telefone"
-              variant="outlined"
-            />
-          )}
-        </InputMask>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleCopyField('telefone')}
-          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
-          <FileCopyIcon />
-        </Button>
-      </Grid>
+      
       <Grid item xs={12} sx={{ mt: 1 }}>
         <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
         <TextField
@@ -269,13 +288,7 @@ export default function SomAlto() {
           style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>
           Copiar texto
         </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleResetForm}
-          style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>
-          Limpar Formulário
-        </Button>
+       
       </Grid>
     </>
   );
@@ -291,7 +304,7 @@ export default function SomAlto() {
           }} id="demo-controlled-radio-buttons-group">PERTURBAÇÃO DO SOSSEGO</FormLabel>
           <Box sx={{ mt: 2 }} noValidate autoComplete="off">
             <FormControl>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-row-radio-buttons-group-label">Local:</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-row-radio-buttons-group-label">Qual o tipo de local da perturbação ?</FormLabel>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -307,11 +320,14 @@ export default function SomAlto() {
             </FormControl>
           </Box>
         </Grid>
+        {
+                        console.log(local)
+                      }
         <Stack sx={{ width: '100%' }} spacing={2}>
           {local === 'residência' && (
             <>
               <Alert severity="warning">{text02}</Alert>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}}id="demo-row-radio-buttons-group-label">Solicitante deseja assinar ?</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}}id="demo-row-radio-buttons-group-label">Solicitante deseja assinar TCO/PMDF ?</FormLabel>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"

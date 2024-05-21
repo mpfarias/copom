@@ -177,7 +177,7 @@ export default function AlarmeAcionado() {
             noValidate
             autoComplete="off"
           >
-            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Tipo de solicitante:</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Qual o tipo de solicitante ?</FormLabel>
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
@@ -190,8 +190,9 @@ export default function AlarmeAcionado() {
             </RadioGroup>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={10}>
           <FormControl fullWidth>
+          <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' , fontSize: 16 }}>ATENÇÃO ATENDENTE, faça as perguntas abaixo para o solicitante:</FormLabel>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 16,}} id="demo-controlled-radio-buttons-group">1 - Como a Empresa foi acionada ?</FormLabel>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 16,}} id="demo-controlled-radio-buttons-group">2 - Tentou ligar para o proprietário ?</FormLabel>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 16,}} id="demo-controlled-radio-buttons-group">3 - Sabe dizer o nome/telefone do proprietário ?</FormLabel>
@@ -199,18 +200,19 @@ export default function AlarmeAcionado() {
           <FormLabel style={{ fontWeight: 'bold', fontSize: 16,}} id="demo-controlled-radio-buttons-group">5 - Há sinais de arrombamento ?</FormLabel>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 16,}} id="demo-controlled-radio-buttons-group">6 - Há pessoas ou veículos suspeitos ?</FormLabel>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 16,}} id="demo-controlled-radio-buttons-group">7 - Há situação de violência no local ?</FormLabel>
-           
+          <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' , fontSize: 16 }}>Caso o solicitante nao seja capaz de responder as perguntas acima informe que:</FormLabel>
+          <FormLabel style={{  fontSize: 16,}} id="demo-controlled-radio-buttons-group">Senhor(a), para acionar o serviço de emergência é necessário que se trate de uma SITUAÇÃO REAL. Por gentileza, colha maiores detalhes e ligue novamente.  </FormLabel>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeSolicitante', e.target.value)} label="Nome solicitante ?" name="nomeSolicitante" variant="outlined" />
+          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeSolicitante', e.target.value)} label="Qual o nome do solicitante ?" name="nomeSolicitante" variant="outlined" />
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Endereço do alarme acionado ?" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Qual o endereço do alarme acionado ?" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Qual a cidade do estabelecimento ?</FormLabel>
             <Select
               sx={{ marginBottom: 2 }}
               placeholder="Cidade:"
@@ -219,58 +221,58 @@ export default function AlarmeAcionado() {
               IconComponent={KeyboardArrowDownIcon}
               variant="outlined"
             >
-              <MenuItem value="Plano Piloto">RA I - Plano Piloto</MenuItem>
-              <MenuItem value="Gama">RA II - Gama</MenuItem>
-              <MenuItem value="Taguatinga">RA III - Taguatinga</MenuItem>
-              <MenuItem value="Brazlândia">RA IV - Brazlândia</MenuItem>
-              <MenuItem value="Sobradinho">RA V - Sobradinho</MenuItem>
-              <MenuItem value="Planaltina">RA VI - Planaltina</MenuItem>
-              <MenuItem value="Paranoá">RA VII - Paranoá</MenuItem>
-              <MenuItem value="Núcleo Bandeirante">RA VIII - Núcleo Bandeirante</MenuItem>
-              <MenuItem value="Ceilândia">RA IX - Ceilândia</MenuItem>
-              <MenuItem value="Guará">RA X - Guará</MenuItem>
-              <MenuItem value="Cruzeiro">RA XI - Cruzeiro</MenuItem>
-              <MenuItem value="Samambaia">RA XII - Samambaia</MenuItem>
-              <MenuItem value="Santa Maria">RA XIII - Santa Maria</MenuItem>
-              <MenuItem value="São Sebastião">RA XIV - São Sebastião</MenuItem>
-              <MenuItem value="Recanto das Emas">RA XV - Recanto das Emas</MenuItem>
-              <MenuItem value="Lago Sul">RA XVI - Lago Sul</MenuItem>
-              <MenuItem value="Riacho Fundo">RA XVII - Riacho Fundo</MenuItem>
-              <MenuItem value="Lago Norte">RA XVIII - Lago Norte</MenuItem>
-              <MenuItem value="Candangolândia">RA XIX - Candangolândia</MenuItem>
-              <MenuItem value="Águas Claras">RA XX - Águas Claras</MenuItem>
-              <MenuItem value="Riacho Fundo II">RA XXI - Riacho Fundo 2</MenuItem>
-              <MenuItem value="Sudoeste">RA XXII - Sudoeste</MenuItem>
-              <MenuItem value="Octogonal">RA XXII - Octogonal</MenuItem>
-              <MenuItem value="Varjão">RA XXIII - Varjão</MenuItem>
-              <MenuItem value="Park Way">RA XXIV - Park Way</MenuItem>
-              <MenuItem value="Estrutural">RA XXV - Estrutural</MenuItem>
-              <MenuItem value="SCIA">RA XXV - SCIA</MenuItem>
-              <MenuItem value="Sobradinho II">RA XXVI - Sobradinho II</MenuItem>
-              <MenuItem value="Jardim Botânico">RA XIV - Jardim Botânico</MenuItem>
-              <MenuItem value="Itapoã">RA XIV - Itapoã</MenuItem>
-              <MenuItem value="SIA">RA XIV - SIA</MenuItem>
-              <MenuItem value="Vicente Pires">RA XIV - Vicente Pires</MenuItem>
-              <MenuItem value="Fercal">RA XIV - Fercal</MenuItem>
-              <MenuItem value="Sol Nascente">RA XIV - Sol Nascente</MenuItem>
-              <MenuItem value="Por do Sol">RA XIV - Por do Sol</MenuItem>
-              <MenuItem value="Arniqueira">RA XIV - Arniqueira</MenuItem>
-              <MenuItem value="Arapoanga">RA XIV - Arapoanga</MenuItem>
-              <MenuItem value="Água Quente">RA XIV - Água Quente</MenuItem>
+              <MenuItem value="Água Quente">Água Quente</MenuItem>
+              <MenuItem value="Águas Claras">Águas Claras</MenuItem>
+              <MenuItem value="Arapoanga">Arapoanga</MenuItem>
+              <MenuItem value="Arniqueira">Arniqueira</MenuItem>
+              <MenuItem value="Brazlândia">Brazlândia</MenuItem>
+              <MenuItem value="Candangolândia">Candangolândia</MenuItem>
+              <MenuItem value="Ceilândia">Ceilândia</MenuItem>
+              <MenuItem value="Cruzeiro">Cruzeiro</MenuItem>
+              <MenuItem value="Estrutural">Estrutural</MenuItem>
+              <MenuItem value="Fercal">Fercal</MenuItem>
+              <MenuItem value="Gama">Gama</MenuItem>
+              <MenuItem value="Guará">Guará</MenuItem>
+              <MenuItem value="Itapoã">Itapoã</MenuItem>
+              <MenuItem value="Jardim Botânico">Jardim Botânico</MenuItem>
+              <MenuItem value="Lago Norte">Lago Norte</MenuItem>
+              <MenuItem value="Lago Sul">Lago Sul</MenuItem>
+              <MenuItem value="Núcleo Bandeirante">Núcleo Bandeirante</MenuItem>
+              <MenuItem value="Octogonal">Octogonal</MenuItem>
+              <MenuItem value="Paranoá">Paranoá</MenuItem>
+              <MenuItem value="Park Way">Park Way</MenuItem>
+              <MenuItem value="Planaltina">Planaltina</MenuItem>
+              <MenuItem value="Por do Sol">Por do Sol</MenuItem>
+              <MenuItem value="Recanto das Emas">Recanto das Emas</MenuItem>
+              <MenuItem value="Riacho Fundo">Riacho Fundo</MenuItem>
+              <MenuItem value="Riacho Fundo II">Riacho Fundo 2</MenuItem>
+              <MenuItem value="Samambaia">Samambaia</MenuItem>
+              <MenuItem value="Santa Maria">Santa Maria</MenuItem>
+              <MenuItem value="São Sebastião">São Sebastião</MenuItem>
+              <MenuItem value="SCIA">SCIA</MenuItem>
+              <MenuItem value="SIA">SIA</MenuItem>
+              <MenuItem value="Sobradinho">Sobradinho</MenuItem>
+              <MenuItem value="Sobradinho II">Sobradinho II</MenuItem>
+              <MenuItem value="Sol Nascente">Sol Nascente</MenuItem>
+              <MenuItem value="Sudoeste">Sudoeste</MenuItem>
+              <MenuItem value="Taguatinga">Taguatinga</MenuItem>
+              <MenuItem value="Varjão">Varjão</MenuItem>
+              <MenuItem value="Vicente Pires">Vicente Pires</MenuItem>
+              <MenuItem value="Plano Piloto">Plano Piloto</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Ponto de referência ?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
+          <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-endereco" label="Qual é o ponto de referência ?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
         </Grid>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Telefone ?" name="telefone" variant="outlined" />
+          <TextField sx={{ marginBottom: 1 }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Qual é o telefone para contato ?" name="telefone" variant="outlined" />
         </Grid>
         <Grid item xs={12}>
           <TextField sx={{ marginBottom: 0 }} fullWidth id="outlined-basic-tempoAgressao" label="Quanto tempo o alarme está acionado  ?" name="tempoAgressao" onChange={e => handleChange('tempoAgressao', e.target.value)} variant="outlined" />
         </Grid>
         <Grid item xs={12}>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-checkbox-group">Tipo de alarme:</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-checkbox-group">Qual é o tipo de alarme acionado ?</FormLabel>
           <Grid container spacing={0}>
             {agressaoOptions.map(option => (
               <Grid item key={option} xs={6} sm={4} md={5}>
@@ -291,7 +293,7 @@ export default function AlarmeAcionado() {
         
         
         <Grid item xs={12}>
-        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Suspeitos encontram-se no local ?</FormLabel>
+        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Existem suspeitos encontram-se no local ?</FormLabel>
           <RadioGroup
             value={agressorNoLocal}
             onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
@@ -315,7 +317,7 @@ export default function AlarmeAcionado() {
             <FormControlLabel value="false" control={<Radio />} label="Não" />
           </RadioGroup>
 
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Verifica-se Urgência no atedimento ?</FormLabel>
           <RadioGroup
             value={urgencia}
             onChange={(e) => handleChange("urgencia", e.target.value)}
@@ -348,10 +350,7 @@ export default function AlarmeAcionado() {
             color="secondary"
             onClick={handleCopy}
             style={{ backgroundColor: '#006600', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
-          <Button variant="contained"
-            color="secondary"
-            onClick={handleResetForm}
-            style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
+          
         </Grid>
       </Grid >
     </Box>
