@@ -19,6 +19,8 @@ import {
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 export default function SomAlto() {
   
   
@@ -114,7 +116,7 @@ export default function SomAlto() {
   };
 
   const handleTelefoneChange = (e, field) => {
-    const maxLength = 14;
+    const maxLength = 11;
     if (e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
     }
@@ -156,11 +158,11 @@ export default function SomAlto() {
   useEffect(() => {
     setState(prevState => ({
       ...prevState,
-      text07:` Solicitante${nome === '' ? '' : ': '+nome}, 
-${endereco === '' ? '' : ', Endereço: '+endereco} 
-${telefone === '' ? '' : ', Telefone: '+telefone} 
-${regiaoAdministrativa === null ? '' : ', RA: '+regiaoAdministrativa}
-, informa som alto no local, pede PMDF no local pois TEM INTERESSE EM ASSINAR O TCO.`,
+      text07:`Solicitante${nome === '' ? '' : ': ' + nome}, 
+${endereco === '' ? '' : 'Endereço: '+ endereco + ','} 
+${telefone === '' ? '' : 'Telefone: '+ telefone + ','} 
+Cidade: ${regiaoAdministrativa}
+Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
     }));
   }, [nome, endereco]);
 
@@ -185,23 +187,17 @@ ${regiaoAdministrativa === null ? '' : ', RA: '+regiaoAdministrativa}
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <InputMask
-          mask="(99)99999-9999"
-          value={telefone}
-          onChange={(e) => handleTelefoneChange(e, 'telefone')}
-        >
-          {(inputProps) => (
             <TextField
-              {...inputProps}
               sx={{ marginBottom: 1, marginRight: 2, width: '80%' }}
               fullWidth
+              type='number'
               id="outlined-basic-telefone"
               label="Qual o telefone do solicitante ?"
               name="telefone"
               variant="outlined"
+              value={telefone}
+              onChange={(e) => handleTelefoneChange(e, 'telefone')}
             />
-          )}
-        </InputMask>
         <Button
           variant="contained"
           color="secondary"
@@ -399,10 +395,11 @@ ${regiaoAdministrativa === null ? '' : ', RA: '+regiaoAdministrativa}
                 />
               </Grid>
               <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
+              <CopyToClipboard text={text06} onCopy={() => console.log('Narrativa copiada!')}>
                 <Button variant="contained"
                   color="secondary"
-                  onClick={() => handleCopyText(text06)}
                   style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+                  </CopyToClipboard>
               </Grid>
             </>)
           }

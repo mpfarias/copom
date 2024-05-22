@@ -17,6 +17,7 @@ import {
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 export default function FormularioViolenciaDomestica() {
   const handleCopy = () => {
@@ -90,7 +91,7 @@ export default function FormularioViolenciaDomestica() {
   const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
-  const [state, setState] = useState({ nomeVitima: '',  endereco: '',  regiaoAdministrativa: 'Plano Piloto',  referencia: '',  telefone: '',  agressao: [],  gritos: [],  armado: '',  parentesco: 'marido',  medida: '',  agressorNoLocal: '',  ferida: '',  criancas: '',  urgencia: '',  narrativa: ''});
+  const [state, setState] = useState({ nomeVitima: '', endereco: '', regiaoAdministrativa: 'Plano Piloto', referencia: '', telefone: '', agressao: [], gritos: [], armado: '', parentesco: 'marido', medida: '', agressorNoLocal: '', ferida: '', criancas: '', urgencia: '', narrativa: '' });
   const [outroParentesco, setOutroParentesco] = useState('');
   const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
@@ -127,7 +128,7 @@ export default function FormularioViolenciaDomestica() {
 
 * A pessoa de NOME: ${nomeVitima}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
 
-          solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de: ' + agressao.join(', ') :
+        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de: ' + agressao.join(', ') :
           solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'informa que uma pessoa está sendo vítima de: ' + agressao.join(', ') + ', e que reside em: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ", possivelmente" :
             ''} pelo(a): ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
  ${medida === 'null' ? '* Não sabe se possui medida' : medida === 'true' ? '* Possui medida protetiva' :
@@ -157,7 +158,7 @@ export default function FormularioViolenciaDomestica() {
             noValidate
             autoComplete="off"
           >
-            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Qual o tipo de solicitante ?</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual o tipo de solicitante ?</FormLabel>
             <RadioGroup
               id="solicitante"
               aria-labelledby="demo-controlled-radio-buttons-group"
@@ -173,16 +174,17 @@ export default function FormularioViolenciaDomestica() {
         </Grid>
         <Grid item xs={12}>
           <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Qual o nome solicitante/vitima ?" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nomeVitima', e.target.value)} label="Qual o nome solicitante/vitima ?" variant="outlined" />
-          <Button variant="contained"
-            color="secondary"
-            onClick={handleCopyNome}
-            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-          </Button>
+          <CopyToClipboard text={nomeVitima} onCopy={() => console.log("nomeVitima")}>
+            <Button variant="contained"
+              color="secondary"
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+            </Button>
+          </CopyToClipboard>
         </Grid>
         <Grid item xs={12} >
           {solicitante === 'denunciante' && (
             <>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-row-radio-buttons-group-label">Qual Endereço próprio ou da vítima ?</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-row-radio-buttons-group-label">Qual Endereço próprio ou da vítima ?</FormLabel>
               <RadioGroup
                 id="enderecoDenunciante"
                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -195,20 +197,19 @@ export default function FormularioViolenciaDomestica() {
                 <FormControlLabel value="endereço da vítima" control={<Radio />} label="Vítima" />
               </RadioGroup>
             </>)}
-
           <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Endereço" id="outlined-basic-endereco" label="Qual endereço da violência ?" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
-
-          <Button variant="contained"
-            color="secondary"
-            onClick={handleCopyEndereco}
-            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-          </Button>
+          <CopyToClipboard text={endereco} onCopy={() => console.log("endereco")}>
+            <Button variant="contained"
+              color="secondary"
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+            </Button>
+          </CopyToClipboard>
         </Grid>
 
 
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Qual é a cidade da vítima ?</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual é a cidade da vítima ?</FormLabel>
             <Select
               sx={{ marginBottom: 2 }}
               placeholder="Cidade:"
@@ -257,24 +258,36 @@ export default function FormularioViolenciaDomestica() {
             </Select>
           </FormControl>
         </Grid>
+        <Grid item xs={4}>
+          <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
+            <Button variant="contained"
+              color="secondary"
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+            </Button>
+          </CopyToClipboard>
+        </Grid>
         <Grid item xs={12}>
           <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Qual é o Ponto de Referência ?" fullWidth id="outlined-basic-referencia" label="Qual é o Ponto de Referência ?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
-          <Button variant="contained"
-            color="secondary"
-            onClick={handleCopyReferencia}
-            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-          </Button>
+          <CopyToClipboard text={referencia} onCopy={() => console.log("Referencia copiada")}>
+            <Button variant="contained"
+              color="secondary"
+
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+            </Button>
+          </CopyToClipboard>
         </Grid>
         <Grid item xs={12}>
           <TextField sx={{ marginBottom: 1, marginRight: 2, width: '80%' }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Qual é o Telefone do solicitante ?" name="telefone" variant="outlined" />
-          <Button variant="contained"
-            color="secondary"
-            onClick={handleCopyTelefone}
-            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-          </Button>
+          <CopyToClipboard text={telefone} onCopy={() => console.log("Telefone copiada")}>
+            <Button variant="contained"
+              color="secondary"
+
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+            </Button>
+          </CopyToClipboard>
         </Grid>
         <Grid item xs={12}>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-checkbox-group">Qual é o tipo de agressão ?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-checkbox-group">Qual é o tipo de agressão ?</FormLabel>
           <Grid container spacing={0}>
             {agressaoOptions.map(option => (
               <Grid item key={option} xs={6} sm={4} md={5}>
@@ -293,7 +306,7 @@ export default function FormularioViolenciaDomestica() {
           </Grid>
         </Grid>
         <Grid item xs={10}>
-          <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold' , fontSize: 16 }}>ATENÇÃO ATENDENTE, você escuta alguma coisa no fundo da conversa ?</FormLabel>
+          <FormLabel id="demo-controlled-checkbox-group" style={{ color: '#990000', fontWeight: 'bold', fontSize: 16 }}>ATENÇÃO ATENDENTE, você escuta alguma coisa no fundo da conversa ?</FormLabel>
           <Grid container spacing={0}>
             {gritosOptions.map(option => (
               <Grid item key={option} xs={6} sm={2} md={4}>
@@ -312,7 +325,7 @@ export default function FormularioViolenciaDomestica() {
         </Grid>
         <Grid item xs={12} sm={7}>
           <FormControl fullWidth>
-            <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Qual o grau parentesco da vítima com o agressor ?</FormLabel>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual o grau parentesco da vítima com o agressor ?</FormLabel>
             <Select
               sx={{ marginBottom: 2 }}
               placeholder="Parentesco"
@@ -351,7 +364,7 @@ export default function FormularioViolenciaDomestica() {
           )}
         </Grid>
         <Grid item xs={12}>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">vítima Possui medida protetiva contra o agressor ?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">vítima Possui medida protetiva contra o agressor ?</FormLabel>
           <RadioGroup
             value={medida}
             onChange={(e) => handleChange("medida", e.target.value)}
@@ -363,7 +376,7 @@ export default function FormularioViolenciaDomestica() {
             <FormControlLabel value="false" control={<Radio />} label="Não" />
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">O agressor encontra-se no local ?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">O agressor encontra-se no local ?</FormLabel>
           <RadioGroup
             value={agressorNoLocal}
             onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
@@ -375,7 +388,7 @@ export default function FormularioViolenciaDomestica() {
             <FormControlLabel value="false" control={<Radio />} label="Não" />
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">O agressor sstá armado com arma de fogo/faca ?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">O agressor sstá armado com arma de fogo/faca ?</FormLabel>
           <RadioGroup
             value={armado}
             onChange={(e) => handleChange("armado", e.target.value)}
@@ -388,7 +401,7 @@ export default function FormularioViolenciaDomestica() {
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
 
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">A vítima está ferida ?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">A vítima está ferida ?</FormLabel>
           <RadioGroup
             value={ferida}
             onChange={(e) => handleChange("ferida", e.target.value)}
@@ -401,7 +414,7 @@ export default function FormularioViolenciaDomestica() {
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
 
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Tem criança envolvida na agressão ?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Tem criança envolvida na agressão ?</FormLabel>
           <RadioGroup
             value={criancas}
             onChange={(e) => handleChange("criancas", e.target.value)}
@@ -413,7 +426,7 @@ export default function FormularioViolenciaDomestica() {
             <FormControlLabel value="false" control={<Radio />} label="Não" />
           </RadioGroup>
 
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
           <RadioGroup
             value={urgencia}
             onChange={(e) => handleChange("urgencia", e.target.value)}
@@ -426,7 +439,7 @@ export default function FormularioViolenciaDomestica() {
 
         </Grid>
         <Grid item xs={12} sx={{ mt: 1 }}>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
           <TextField
             className="narrativa-text"
             sx={{
@@ -442,14 +455,17 @@ export default function FormularioViolenciaDomestica() {
         </Grid>
 
         <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
-          <Button variant="contained"
-            color="secondary"
-            onClick={handleCopy}
-            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
-          
+          <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
+            <Button variant="contained"
+              color="secondary"
+              onClick={handleCopy}
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
+            </Button>
+          </CopyToClipboard>
+
         </Grid>
       </Grid >
-    </Box>
+    </Box >
 
   );
 }

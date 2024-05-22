@@ -108,6 +108,7 @@ export const opcoesCabelo = [
   { value: 'grisalho', label: 'Grisalho' },
   { value: 'longo', label: 'Longo' },
   { value: 'curto', label: 'Curto' },
+  {value: 'careca', label: 'Careca'},
   { value: 'não sabe', label: 'Não sabe' },
 ]
 
