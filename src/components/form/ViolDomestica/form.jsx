@@ -17,40 +17,17 @@ import {
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 export default function FormularioViolenciaDomestica() {
-  const handleCopy = () => {
-    const narrativa = state.narrativa;
-    navigator.clipboard.writeText(narrativa);
-  };
-
-  const handleCopyNome = () => {
-    const nomeVitima = state.nomeVitima;
-    navigator.clipboard.writeText(nomeVitima);
-  };
-
 
   const handleCopyEndereco = () => {
     const endereco = state.endereco;
     navigator.clipboard.writeText(endereco);
   };
 
-
-  const handleCopyReferencia = () => {
-    const referencia = state.referencia;
-    navigator.clipboard.writeText(referencia);
-  };
-
-  const handleCopyTelefone = () => {
-    const telefone = state.telefone;
-    navigator.clipboard.writeText(telefone);
-  };
-
-
-
   const handleTelefoneChange = (e) => {
-    // Limitando o número de caracteres do campo de telefone para 11
     const maxLength = 11;
     if (e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
@@ -77,14 +54,14 @@ export default function FormularioViolenciaDomestica() {
       urgencia: '',
       narrativa: '',
     });
-    setOutroParentesco(''); // Resetar o estado de outroParentesco
-    setShowOutroInput(false); // Esconder o input de outroParentesco
+    setOutroParentesco(''); 
+    setShowOutroInput(false);
     document.getElementById('outlined-basic-nome').value = '';
     document.getElementById('outlined-basic-endereco').value = '';
     document.getElementById('outlined-basic-telefone').value = '';
     document.getElementById('outlined-basic-referencia').value = '';
     setSolicitante('vitima');
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Role até o topo da página
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
 
@@ -205,8 +182,6 @@ export default function FormularioViolenciaDomestica() {
             </Button>
           </CopyToClipboard>
         </Grid>
-
-
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual é a cidade da vítima ?</FormLabel>
@@ -262,7 +237,7 @@ export default function FormularioViolenciaDomestica() {
           <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
             <Button variant="contained"
               color="secondary"
-              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginTop:'10%' }}><FileCopyIcon />
             </Button>
           </CopyToClipboard>
         </Grid>
@@ -453,12 +428,10 @@ export default function FormularioViolenciaDomestica() {
             }}
           />
         </Grid>
-
         <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
           <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
             <Button variant="contained"
               color="secondary"
-              onClick={handleCopy}
               style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
             </Button>
           </CopyToClipboard>

@@ -22,9 +22,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function SomAlto() {
-  
-  
-  
+
+
+
   const regioesAdministrativas = [
     { value: 'Água Quente', label: 'Água Quente' },
     { value: 'Águas Claras', label: 'Águas Claras' },
@@ -64,7 +64,7 @@ export default function SomAlto() {
     { value: 'Varjão', label: 'Varjão' },
     { value: 'Vicente Pires', label: 'Vicente Pires' },
     { value: 'Plano Piloto', label: 'Plano Piloto' }]
-    
+
   const [local, setLocal] = useState('');
   const [assinatura, setAssinatura] = useState('');
 
@@ -72,7 +72,7 @@ export default function SomAlto() {
     assinatura: '',
     nome: '',
     endereco: '',
-    regiaoAdministrativa: '',
+    regiaoAdministrativa: 'Plano Piloto',
     referencia: '',
     telefone: '',
     text01: 'Solicitante informa perturbação do sossego, porém não quis se identificar. Foi orientado a ligar para a Ouvidora Geral do GDF (162).',
@@ -158,9 +158,9 @@ export default function SomAlto() {
   useEffect(() => {
     setState(prevState => ({
       ...prevState,
-      text07:`Solicitante${nome === '' ? '' : ': ' + nome}, 
-${endereco === '' ? '' : 'Endereço: '+ endereco + ','} 
-${telefone === '' ? '' : 'Telefone: '+ telefone + ','} 
+      text07: `Solicitante${nome === '' ? '' : ': ' + nome}, 
+${endereco === '' ? '' : 'Endereço: ' + endereco + ','} 
+${telefone === '' ? '' : 'Telefone: ' + telefone + ','} 
 Cidade: ${regiaoAdministrativa}
 Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
     }));
@@ -186,31 +186,12 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           <FileCopyIcon />
         </Button>
       </Grid>
-      <Grid item xs={12}>
-            <TextField
-              sx={{ marginBottom: 1, marginRight: 2, width: '80%' }}
-              fullWidth
-              type='number'
-              id="outlined-basic-telefone"
-              label="Qual o telefone do solicitante ?"
-              name="telefone"
-              variant="outlined"
-              value={telefone}
-              onChange={(e) => handleTelefoneChange(e, 'telefone')}
-            />
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleCopyField('telefone')}
-          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
-          <FileCopyIcon />
-        </Button>
-      </Grid>
+
       <Grid item xs={12}>
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
           placeholder="Qual endereço do solicitante ?"
-          fullWidth 
+          fullWidth
           id="outlined-basic-endereco"
           onChange={(e) => handleChange('endereco', e.target.value)}
           label="Qual endereço do solicitante ?"
@@ -224,24 +205,55 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           <FileCopyIcon />
         </Button>
       </Grid>
-      <FormControl fullWidth>
-        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group">Qual a cidade da perturbação ?</FormLabel>
-        <Select
-          id="regiaoAdministrativa"
-          sx={{ marginBottom: 2, width: '50%' }}
-          placeholder="regiaoAdministrativa:"
-          value={regiaoAdministrativa}
-          IconComponent={KeyboardArrowDownIcon}
+
+      <Grid item xs={12}>
+        <TextField
+          sx={{ marginBottom: 1, marginRight: 2, width: '80%' }}
+          fullWidth
+          type='number'
+          id="outlined-basic-telefone"
+          label="Qual o telefone do solicitante ?"
+          name="telefone"
           variant="outlined"
-          onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
-        >
-          {regioesAdministrativas.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          value={telefone}
+          onChange={(e) => handleTelefoneChange(e, 'telefone')}
+        />
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => handleCopyField('telefone')}
+          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
+          <FileCopyIcon />
+        </Button>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <FormControl fullWidth>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual a cidade da perturbação ?</FormLabel>
+          <Select
+            id="regiaoAdministrativa"
+            sx={{ marginBottom: 2, width: '50%' }}
+            placeholder="regiaoAdministrativa:"
+            value={regiaoAdministrativa}
+            IconComponent={KeyboardArrowDownIcon}
+            variant="outlined"
+            onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
+          >
+            {regioesAdministrativas.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={4}>
+        <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
+          <Button variant="contained"
+            color="secondary"
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginTop: '10%' }}><FileCopyIcon />
+          </Button>
+        </CopyToClipboard>
+      </Grid>
       <Grid item xs={12}>
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
@@ -261,9 +273,9 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           <FileCopyIcon />
         </Button>
       </Grid>
-      
+
       <Grid item xs={12} sx={{ mt: 1 }}>
-        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+        <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
         <TextField
           sx={{
             backgroundColor: 'rgba(0, 200, 0, 0.1)',
@@ -284,7 +296,6 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>
           Copiar texto
         </Button>
-       
       </Grid>
     </>
   );
@@ -294,13 +305,13 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
     <Box paddingRight={2} marginTop={4} marginBottom={8}>
       <Grid container sx={{ marginLeft: 1, width: '100%' }} spacing={3}>
         <Grid item style={{ paddingTop: 0 }} xs={12}>
-        <FormLabel style={{
+          <FormLabel style={{
             fontWeight: 'bold',
             fontSize: 30,
           }} id="demo-controlled-radio-buttons-group">PERTURBAÇÃO DO SOSSEGO</FormLabel>
           <Box sx={{ mt: 2 }} noValidate autoComplete="off">
             <FormControl>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-row-radio-buttons-group-label">Qual o tipo de local da perturbação ?</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-row-radio-buttons-group-label">Qual o tipo de local da perturbação ?</FormLabel>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -317,13 +328,13 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           </Box>
         </Grid>
         {
-                        console.log(local)
-                      }
+          console.log(local)
+        }
         <Stack sx={{ width: '100%' }} spacing={2}>
           {local === 'residência' && (
             <>
               <Alert severity="warning">{text02}</Alert>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}}id="demo-row-radio-buttons-group-label">Solicitante deseja assinar TCO/PMDF ?</FormLabel>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-row-radio-buttons-group-label">Solicitante deseja assinar TCO/PMDF ?</FormLabel>
               <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
@@ -341,7 +352,7 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
                     <>
                       <Alert severity="warning">{text03}</Alert>
                       <Grid item xs={12} sx={{ mt: 1 }}>
-                        <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+                        <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
                         <TextField
                           sx={{
                             backgroundColor: 'rgba(0, 200, 0, 0.1)',
@@ -354,7 +365,6 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
                           }}
                         />
                       </Grid>
-
                       <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
                         <Button variant="contained"
                           color="secondary"
@@ -363,25 +373,24 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
                       </Grid>
                     </>
                   )}
-
                 </Stack>
               </Grid>
             </>
           )}
           {local === 'automóvel' && (
             <>
-          <Alert severity="warning">{text04} </Alert>
-          {renderOpcoesAssinatura()}
-          </>
+              <Alert severity="warning">{text04} </Alert>
+              {renderOpcoesAssinatura()}
+            </>
           )
-        }
+          }
           {local === 'estabelecimento comercial' && (
             <>
               <Alert severity="warning">{text05} </Alert>
               <Alert severity="warning">{aviso01}</Alert>
 
               <Grid item xs={12} sx={{ mt: 1 }}>
-                <FormLabel style={{ fontWeight: 'bold', fontSize: 18,}} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+                <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
                 <TextField
                   sx={{
                     backgroundColor: 'rgba(0, 200, 0, 0.1)',
@@ -395,11 +404,11 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
                 />
               </Grid>
               <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
-              <CopyToClipboard text={text06} onCopy={() => console.log('Narrativa copiada!')}>
-                <Button variant="contained"
-                  color="secondary"
-                  style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
-                  </CopyToClipboard>
+                <CopyToClipboard text={text06} onCopy={() => console.log('Narrativa copiada!')}>
+                  <Button variant="contained"
+                    color="secondary"
+                    style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+                </CopyToClipboard>
               </Grid>
             </>)
           }

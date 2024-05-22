@@ -31,7 +31,7 @@ export default function Menu() {
   const drawerItems = [
     { text: 'Home', icon: <HomeIcon />, link: '/' },
     { text: 'Violência doméstica', icon: <ReportIcon />, link: '/ViolenciaDomestica'},
-    //{ text: 'Som automotivo/ Perturbação', icon: <SpatialAudioIcon />, link: '/SomAlto' },
+    { text: 'Som automotivo/ Perturbação', icon: <SpatialAudioIcon />, link: '/SomAlto' },
     { text: 'Roubo/Furto', icon: <LocalPoliceIcon />, link: '/RouboFurto' },
     { text: 'Maus tratos a animais', icon: <PetsIcon />, link: '/MausTratos' },
     { text: 'Alarme acionado', icon: <AlarmIcon />, link: '/AlarmeAcionado' }

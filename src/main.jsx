@@ -28,8 +28,8 @@ const router = createBrowserRouter([
         element: <FormularioViolenciaDomestica />
       },
       {
-       // path: "SomAlto",
-      //  element: <SomAlto />
+        path: "SomAlto",
+        element: <SomAlto />
       },
       {
         path: "RouboFurto",
