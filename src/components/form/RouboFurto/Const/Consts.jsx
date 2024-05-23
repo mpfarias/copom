@@ -77,6 +77,7 @@ export const opcoesParteDeCima = [
   { value: 'camisa', label: 'Camisa' },
   { value: 'regata', label: 'Regata' },
   { value: 'casaco', label: 'Casaco' },
+  { value: 'time', label: 'Camisa de time'},
   { value: 'sem camisa', label: 'Sem camisa/camiseta' },
   { value: 'não sabe', label: 'Não sabe' },
 ];

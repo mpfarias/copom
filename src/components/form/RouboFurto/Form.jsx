@@ -91,21 +91,47 @@ export default function RouboFurto() {
   const handleChange = (field, value) => {
 
     setState(prevState => ({ ...prevState, [field]: value }));
-
   };
 
   const [selectedOptionCima, setSelectedOptionCima] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
   const [selectedOptionBaixo, setSelectedOptionBaixo] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
   const [selectedOptionArma, setSelectedOptionArma] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
   const [selectedOptionCabelo, setSelectedOptionCabelo] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
+  const [nomesTimes, setNomesTimes] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
+  const [showCamisaTime, setShowCamisaTime] = useState(false)
+
+  /* const handleChangeCima = (individuoIndex, event) => {
+     const newOptions = [...selectedOptionCima];
+     newOptions[individuoIndex] = event.target.value;
+     setSelectedOptionCima(newOptions);
+     setIndividuosData(prevIndividuos => prevIndividuos.map((individuo, index) =>
+       index === individuoIndex ? { ...individuo, parteDeCima: event.target.value } : individuo
+     ));
+     setShowCamisaTime( selectedOptionCima === 'time');
+   };*/
 
   const handleChangeCima = (individuoIndex, event) => {
-    const newOptions = [...selectedOptionCima];
-    newOptions[individuoIndex] = event.target.value;
-    setSelectedOptionCima(newOptions);
-    setIndividuosData(prevIndividuos => prevIndividuos.map((individuo, index) =>
-      index === individuoIndex ? { ...individuo, parteDeCima: event.target.value } : individuo
-    ));
+    const novoValor = event.target.value;
+    setSelectedOptionCima((prevOptions) => {
+      const novasOpcoes = [...prevOptions];
+      novasOpcoes[individuoIndex] = novoValor;
+      return novasOpcoes;
+    });
+    setIndividuosData((prevIndividuos) =>
+      prevIndividuos.map((individuo, index) =>
+        index === individuoIndex ? { ...individuo, parteDeCima: novoValor } : individuo
+      )
+    );
+    setShowCamisaTime(novoValor === 'time');
+  };
+
+  const handleNomeTimeChange = (individuoIndex, event) => {
+    const novoNomeTime = event.target.value;
+    setNomesTimes((prevNomesTimes) => {
+      const novosNomesTimes = [...prevNomesTimes];
+      novosNomesTimes[individuoIndex] = novoNomeTime;
+      return novosNomesTimes;
+    });
   };
 
   const handleChangeBaixo = (individuoIndex, event) => {
@@ -224,10 +250,11 @@ export default function RouboFurto() {
         showOutraCaracteristica: existingIndividuo.showOutraCaracteristica || false,
       };
     });
-
+    const novosNomesTimes = Array.from({ length: numIndividuos }, (_, index) => nomesTimes[index] || '');
     setIndividuosData(novosIndividuos);
     setSelectedOptionCima(novosIndividuos.map(individuo => individuo.parteDeCima));
     setSelectedOptionBaixo(novosIndividuos.map(individuo => individuo.parteDeBaixo));
+    setNomesTimes(novosNomesTimes);
     setState(prevState => ({ ...prevState, individuos: numIndividuos }));
   };
 
@@ -262,11 +289,22 @@ export default function RouboFurto() {
         const individuo = individuosData[i];
 
         text += ` \n\nIndivíduo ${i + 1}:\n`;
-        text += ` - Parte de Cima: ${individuo.parteDeCima.toUpperCase() || 'Não selecionado'}\n`;
+        if (individuo.parteDeCima === 'time') {
+          text += ` - Camisa de time: ${nomesTimes[i].toUpperCase() || 'NÃO INFORMADO'}\n`;
+        } else {
+          text += ` - Parte de Cima: ${individuo.parteDeCima.toUpperCase() || 'Não selecionado'}\n`;
+        }
         text += ` - Parte de Baixo: ${individuo.parteDeBaixo.toUpperCase() || 'Não selecionado'}\n`;
-        text += ` - Cor da camiseta/camisa/regata: ${individuo.corCamiseta?.label.toUpperCase() || 'NÃO SELECIONADO'}\n`;
+        if (individuo.parteDeCima === 'time') {
+          text += ``;
+        } else {
+          text += ` - Cor da camiseta/camisa/regata: ${individuo.corCamiseta?.label.toUpperCase() || 'NÃO SELECIONADO'}\n`;
+        }
         text += ` - Cor da calça/bermuda: ${individuo.corCalca?.label.toUpperCase() || 'NÃO SELECIONADO'}\n`;
         text += ` - Características: ${individuo.caracteristicas.length > 0 ? individuo.caracteristicas.join(', ').toUpperCase() : 'NENHUMA CARACTERÍSTICA SELECIONADA'}\n`;
+        if (showOutraCaracteristica) {
+          text += ` - Outras características: ${individuo.outraCaracteristica.toUpperCase() || 'Não selecionado'}\n`;
+        }
         text += ` - Calçado: ${individuo.calcado.toUpperCase() || 'Não selecionado'}\n`;
         text += ` - Tipo de Cabelo: ${individuo.tipoCabelo.toUpperCase() || 'Não selecionado'}\n`;
         text += ` - Uso de Arma: ${individuo.usoArma.toUpperCase() || 'Não selecionado'}\n`;
@@ -287,7 +325,30 @@ export default function RouboFurto() {
 
     const updatedNarrative = generateNarrative();
     setState(prevState => ({ ...prevState, narrativa: updatedNarrative }));
-  }, [solicitante, objeto, tipo, nome, endereco, regiaoAdministrativa, referencia, telefone, modelo, placa, estabelecimento, individuosData, outraCor, parteDeCima, parteDeBaixo, calcado, corVeiculo, corCamiseta, corCalca, caracteristicasIndividuos, outraCaracteristica, usoArma]);
+  }, [solicitante,
+    objeto,
+    tipo,
+    nome,
+    endereco,
+    regiaoAdministrativa,
+    referencia,
+    telefone,
+    modelo,
+    placa,
+    estabelecimento,
+    individuosData,
+    outraCor,
+    parteDeCima,
+    nomesTimes,
+    parteDeBaixo,
+    calcado,
+    corVeiculo,
+    corCamiseta,
+    corCalca,
+    caracteristicasIndividuos,
+    outraCaracteristica,
+    usoArma
+  ]);
 
 
   const handleCorRoupaChange = (individuoIndex, value, type) => {
@@ -498,7 +559,7 @@ export default function RouboFurto() {
 
                 {objeto === 'estabelecimento comercial' && (
                   <>
-                  <Grid item xs={12}>
+                    <Grid item xs={12}>
                       <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Qual foi o estabelecimento?" fullWidth id="outlined-basic-nome" onChange={e => handleChange('estabelecimento', e.target.value)} label="Aconteceu e que estabelecimento?" variant="outlined" />
                       <CopyToClipboard text={placa} onCopy={() => console.log('Placa copiada!')}>
                         <Button variant="contained"
@@ -537,7 +598,7 @@ export default function RouboFurto() {
                         <FormControl>
                           <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id="demo-row-radio-buttons-group-label">Parte de cima:</FormLabel>
                           <RadioGroup
-                            sx={{ marginBottom: 5 }}
+                            sx={{ marginBottom: 2 }}
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             name={`row-radio-buttons-group-cima-${individuoIndex}`}
@@ -552,6 +613,19 @@ export default function RouboFurto() {
                               />
                             ))}
                           </RadioGroup>
+                          {selectedOptionCima[individuoIndex] === 'time' && (
+                            <TextField
+                              id="outlined-search-time"
+                              sx={{
+                                width: '80%',
+                                marginBottom: 4
+                              }}
+                              label="Informe o time"
+                              type="search"
+                              value={nomesTimes[individuoIndex]}
+                              onChange={(e) => handleNomeTimeChange(individuoIndex, e)}
+                            />
+                          )}
                         </FormControl>
                         <FormControl>
                           <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id="demo-row-radio-buttons-group-label">Parte de baixo:</FormLabel>
@@ -573,7 +647,7 @@ export default function RouboFurto() {
                         </FormControl>
                         <Grid item xs={10}>
                           <FormControl>
-                            <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id={`corCamiseta-label-${individuoIndex}`}>Cor da camiseta/camisa/regata do indivíduo {individuoIndex + 1}:</FormLabel>
+                            <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id={`corCamiseta-label-${individuoIndex}`}>Cor da camiseta/camisa do indivíduo {individuoIndex + 1}:</FormLabel>
                             <Select
                               sx={{ marginBottom: 5 }}
                               value={individuosData[individuoIndex].corCamiseta}
@@ -626,7 +700,6 @@ export default function RouboFurto() {
                             <FormControlLabel
                               control={
                                 <Checkbox
-
                                   checked={showOutraCaracteristica[individuoIndex]}
                                   onChange={() => handleOutraCaracteristicaCheckboxChange(individuoIndex)}
                                 />
@@ -634,6 +707,21 @@ export default function RouboFurto() {
                               label="Outro"
                             />
                           </FormGroup>
+                          {showOutraCaracteristica[individuoIndex] && (
+
+                            <TextField
+                              id={`outraCaracteristica-${individuoIndex}`}
+                              sx={{marginTop:2,
+                                marginBottom:3,
+                                width:'80%'
+                              }}
+                              value={outrasCaracteristicas[individuoIndex]}
+                              label="Outra característica"
+                              variant="outlined"
+                              onChange={(e) => handleOutraCaracteristicaChange(individuoIndex, e.target.value)}
+                            />
+
+                          )}
                         </FormControl>
                         <FormControl>
                           <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id="demo-row-radio-buttons-group-label">Calçado:</FormLabel>
@@ -655,25 +743,6 @@ export default function RouboFurto() {
                             ))}
                           </RadioGroup>
                         </FormControl>
-                        {showOutraCaracteristica[individuoIndex] && (
-                          <Box
-                            component="form"
-                            sx={{
-                              '& > :not(style)': { width: '80%' },
-                              marginTop: 0,
-                            }}
-                            noValidate
-                            autoComplete="off"
-                          >
-                            <TextField
-                              id={`outraCaracteristica-${individuoIndex}`}
-                              value={outrasCaracteristicas[individuoIndex]}
-                              label="Outra característica"
-                              variant="outlined"
-                              onChange={(e) => handleOutraCaracteristicaChange(individuoIndex, e.target.value)}
-                            />
-                          </Box>
-                        )}
                         <FormControl>
                           <FormLabel sx={{ marginBottom: 2, fontWeight: 'bold', textDecoration: 'underline', fontStyle: 'italic' }} id="demo-row-radio-buttons-group-label">Tipo de cabelo:</FormLabel>
                           <RadioGroup
@@ -740,11 +809,6 @@ export default function RouboFurto() {
                       onClick={handleCopy}
                       style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
                   </CopyToClipboard>
-                  <Button variant="contained"
-                    color="secondary"
-                    onClick={handleResetForm}
-                    sx={{ marginBottom: 8 }}
-                    style={{ backgroundColor: '#000066', color: '#FFFFFF' }}>Limpar Formulário</Button>
                 </Grid>
               </>
 

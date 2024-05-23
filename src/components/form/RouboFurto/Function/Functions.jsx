@@ -19,22 +19,3 @@ export const handleCopy = async (fieldId = null, fieldValue = null) => {
     alert('Falha ao copiar texto.');
   }
 };
-
-
-  export const handleResetForm = (setState) => {
-    setState({
-      nome: '',
-      tipo: '',
-      endereco: '',
-      regiaoAdministrativa: 'Plano Piloto',
-      referencia: '',
-      telefone: '',
-      placa: '',
-      modelo: '',
-      individuos: '1',
-      corCamisetas: ['clara'],
-      corCalcas: ['clara'],
-      caracteristicas: [],
-      narrativa: ''
-    });
-  };
