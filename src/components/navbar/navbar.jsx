@@ -38,14 +38,31 @@ const Navbar = () => {
                 COPOM
             </Box>
 
-                        <Box component="section"
+            
+            <Box component="section"
+                sx={{
+                    p: 1.5,
+                    alignItems: 'center',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    color: '#ffffff',
+                    backgroundColor: '#000066',
+                    fontFamily: 'Myriad Pro',
+                    fontSize: 'calc(10px + 1vw)',
+                    width: '100%',
+                    paddingBottom: 2,
+                }}>
+            ELYSIUM - Registro de Ocorrências
+            </Box>
+
+            <Box component="section"
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
-                    marginBottom: 0,
                     backgroundImage: 'url("https://github.com/mpfarias/copom-mulher/blob/main/src/img/faixa.png?raw=true")', // Definindo a imagem de fundo
-                    backgroundRepeat: 'repeat-x', // Repete horizontal e verticalmente
-                    padding: '19px', // Adiciona espaço em torno da imagem
+                    backgroundRepeat: 'repeat-x',
+                    padding: '19px',
+                    marginBottom:5
                 }}>
 
             </Box>
