@@ -83,7 +83,7 @@ export default function SomAlto() {
     text05: 'Informe ao solicitante que a denúncia deverá ser feita no telefone 162, pois a responsabilidade para atuar em estabelecimento comercial é do IBRAM.',
     text06: 'Solicitante informa som alto em estabelecimento comercial. Foi orientado a ligar na Ouvidora do GDF (162).',
     text07: '',
-    text08: "Solicitante informa que veículo está incomodando com o sol alto. Pede apoio do DETRAN."
+    text08: ''
   });
 
   const {
@@ -91,6 +91,7 @@ export default function SomAlto() {
     telefone,
     endereco,
     regiaoAdministrativa,
+    referencia,
     text01,
     aviso01,
     text02,
@@ -158,13 +159,22 @@ export default function SomAlto() {
   useEffect(() => {
     setState(prevState => ({
       ...prevState,
-      text07: `Solicitante${nome === '' ? '' : ': ' + nome}, 
-${endereco === '' ? '' : 'Endereço: ' + endereco + ','} 
+      text07: `Solicitante${nome === '' ? '' : ': ' + nome.toUpperCase()}, 
+${endereco === '' ? '' : 'Endereço: ' + endereco.toUpperCase() + ','} 
 ${telefone === '' ? '' : 'Telefone: ' + telefone + ','} 
-Cidade: ${regiaoAdministrativa}
+Cidade: ${regiaoAdministrativa.toUpperCase()}, ponto de referência: ${referencia.toUpperCase()}.
 Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
-    }));
-  }, [nome, endereco]);
+    
+      text08:`Solicitante ${nome.toUpperCase()},
+endereço: ${endereco.toUpperCase()},
+cidade: ${regiaoAdministrativa.toUpperCase()},
+ponto de referência: ${referencia.toUpperCase()}
+telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DETRAN  `,
+
+}));
+  }, [nome, endereco, telefone, regiaoAdministrativa, referencia]);
+
+
 
   const renderOpcoesAssinatura = () => (
     <>
@@ -178,13 +188,14 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           label="Qual o nome do solicitante ?"
           variant="outlined"
         />
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleCopyField('nome')}
-          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
-          <FileCopyIcon />
-        </Button>
+        <CopyToClipboard text={nome} onCopy={() => console.log('Nome copiado!')}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
+            <FileCopyIcon />
+          </Button>
+        </CopyToClipboard>
       </Grid>
 
       <Grid item xs={12}>
@@ -197,13 +208,14 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           label="Qual endereço do solicitante ?"
           variant="outlined"
         />
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleCopyField('endereco')}
-          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
-          <FileCopyIcon />
-        </Button>
+        <CopyToClipboard text={endereco} onCopy={() => console.log('Endereço copiado!')}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
+            <FileCopyIcon />
+          </Button>
+        </CopyToClipboard>
       </Grid>
 
       <Grid item xs={12}>
@@ -218,41 +230,44 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           value={telefone}
           onChange={(e) => handleTelefoneChange(e, 'telefone')}
         />
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleCopyField('telefone')}
-          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
-          <FileCopyIcon />
-        </Button>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <FormControl fullWidth>
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual a cidade da perturbação ?</FormLabel>
-          <Select
-            id="regiaoAdministrativa"
-            sx={{ marginBottom: 2, width: '50%' }}
-            placeholder="regiaoAdministrativa:"
-            value={regiaoAdministrativa}
-            IconComponent={KeyboardArrowDownIcon}
-            variant="outlined"
-            onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
-          >
-            {regioesAdministrativas.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid item xs={4}>
-        <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
-          <Button variant="contained"
+        <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
+          <Button
+            variant="contained"
             color="secondary"
-            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginTop: '10%' }}><FileCopyIcon />
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
+            <FileCopyIcon />
           </Button>
         </CopyToClipboard>
+      </Grid>
+      <Grid container sx={{ width: '100%' }} spacing={0}>
+        <Grid item xs={12} sm={8}>
+          <FormControl fullWidth>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual a cidade da perturbação ?</FormLabel>
+            <Select
+              id="regiaoAdministrativa"
+              sx={{ marginBottom: 2 }}
+              placeholder="regiaoAdministrativa:"
+              value={regiaoAdministrativa}
+              IconComponent={KeyboardArrowDownIcon}
+              variant="outlined"
+              onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
+            >
+              {regioesAdministrativas.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
+            <Button variant="contained"
+              color="secondary"
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginLeft: '90%', marginTop: '20%' }}><FileCopyIcon />
+            </Button>
+          </CopyToClipboard>
+        </Grid>
       </Grid>
       <Grid item xs={12}>
         <TextField
@@ -265,13 +280,14 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
           onChange={(e) => handleChange('referencia', e.target.value)}
           variant="outlined"
         />
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleCopyField('referencia')}
-          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
-          <FileCopyIcon />
-        </Button>
+        <CopyToClipboard text={referencia} onCopy={() => console.log('Referência copiado!')}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}>
+            <FileCopyIcon />
+          </Button>
+        </CopyToClipboard>
       </Grid>
 
       <Grid item xs={12} sx={{ mt: 1 }}>
@@ -289,13 +305,11 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
         />
       </Grid>
       <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleCopyText(text07)}
-          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>
-          Copiar texto
-        </Button>
+        <CopyToClipboard text={text06} onCopy={() => console.log('Narrativa copiada!')}>
+          <Button variant="contained"
+            color="secondary"
+            style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+        </CopyToClipboard>
       </Grid>
     </>
   );
@@ -327,9 +341,6 @@ Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
             </FormControl>
           </Box>
         </Grid>
-        {
-          console.log(local)
-        }
         <Stack sx={{ width: '100%' }} spacing={2}>
           {local === 'residência' && (
             <>

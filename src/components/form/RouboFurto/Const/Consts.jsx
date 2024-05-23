@@ -83,12 +83,15 @@ export const opcoesParteDeCima = [
 export const opcoesParteDeBaixo = [
   { value: 'bermuda', label: 'Bermuda' },
   { value: 'calça', label: 'Calça' },
+  { value: 'saia', label: 'Saia' },
+  { value: 'vestido', label: 'Vestido' },
   { value: 'não sabe', label: 'Não sabe' },
 ];
 
 export const opcoesCalcado = [
   { value: 'tênis', label: 'Tênis' },
   { value: 'sapato', label: 'Sapato' },
+  { value: 'bota', label: 'Bota' },
   { value: 'chinelo', label: 'Chinelo' },
   { value: 'descalço', label: 'Descalço' },
   { value: 'não sabe', label: 'Não sabe' },

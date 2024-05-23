@@ -17,6 +17,8 @@ import {
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 export default function AlarmeAcionado() {
   const agressaoOptions = ['Sonoro', 'Luminoso' , 'Acionamento eletrônico', 'Acionamento manual', 'Botão do pânico',];
   const [solicitante, setSolicitante] = useState('vitima');
@@ -121,11 +123,6 @@ export default function AlarmeAcionado() {
     urgencia, 
     outroParentesco]);
 
-  const handleCopy = () => {
-    const narrativa = state.narrativa;
-    navigator.clipboard.writeText(narrativa);
-  };
-
   const handleTelefoneChange = (e) => {
     // Limitando o número de caracteres do campo de telefone para 11
     const maxLength = 11;
@@ -133,32 +130,6 @@ export default function AlarmeAcionado() {
       e.target.value = e.target.value.slice(0, maxLength);
     }
     handleChange('telefone', e.target.value);
-  };
-
-  const handleResetForm = () => {
-    setState({
-      solicitante: 'vitima',
-      tipoAnimal: '',
-      nomeAgressor: '',
-      nomeAutor: '',
-      nomeSolicitante: '',
-      endereco: '',
-      regiaoAdministrativa: '',
-      referencia: '',
-      telefone: '',
-      agressao: [],
-      tempoAgressao: '',
-      agressorNoLocal: '',
-      localAgressao: '',
-      filmagenImagem: '',
-      parentesco: 'marido',
-      filmagenImagem: '',
-      urgencia: '',
-      narrativa: '',
-    });
-    setOutroParentesco(''); // Resetar o estado de outroParentesco
-    setShowOutroInput(false); // Esconder o input de outroParentesco
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Role até o topo da página
   };
 
   return (
@@ -344,13 +315,13 @@ export default function AlarmeAcionado() {
             }}
           />
         </Grid>
-
         <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
-          <Button variant="contained"
-            color="secondary"
-            onClick={handleCopy}
-            style={{ backgroundColor: '#006600', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
-          
+          <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
+            <Button variant="contained"
+              color="secondary"
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
+            </Button>
+          </CopyToClipboard>
         </Grid>
       </Grid >
     </Box>
