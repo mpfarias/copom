@@ -52,14 +52,14 @@ const Navbar = () => {
                     width: '100%',
                     paddingBottom: 2,
                 }}>
-            ELYSIUM - Registro de Ocorrências
+            HEFESTO - Registro de Ocorrências
             </Box>
 
             <Box component="section"
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
-                    backgroundImage: 'url("https://github.com/mpfarias/copom-mulher/blob/main/src/img/faixa.png?raw=true")', // Definindo a imagem de fundo
+                    backgroundImage: 'url("https://github.com/mpfarias/copom-mulher/blob/main/src/img/faixa.png?raw=true")',
                     backgroundRepeat: 'repeat-x',
                     padding: '19px',
                     marginBottom:5

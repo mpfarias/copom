@@ -57,7 +57,7 @@ export default function Menu() {
 
   return (
     <div>
-      <Button variant="contained" endIcon={<SendIcon />} sx={{ marginLeft:20, marginTop: 3 }} onClick={toggleDrawer(true)}>Menu</Button>
+      <Button variant="contained" endIcon={<SendIcon />} sx={{ marginLeft:5, marginTop: 2 }} onClick={toggleDrawer(true)}>Menu</Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>

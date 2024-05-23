@@ -48,6 +48,7 @@ export default function RouboFurto() {
     telefone: '',
     placa: '',
     modelo: '',
+    estabelecimento: '',
     corVeiculo: 'branco',
     outraCor: '',
     individuos: -1,
@@ -71,6 +72,7 @@ export default function RouboFurto() {
     telefone,
     placa,
     modelo,
+    estabelecimento,
     calcado,
     individuos,
     parteDeCima,
@@ -245,6 +247,8 @@ export default function RouboFurto() {
       text += `informa que teve seu veículo ${tipo === 'roubado' ? 'tomado de ASSALTO (ROUBO)' : 'furtado'}, trata-se de um ${modelo.toUpperCase()} ${corExibida.toUpperCase() || 'COR NÃO INFORMADA'}, ${placa === '' ? 'não soube informar a placa' : 'placa: ' + placa.toUpperCase()}, `;
     } else if (objeto === 'transeunte') {
       text += `informa que foi vítima de  ${tipo === 'roubado' ? 'ROUBO, e ' : 'FURTO, e '}`;
+    } else if (objeto === 'estabelecimento comercial') {
+      text += ` informa que houve um assalto no/na ${estabelecimento}, `;
     }
 
     if (individuos === -1) {
@@ -264,7 +268,6 @@ export default function RouboFurto() {
         text += ` - Cor da calça/bermuda: ${individuo.corCalca?.label.toUpperCase() || 'NÃO SELECIONADO'}\n`;
         text += ` - Características: ${individuo.caracteristicas.length > 0 ? individuo.caracteristicas.join(', ').toUpperCase() : 'NENHUMA CARACTERÍSTICA SELECIONADA'}\n`;
         text += ` - Calçado: ${individuo.calcado.toUpperCase() || 'Não selecionado'}\n`;
-        { console.log(calcado) }
         text += ` - Tipo de Cabelo: ${individuo.tipoCabelo.toUpperCase() || 'Não selecionado'}\n`;
         text += ` - Uso de Arma: ${individuo.usoArma.toUpperCase() || 'Não selecionado'}\n`;
         if (individuo.caracteristicas.includes('Outro') && individuo.outraCaracteristica.trim() !== '') {
@@ -284,7 +287,7 @@ export default function RouboFurto() {
 
     const updatedNarrative = generateNarrative();
     setState(prevState => ({ ...prevState, narrativa: updatedNarrative }));
-  }, [solicitante, objeto, tipo, nome, endereco, regiaoAdministrativa, telefone, modelo, placa, individuosData, outraCor, parteDeCima, parteDeBaixo, calcado, corVeiculo, corCamiseta, corCalca, caracteristicasIndividuos, outraCaracteristica, usoArma]);
+  }, [solicitante, objeto, tipo, nome, endereco, regiaoAdministrativa, referencia, telefone, modelo, placa, estabelecimento, individuosData, outraCor, parteDeCima, parteDeBaixo, calcado, corVeiculo, corCamiseta, corCalca, caracteristicasIndividuos, outraCaracteristica, usoArma]);
 
 
   const handleCorRoupaChange = (individuoIndex, value, type) => {
@@ -354,6 +357,7 @@ export default function RouboFurto() {
                 onChange={(e) => setObjeto(e.target.value)}
               >
                 <FormControlLabel value="veículo" control={<Radio />} label="Veículo" />
+                <FormControlLabel value="estabelecimento comercial" control={<Radio />} label="Estabelecimento comercial" />
                 <FormControlLabel value="celular" control={<Radio />} label="Aparelho Celular" />
                 <FormControlLabel value="transeunte" control={<Radio />} label="Transeunte" />
               </RadioGroup>
@@ -362,7 +366,7 @@ export default function RouboFurto() {
         </Grid>
         <Grid item xs={12} >
           <Stack sx={{ width: '100%' }} spacing={2}>
-            {(objeto === 'veículo' || objeto === 'transeunte') && (
+            {(objeto === 'veículo' || objeto === 'transeunte' || objeto === 'estabelecimento comercial') && (
               <>
                 <Grid item xs={12}>
                   <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Nome solicitante" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nome', e.target.value)} label="Nome solicitante ?" variant="outlined" />
@@ -491,6 +495,21 @@ export default function RouboFurto() {
                     </Grid>
                   </>
                 )}
+
+                {objeto === 'estabelecimento comercial' && (
+                  <>
+                  <Grid item xs={12}>
+                      <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Qual foi o estabelecimento?" fullWidth id="outlined-basic-nome" onChange={e => handleChange('estabelecimento', e.target.value)} label="Aconteceu e que estabelecimento?" variant="outlined" />
+                      <CopyToClipboard text={placa} onCopy={() => console.log('Placa copiada!')}>
+                        <Button variant="contained"
+                          color="secondary"
+                          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                        </Button>
+                      </CopyToClipboard>
+                    </Grid>
+                  </>
+                )
+                }
                 <Grid item xs={12}>
                   <FormControl sx={{ width: '80%' }}>
                     <FormLabel sx={{ marginBottom: 2 }} id="demo-controlled-radio-buttons-group">Indivíduos:</FormLabel>
@@ -641,7 +660,7 @@ export default function RouboFurto() {
                             component="form"
                             sx={{
                               '& > :not(style)': { width: '80%' },
-                              marginTop: 3,
+                              marginTop: 0,
                             }}
                             noValidate
                             autoComplete="off"
@@ -733,7 +752,7 @@ export default function RouboFurto() {
             {objeto === 'celular' && (
 
               <Box >
-                <Alert sx={{marginBottom:10}} severity="warning">{text01}</Alert>
+                <Alert sx={{ marginBottom: 10 }} severity="warning">{text01}</Alert>
               </Box>
             )}
           </Stack>

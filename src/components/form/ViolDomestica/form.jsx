@@ -33,7 +33,24 @@ export default function FormularioViolenciaDomestica() {
   const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
-  const [state, setState] = useState({ nomeVitima: '', endereco: '', regiaoAdministrativa: 'Plano Piloto', referencia: '', telefone: '', agressao: [], gritos: [], armado: '', parentesco: 'marido', medida: '', agressorNoLocal: '', ferida: '', criancas: '', urgencia: '', narrativa: '' });
+
+  const [state, setState] = useState({ 
+    nomeVitima: '', 
+    endereco: '', 
+    regiaoAdministrativa: 'Plano Piloto',
+    referencia: '', 
+    telefone: '', 
+    agressao: [], 
+    gritos: [], 
+    armado: '', 
+    parentesco: 'marido', 
+    medida: '', 
+    agressorNoLocal: '', 
+    ferida: '', 
+    criancas: '', 
+    urgencia: '', 
+    narrativa: '' });
+  
   const [outroParentesco, setOutroParentesco] = useState('');
   const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
@@ -58,9 +75,9 @@ export default function FormularioViolenciaDomestica() {
   const handleCheckboxChange = (field, value) => {
     let updatedValue;
     if (state[field].includes(value)) {
-      updatedValue = state[field].filter(item => item !== value); // Remove o valor se já estiver selecionado
+      updatedValue = state[field].filter(item => item !== value);
     } else {
-      updatedValue = [...state[field], value]; // Adiciona o valor se ainda não estiver selecionado
+      updatedValue = [...state[field], value];
     }
     setState(prevState => ({ ...prevState, [field]: updatedValue }));
   };
@@ -68,10 +85,10 @@ export default function FormularioViolenciaDomestica() {
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-* A pessoa de NOME: ${nomeVitima}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
+* A pessoa de NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + (referencia ==='' ? '' : ', PONTO DE REFERÊNCIA: ') + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
 
-        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de: ' + agressao.join(', ') :
-          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'informa que uma pessoa está sendo vítima de: ' + agressao.join(', ') + ', e que reside em: ' + endereco + ', RA: ' + regiaoAdministrativa + ', PONTO DE REFERÊNCIA: ' + referencia + ', TELEFONE: ' + telefone + ", possivelmente" :
+        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de: ' + agressao.join(', ') :
+          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'informa que uma pessoa está sendo vítima de: ' + agressao.join(', ') + ', e que reside em: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ", possivelmente" :
             ''} pelo(a): ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
  ${medida === 'null' ? '* Não sabe se possui medida' : medida === 'true' ? '* Possui medida protetiva' :
         'Não possui medida protetiva'} contra o agressor.

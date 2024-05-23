@@ -67,6 +67,7 @@ export const caracteristicasOption = [
   'cicatriz',
   'tatuagem',
   'sinal no rosto',
+  'capuz',
   'não sabe',
 ]
 
@@ -92,7 +93,7 @@ export const opcoesCalcado = [
   { value: 'tênis', label: 'Tênis' },
   { value: 'sapato', label: 'Sapato' },
   { value: 'bota', label: 'Bota' },
-  { value: 'chinelo', label: 'Chinelo' },
+  { value: 'chinelo/sandália', label: 'Chinelo/Sandália' },
   { value: 'descalço', label: 'Descalço' },
   { value: 'não sabe', label: 'Não sabe' },
 ];
