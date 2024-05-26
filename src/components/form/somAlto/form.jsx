@@ -273,7 +273,7 @@ telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DET
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
           placeholder="Qual o ponto de referência ?"
-          fullWidth
+          fullWidth         
           id="outlined-basic-referencia"
           label="Qual o ponto de referência ?"
           name="referencia"
@@ -376,12 +376,11 @@ telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DET
                           }}
                         />
                       </Grid>
-                      <Grid item xs={12} sx={{ marginBottom: 8 }} sm={6}>
-                        <Button variant="contained"
-                          color="secondary"
-                          onClick={() => handleCopyText(text01)}
-                          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
-                      </Grid>
+                      <CopyToClipboard text={text01} onCopy={() => console.log('Narrativa copiada!')}>
+                  <Button variant="contained"
+                    color="secondary"
+                    style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+                </CopyToClipboard>
                     </>
                   )}
                 </Stack>

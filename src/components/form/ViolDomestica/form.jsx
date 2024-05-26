@@ -30,7 +30,7 @@ export default function FormularioViolenciaDomestica() {
     handleChange('telefone', e.target.value);
   };
 
-  const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção'];
+  const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'pedido de socorro', 'agressão psicológica', 'violação de zona de proteção'];
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
 

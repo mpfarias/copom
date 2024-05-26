@@ -24,7 +24,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 import { cores, qtdeIndividuos, regioesAdministrativas, opcoesCorVeiculo, caracteristicasOption, opcoesParteDeBaixo, opcoesParteDeCima, opcoesCalcado, opcoesArma, opcoesCabelo } from './Const/Consts';
-import { handleCopy, handleResetForm } from './Function/Functions';
+import { handleCopy } from './Function/Functions';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -99,16 +99,6 @@ export default function RouboFurto() {
   const [selectedOptionCabelo, setSelectedOptionCabelo] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
   const [nomesTimes, setNomesTimes] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
   const [showCamisaTime, setShowCamisaTime] = useState(false)
-
-  /* const handleChangeCima = (individuoIndex, event) => {
-     const newOptions = [...selectedOptionCima];
-     newOptions[individuoIndex] = event.target.value;
-     setSelectedOptionCima(newOptions);
-     setIndividuosData(prevIndividuos => prevIndividuos.map((individuo, index) =>
-       index === individuoIndex ? { ...individuo, parteDeCima: event.target.value } : individuo
-     ));
-     setShowCamisaTime( selectedOptionCima === 'time');
-   };*/
 
   const handleChangeCima = (individuoIndex, event) => {
     const novoValor = event.target.value;
