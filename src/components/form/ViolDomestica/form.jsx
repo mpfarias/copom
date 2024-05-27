@@ -30,7 +30,7 @@ export default function FormularioViolenciaDomestica() {
     handleChange('telefone', e.target.value);
   };
 
-  const agressaoOptions = ['ameaça', 'xingamentos', 'agressão física', 'pedido de socorro', 'agressão psicológica', 'violação de zona de proteção'];
+  const [agressaoOptions, setAgressaoOptions] = useState(['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção']);
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
 
@@ -81,14 +81,23 @@ export default function FormularioViolenciaDomestica() {
     }
     setState(prevState => ({ ...prevState, [field]: updatedValue }));
   };
+  useEffect(() => {
+    if (solicitante === 'denunciante' && !agressaoOptions.includes('pedido de socorro')) {
+      setAgressaoOptions(prevOpcoes => [...prevOpcoes, 'pedido de socorro']);
+    } else if (solicitante !== 'denunciante') {
+      setAgressaoOptions(prevOpcoes =>
+        prevOpcoes.filter(opcao => opcao !== 'pedido de socorro')
+      );
+    }
+  }, [solicitante, agressaoOptions]); 
 
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
 * A pessoa de NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + (referencia ==='' ? '' : ', PONTO DE REFERÊNCIA: ') + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
 
-        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está presenciando uma pessoa sendo vítima de: ' + agressao.join(', ') :
-          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'informa que uma pessoa está sendo vítima de: ' + agressao.join(', ') + ', e que reside em: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ", possivelmente" :
+        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que ' + (agressao.includes('pedido de socorro') ? 'está presenciando uma pessoa gritando por socorro, possivelmente sendo agredida' : 'está presenciando uma pessoa sendo vítima de ' + agressao.join(', ')) :
+          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que ' +  (agressao.includes('pedido de socorro') ? 'está presenciando uma pessoa gritando por socorro, no ENDEREÇO: ' + endereco.toUpperCase() + ',possivelmente sendo agredida' : 'está presenciando uma pessoa sendo vítima de ' + agressao.join(', ')) :
             ''} pelo(a): ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
  ${medida === 'null' ? '* Não sabe se possui medida' : medida === 'true' ? '* Possui medida protetiva' :
         'Não possui medida protetiva'} contra o agressor.
