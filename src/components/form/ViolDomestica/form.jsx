@@ -30,7 +30,7 @@ export default function FormularioViolenciaDomestica() {
     handleChange('telefone', e.target.value);
   };
 
-  const [agressaoOptions, setAgressaoOptions] = useState(['ameaça', 'xingamentos', 'agressão física', 'agressão psicológica', 'violação de zona de proteção']);
+  const [agressaoOptions, setAgressaoOptions] = useState(['ameaça', 'agressão física', 'agressão psicológica',  'xingamentos', 'cárcere privado', 'estupro', 'violação de zona de proteção']);
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
 
@@ -81,15 +81,6 @@ export default function FormularioViolenciaDomestica() {
     }
     setState(prevState => ({ ...prevState, [field]: updatedValue }));
   };
-  useEffect(() => {
-    if (solicitante === 'denunciante' && !agressaoOptions.includes('pedido de socorro')) {
-      setAgressaoOptions(prevOpcoes => [...prevOpcoes, 'pedido de socorro']);
-    } else if (solicitante !== 'denunciante') {
-      setAgressaoOptions(prevOpcoes =>
-        prevOpcoes.filter(opcao => opcao !== 'pedido de socorro')
-      );
-    }
-  }, [solicitante, agressaoOptions]); 
 
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
@@ -109,6 +100,18 @@ export default function FormularioViolenciaDomestica() {
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
   }, [solicitante, nomeVitima, endereco, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
+
+  useEffect(() => {
+    if (solicitante === 'denunciante' && !agressaoOptions.includes('pedido de socorro')) {
+      setAgressaoOptions(prevOpcoes => [...prevOpcoes, 'pedido de socorro']);
+    } else if (solicitante !== 'denunciante') {
+      setAgressaoOptions(prevOpcoes =>
+        prevOpcoes.filter(opcao => opcao !== 'pedido de socorro')
+      );
+    }
+  }, [solicitante, agressaoOptions]); 
+
+
 
   return (
 
