@@ -23,8 +23,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function SomAlto() {
 
-
-
   const regioesAdministrativas = [
     { value: 'Água Quente', label: 'Água Quente' },
     { value: 'Águas Claras', label: 'Águas Claras' },
@@ -83,7 +81,9 @@ export default function SomAlto() {
     text05: 'Informe ao solicitante que a denúncia deverá ser feita no telefone 162, pois a responsabilidade para atuar em estabelecimento comercial é do IBRAM.',
     text06: 'Solicitante informa som alto em estabelecimento comercial. Foi orientado a ligar na Ouvidora do GDF (162).',
     text07: '',
-    text08: ''
+    text08: '',
+    text09: 'NATUREZA CAD: PERTURBAÇÃO DO TRABALHO OU DO SOSSEGO ALHEIO - ART. 42 LCP',
+    text10: 'NATUREZA CAD: SOM ALTO - AUTOMOTIVO ART. 228 CTB'
   });
 
   const {
@@ -100,7 +100,9 @@ export default function SomAlto() {
     text05,
     text07,
     text06,
-    text08
+    text08,
+    text09,
+    text10
   } = state;
 
   const handleCopyText = (text) => {
@@ -136,15 +138,6 @@ export default function SomAlto() {
       regiaoAdministrativa: 'Plano Piloto',
       referencia: '',
       telefone: '',
-      text01,
-      aviso01,
-      text02,
-      text03,
-      text04,
-      text05,
-      text07,
-      text06,
-      text08,
     });
 
     setLocal('');
@@ -178,6 +171,11 @@ telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DET
 
   const renderOpcoesAssinatura = () => (
     <>
+    {local === 'automóvel' ? (
+    <Alert severity="error">{text10}</Alert>
+    ):(
+    <Alert severity="error">{text09}</Alert>)
+}
       <Grid item xs={12}>
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}

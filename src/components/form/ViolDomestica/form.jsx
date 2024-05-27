@@ -12,7 +12,8 @@ import {
   Select,
   MenuItem,
   Grid,
-  Button
+  Button,
+  Alert
 } from '@mui/material';
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
@@ -49,12 +50,14 @@ export default function FormularioViolenciaDomestica() {
     ferida: '', 
     criancas: '', 
     urgencia: '', 
-    narrativa: '' });
+    narrativa: '',
+    text01: 'NATUREZA CAD: VIOLÊNCIA DOMÉSTICA'
+  });
   
   const [outroParentesco, setOutroParentesco] = useState('');
   const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
-  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa } = state;
+  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa, text01 } = state;
   const handleChange = (field, value) => {
     if (field === 'outroParentesco') {
       setOutroParentesco(value);
@@ -407,8 +410,10 @@ export default function FormularioViolenciaDomestica() {
           </RadioGroup>
 
         </Grid>
+        
         <Grid item xs={12} sx={{ mt: 1 }}>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+          <Alert severity="error">{text01}</Alert>
           <TextField
             className="narrativa-text"
             sx={{
