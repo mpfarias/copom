@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import InputMask from 'react-input-mask';
+
 import {
   Box,
   TextField,
@@ -118,14 +118,6 @@ export default function SomAlto() {
     text10
   } = state;
 
-  const handleCopyText = (text) => {
-    navigator.clipboard.writeText(text);
-  };
-
-  const handleCopyField = (fieldName) => {
-    const fieldValue = state[fieldName];
-    navigator.clipboard.writeText(fieldValue);
-  };
 
   const handleRadioChangePerturbacao = (event) => {
     setAssinatura(event.target.value);
@@ -141,25 +133,6 @@ export default function SomAlto() {
 
   const handleChange = (field, value) => {
     setState(prevState => ({ ...prevState, [field]: value }));
-  };
-
-  const handleResetForm = () => {
-    setState({
-      assinatura: '',
-      nome: '',
-      endereco: '',
-      regiaoAdministrativa: 'Plano Piloto',
-      referencia: '',
-      telefone: '',
-    });
-
-    setLocal('');
-    setAssinatura('');
-    document.getElementById('outlined-basic-nome').value = '';
-    document.getElementById('outlined-basic-endereco').value = '';
-    document.getElementById('outlined-basic-telefone').value = '';
-    document.getElementById('outlined-basic-referencia').value = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {

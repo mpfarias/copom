@@ -57,7 +57,7 @@ export default function Menu() {
   );
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={() => {
+    <Box sx={{ width: 280, marginTop:2, paddingLeft:2, marginRight:5 }} role="presentation" onClick={() => {
       if (!isSearchFocused) {
         toggleDrawer(false)();
         setSearchTerm('');
@@ -75,7 +75,7 @@ export default function Menu() {
       >
         
         <InputBase
-          sx={{ ml: 1, flex: 1 }}
+          sx={{ ml: 2, flex: 1 }}
           placeholder="Pesquisar natureza"
           inputProps={{ 'aria-label': 'search' }}
           value={searchTerm}
@@ -83,7 +83,7 @@ export default function Menu() {
           onFocus={() => setIsSearchFocused(true)} 
           onBlur={() => setIsSearchFocused(false)}
         />
-        <IconButton sx={{ p: '10px' }} aria-label="search">
+        <IconButton sx={{ p: '8px' }} aria-label="search">
           <SearchIcon />
         </IconButton>
       </Paper>
