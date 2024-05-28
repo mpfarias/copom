@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
 import {
   Box,
@@ -13,8 +13,10 @@ import {
   MenuItem,
   Grid,
   Button,
-  Alert
+  Alert,
+
 } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar'
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -22,6 +24,18 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 export default function FormularioViolenciaDomestica() {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleTelefoneChange = (e) => {
     const maxLength = 11;
@@ -31,29 +45,29 @@ export default function FormularioViolenciaDomestica() {
     handleChange('telefone', e.target.value);
   };
 
-  const [agressaoOptions, setAgressaoOptions] = useState(['ameaça', 'agressão física', 'agressão psicológica',  'xingamentos', 'cárcere privado', 'estupro', 'violação de zona de proteção']);
+  const [agressaoOptions, setAgressaoOptions] = useState(['ameaça', 'agressão física', 'agressão psicológica', 'xingamentos', 'cárcere privado', 'estupro', 'violação de zona de proteção']);
   const gritosOptions = ['voz masculina ao fundo', 'gritos de socorro', 'choro'];
   const [solicitante, setSolicitante] = useState('vitima');
 
-  const [state, setState] = useState({ 
-    nomeVitima: '', 
-    endereco: '', 
+  const [state, setState] = useState({
+    nomeVitima: '',
+    endereco: '',
     regiaoAdministrativa: 'Plano Piloto',
-    referencia: '', 
-    telefone: '', 
-    agressao: [], 
-    gritos: [], 
-    armado: '', 
-    parentesco: 'marido', 
-    medida: '', 
-    agressorNoLocal: '', 
-    ferida: '', 
-    criancas: '', 
-    urgencia: '', 
+    referencia: '',
+    telefone: '',
+    agressao: [],
+    gritos: [],
+    armado: '',
+    parentesco: 'marido',
+    medida: '',
+    agressorNoLocal: '',
+    ferida: '',
+    criancas: '',
+    urgencia: '',
     narrativa: '',
     text01: 'NATUREZA CAD: VIOLÊNCIA DOMÉSTICA'
   });
-  
+
   const [outroParentesco, setOutroParentesco] = useState('');
   const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
@@ -88,10 +102,10 @@ export default function FormularioViolenciaDomestica() {
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-* A pessoa de NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + (referencia ==='' ? '' : ', PONTO DE REFERÊNCIA: ') + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
+* A pessoa de NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + (referencia === '' ? '' : ', PONTO DE REFERÊNCIA: ') + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
 
         solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que ' + (agressao.includes('pedido de socorro') ? 'está presenciando uma pessoa gritando por socorro, possivelmente sendo agredida' : 'está presenciando uma pessoa sendo vítima de ' + agressao.join(', ')) :
-          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que ' +  (agressao.includes('pedido de socorro') ? 'está presenciando uma pessoa gritando por socorro, no ENDEREÇO: ' + endereco.toUpperCase() + ',possivelmente sendo agredida' : 'está presenciando uma pessoa sendo vítima de ' + agressao.join(', ')) :
+          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que ' + (agressao.includes('pedido de socorro') ? 'está presenciando uma pessoa gritando por socorro, no ENDEREÇO: ' + endereco.toUpperCase() + ',possivelmente sendo agredida' : 'está presenciando uma pessoa sendo vítima de ' + agressao.join(', ')) :
             ''} pelo(a): ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
  ${medida === 'null' ? '* Não sabe se possui medida' : medida === 'true' ? '* Possui medida protetiva' :
         'Não possui medida protetiva'} contra o agressor.
@@ -112,7 +126,7 @@ export default function FormularioViolenciaDomestica() {
         prevOpcoes.filter(opcao => opcao !== 'pedido de socorro')
       );
     }
-  }, [solicitante, agressaoOptions]); 
+  }, [solicitante, agressaoOptions]);
 
 
 
@@ -234,7 +248,7 @@ export default function FormularioViolenciaDomestica() {
           <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
             <Button variant="contained"
               color="secondary"
-              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginTop:'10%' }}><FileCopyIcon />
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginTop: '10%' }}><FileCopyIcon />
             </Button>
           </CopyToClipboard>
         </Grid>
@@ -410,7 +424,7 @@ export default function FormularioViolenciaDomestica() {
           </RadioGroup>
 
         </Grid>
-        
+
         <Grid item xs={12} sx={{ mt: 1 }}>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
           <Alert severity="error">{text01}</Alert>
@@ -431,10 +445,21 @@ export default function FormularioViolenciaDomestica() {
           <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
             <Button variant="contained"
               color="secondary"
+              onClick={handleClick}
               style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
             </Button>
           </CopyToClipboard>
         </Grid>
+        <Snackbar
+            sx={{
+              top: '70%',
+              marginLeft:'26%'
+            }}
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}>
+            <Alert severity="warning">Texto COPIADO</Alert>
+          </Snackbar>
       </Grid >
     </Box >
 

@@ -16,12 +16,25 @@ import {
   Alert
 } from '@mui/material';
 
+import Snackbar from '@mui/material/Snackbar'
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function SomAlto() {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const regioesAdministrativas = [
     { value: 'Água Quente', label: 'Água Quente' },
@@ -157,25 +170,25 @@ ${endereco === '' ? '' : 'Endereço: ' + endereco.toUpperCase() + ','}
 ${telefone === '' ? '' : 'Telefone: ' + telefone + ','} 
 Cidade: ${regiaoAdministrativa.toUpperCase()}, ponto de referência: ${referencia.toUpperCase()}.
 Informa som alto no local, pede PMDF pois TEM INTERESSE EM ASSINAR O TCO.`,
-    
-      text08:`Solicitante ${nome.toUpperCase()},
+
+      text08: `Solicitante ${nome.toUpperCase()},
 endereço: ${endereco.toUpperCase()},
 cidade: ${regiaoAdministrativa.toUpperCase()},
 ponto de referência: ${referencia.toUpperCase()}
 telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DETRAN  `,
 
-}));
+    }));
   }, [nome, endereco, telefone, regiaoAdministrativa, referencia]);
 
 
 
   const renderOpcoesAssinatura = () => (
     <>
-    {local === 'automóvel' ? (
-    <Alert severity="error">{text10}</Alert>
-    ):(
-    <Alert severity="error">{text09}</Alert>)
-}
+      {local === 'automóvel' ? (
+        <Alert severity="error">{text10}</Alert>
+      ) : (
+        <Alert severity="error">{text09}</Alert>)
+      }
       <Grid item xs={12}>
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
@@ -271,7 +284,7 @@ telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DET
         <TextField
           sx={{ marginBottom: 0, marginRight: 2, width: '80%' }}
           placeholder="Qual o ponto de referência ?"
-          fullWidth         
+          fullWidth
           id="outlined-basic-referencia"
           label="Qual o ponto de referência ?"
           name="referencia"
@@ -306,12 +319,22 @@ telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DET
         <CopyToClipboard text={assinatura === 'sim' && local === 'residência' ? text07 : text08} onCopy={() => console.log('Narrativa copiada!')}>
           <Button variant="contained"
             color="secondary"
+            onClick={handleClick}
             style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
         </CopyToClipboard>
+        <Snackbar
+            sx={{
+              top: '70%',
+              marginLeft:'26%'
+            }}
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}>
+            <Alert severity="warning">Texto COPIADO</Alert>
+          </Snackbar>
       </Grid>
     </>
   );
-
 
   return (
     <Box paddingRight={2} marginTop={4} marginBottom={8}>
@@ -375,10 +398,21 @@ telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DET
                         />
                       </Grid>
                       <CopyToClipboard text={text01} onCopy={() => console.log('Narrativa copiada!')}>
-                  <Button variant="contained"
-                    color="secondary"
-                    style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
-                </CopyToClipboard>
+                        <Button variant="contained"
+                          color="secondary"
+                          onClick={handleClick}
+                          style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
+                      </CopyToClipboard>
+                      <Snackbar
+                  sx={{
+                    top: '70%',
+                    marginLeft: '30%'
+                  }}
+                  open={open}
+                  autoHideDuration={2000}
+                  onClose={handleClose}>
+                  <Alert severity="warning">Texto COPIADO</Alert>
+                </Snackbar>
                     </>
                   )}
                 </Stack>
@@ -415,12 +449,24 @@ telefone: ${telefone} informa que tem som automotivo no local, pede apoio do DET
                 <CopyToClipboard text={text06} onCopy={() => console.log('Narrativa copiada!')}>
                   <Button variant="contained"
                     color="secondary"
+                    onClick={handleClick}
                     style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto</Button>
                 </CopyToClipboard>
+                <Snackbar
+                  sx={{
+                    top: '70%',
+                    marginLeft: '26%'
+                  }}
+                  open={open}
+                  autoHideDuration={2000}
+                  onClose={handleClose}>
+                  <Alert severity="warning">Texto COPIADO</Alert>
+                </Snackbar>
               </Grid>
             </>)
           }
         </Stack>
+
       </Grid >
     </Box>
 
