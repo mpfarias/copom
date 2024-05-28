@@ -9,7 +9,9 @@ import SomAlto from './components/form/somAlto/Form.jsx';
 import RouboFurto from './components/form/RouboFurto/Form.jsx';
 import AlarmeAcionado from './components/form/AlarmeAcionado/Form.jsx';
 import MausTratos from './components/form/MausTratos/Form.jsx';
-
+import AcidenteTransito from './components/form/AcidenteTransito/Form.jsx';
+import Ameaca from './components/form/Ameaca/Form.jsx';
+import ViasDeFato from './components/form/ViasDeFato/Form.jsx';
 import ErrorPage from './components/error/ErrorPage.jsx';
 
 
@@ -42,7 +44,21 @@ const router = createBrowserRouter([
       {
         path: "AlarmeAcionado",
         element: <AlarmeAcionado />
-      }
+      },
+      {
+        path: "AcidenteTransito",
+        element: <AcidenteTransito />
+      },
+      {
+        path: "Ameaca",
+        element: <Ameaca />
+      },
+      {
+        path: "ViasDeFato",
+        element: <ViasDeFato />
+      },
+
+
     ]
   }
 

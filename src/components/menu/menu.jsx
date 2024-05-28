@@ -46,9 +46,11 @@ export default function Menu() {
     { text: 'Maus tratos a animais', icon: <PetsIcon />, link: '/MausTratos' },
     { text: 'Alarme acionado', icon: <AlarmIcon />, link: '/AlarmeAcionado' },
     { text: 'Vias de fato', icon: <SportsKabaddiIcon />, link: '/ViasDeFato' },
-    { text: 'Ameaça', icon: <MoodBadIcon />, link: '/Ameaça' },
-    { text: 'Acidente de trânsito', icon: <CarCrashIcon />, link: '/AcidenteTrânsito' }
+    { text: 'Ameaça', icon: <MoodBadIcon />, link: '/Ameaca' },
+    { text: 'Acidente de trânsito', icon: <CarCrashIcon />, link: '/AcidenteTransito' }
   ];
+  
+  drawerItems.sort((a, b) => a.text.localeCompare(b.text));
 
   const filteredItems = drawerItems.filter(item =>
     item.text.toLowerCase().includes(searchTerm.toLowerCase())
