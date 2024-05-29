@@ -409,7 +409,7 @@ export default function RouboFurto() {
               >
                 <FormControlLabel value="veículo" control={<Radio />} label="Veículo" />
                 <FormControlLabel value="estabelecimento comercial" control={<Radio />} label="Estabelecimento comercial" />
-                <FormControlLabel value="celular" control={<Radio />} label="Aparelho Celular" />
+                <FormControlLabel value="celular" control={<Radio />} label="Bens pessoais" />
                 <FormControlLabel value="transeunte" control={<Radio />} label="Transeunte" />
               </RadioGroup>
             </FormControl>
@@ -550,7 +550,7 @@ export default function RouboFurto() {
                 {objeto === 'estabelecimento comercial' && (
                   <>
                     <Grid item xs={12}>
-                      <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Qual foi o estabelecimento?" fullWidth id="outlined-basic-nome" onChange={e => handleChange('estabelecimento', e.target.value)} label="Aconteceu e que estabelecimento?" variant="outlined" />
+                      <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Qual foi o estabelecimento?" fullWidth id="outlined-basic-nome" onChange={e => handleChange('estabelecimento', e.target.value)} label="Aconteceu em que estabelecimento?" variant="outlined" />
                       <CopyToClipboard text={placa} onCopy={() => console.log('Placa copiada!')}>
                         <Button variant="contained"
                           color="secondary"

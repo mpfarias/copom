@@ -55,10 +55,12 @@ export default function FormularioViolenciaDomestica() {
     regiaoAdministrativa: 'Plano Piloto',
     referencia: '',
     telefone: '',
+    conheceVitima: '',
     agressao: [],
     gritos: [],
     armado: '',
     parentesco: 'marido',
+    vitimaParentesco: 'mãe',
     medida: '',
     agressorNoLocal: '',
     ferida: '',
@@ -69,9 +71,12 @@ export default function FormularioViolenciaDomestica() {
   });
 
   const [outroParentesco, setOutroParentesco] = useState('');
+  const [outraVitima, setOutraVitima] = useState('');
   const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
-  const { nomeVitima, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa, text01 } = state;
+  const [showOutraVitimaInput, setShowOutraVitimaInput] = useState(false);
+  const { nomeVitima, conheceVitima, vitimaParentesco, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa, text01 } = state;
+
   const handleChange = (field, value) => {
     if (field === 'outroParentesco') {
       setOutroParentesco(value);
@@ -89,6 +94,7 @@ export default function FormularioViolenciaDomestica() {
       setState(prevState => ({ ...prevState, [field]: value }));
     }
   };
+
   const handleCheckboxChange = (field, value) => {
     let updatedValue;
     if (state[field].includes(value)) {
@@ -99,14 +105,37 @@ export default function FormularioViolenciaDomestica() {
     setState(prevState => ({ ...prevState, [field]: updatedValue }));
   };
 
+  const handleChangeVitima = (field, value) => {
+    if (field === 'outraVitima') {
+      setOutraVitima(value);
+      setState(prevState => ({
+        ...prevState,
+        vitimaParentesco: value === '' ? vitimaParentesco : value
+      }));
+    } else if (field === 'vitimaParentesco') {
+      setShowOutraVitimaInput(value === '');
+      setState(prevState => ({
+        ...prevState,
+        vitimaParentesco: value === '' ? outraVitima : value
+      }));
+    } else {
+      setState(prevState => ({ ...prevState, [field]: value }));
+    }
+  };
+
+
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
 * A pessoa de NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + (referencia === '' ? '' : ', PONTO DE REFERÊNCIA: ') + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
 
-        solicitante === 'denunciante' && enderecoDenunciante === 'endereço próprio' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que ' + (agressao.includes('pedido de socorro') ? 'está presenciando uma pessoa gritando por socorro, possivelmente sendo agredida' : 'está presenciando uma pessoa sendo vítima de ' + agressao.join(', ')) :
-          solicitante === 'denunciante' && enderecoDenunciante === 'endereço da vítima' ? 'RA: ' + regiaoAdministrativa.toUpperCase() + ', PONTO DE REFERÊNCIA: ' + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que ' + (agressao.includes('pedido de socorro') ? 'está presenciando uma pessoa gritando por socorro, no ENDEREÇO: ' + endereco.toUpperCase() + ',possivelmente sendo agredida' : 'está presenciando uma pessoa sendo vítima de ' + agressao.join(', ')) :
-            ''} pelo(a): ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+        solicitante === 'denunciante' ? 'telefone: ' + telefone + ', ' + (conheceVitima === 'não' && enderecoDenunciante === 'endereço próprio' ? 'residente em: ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', informa que está presenciando uma pessoa ' + (agressao.includes('pedido de socorro') ? ' gritando por socorro, possivelmente sendo agredida' : 'sofrendo ' + agressao.join(', ')) : conheceVitima === 'não' && enderecoDenunciante === 'endereço da vítima' ? ' uma pessoa, residente em ' +  endereco.toUpperCase() + ', ' +regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + (agressao.includes('pedido de socorro') ? ' pedindo por socorro, possivelmente sendo agredida' : ', está sendo vítima de ' + agressao.join(', ')) : 
+        (conheceVitima === 'sim' && enderecoDenunciante === 'endereço da vítima' ? 'informa que sua ' + (vitimaParentesco === '' ? outraVitima : vitimaParentesco) + ', residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', ' + 'está sofrendo ' + agressao.join(', '):
+        (conheceVitima === 'sim' && enderecoDenunciante === 'endereço próprio' ? 'residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', informa que sua ' + (vitimaParentesco === '' ? outraVitima : vitimaParentesco) + (agressao.includes('pedido de socorro') ? ' está pedindo socorro, possivelmente sendo agredida': ' está sofrendo ' + agressao.join(', ')) : '')
+      
+      
+      
+      )):''} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
  ${medida === 'null' ? '* Não sabe se possui medida' : medida === 'true' ? '* Possui medida protetiva' :
         'Não possui medida protetiva'} contra o agressor.
  ${agressorNoLocal === 'null' ? '* Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
@@ -116,7 +145,7 @@ export default function FormularioViolenciaDomestica() {
  ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, endereco, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
+  }, [solicitante, nomeVitima, conheceVitima, vitimaParentesco, endereco, outraVitima, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, vitimaParentesco, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
 
   useEffect(() => {
     if (solicitante === 'denunciante' && !agressaoOptions.includes('pedido de socorro')) {
@@ -172,6 +201,55 @@ export default function FormularioViolenciaDomestica() {
         <Grid item xs={12} >
           {solicitante === 'denunciante' && (
             <>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Conhece a vítima?</FormLabel>
+              <RadioGroup
+
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={conheceVitima}
+                onChange={(e) => handleChange('conheceVitima', e.target.value)}
+                sx={{ marginBottom: 2 }}
+              >
+                <FormControlLabel value="não" control={<Radio />} label="Não" />
+                <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+
+              </RadioGroup>
+              {conheceVitima === 'sim' && (
+                <>
+                  <Grid item xs={12} sm={7}>
+                    <FormControl fullWidth>
+                      <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Quem é a vítima?</FormLabel>
+                      <Select
+                        sx={{ marginBottom: 2 }}
+                        placeholder="Parentesco"
+                        value={vitimaParentesco}
+                        onChange={(e) => handleChangeVitima('vitimaParentesco', e.target.value)}
+                        IconComponent={KeyboardArrowDownIcon}
+                        variant="outlined"
+                      >
+                        <MenuItem value="mãe">Mãe</MenuItem>
+                        <MenuItem value="irmã">Irmã</MenuItem>
+                        <MenuItem value="avó">Avó</MenuItem>
+                        <MenuItem value="tia">Tia</MenuItem>
+                        <MenuItem value="vizinha">Vizinha</MenuItem>
+                        <MenuItem value="">Outro</MenuItem>
+                      </Select>
+                    </FormControl>
+                    {showOutraVitimaInput && (
+                      <FormControl fullWidth>
+                        <TextField
+                        sx={{marginBottom:5}}
+                          fullWidth
+                          value={outraVitima}
+                          onChange={(e) => setOutraVitima(e.target.value)}
+                          label="Outra Vítima"
+                          variant="outlined"
+                        />
+                      </FormControl>
+                      )}
+                  </Grid>
+                </>
+              )}
               <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-row-radio-buttons-group-label">O endereço é próprio ou da vítima ?</FormLabel>
               <RadioGroup
                 id="enderecoDenunciante"
@@ -451,15 +529,15 @@ export default function FormularioViolenciaDomestica() {
           </CopyToClipboard>
         </Grid>
         <Snackbar
-            sx={{
-              top: '70%',
-              marginLeft:'26%'
-            }}
-            open={open}
-            autoHideDuration={2000}
-            onClose={handleClose}>
-            <Alert severity="warning">Texto COPIADO</Alert>
-          </Snackbar>
+          sx={{
+            top: '70%',
+            marginLeft: '26%'
+          }}
+          open={open}
+          autoHideDuration={2000}
+          onClose={handleClose}>
+          <Alert severity="warning">Texto COPIADO</Alert>
+        </Snackbar>
       </Grid >
     </Box >
 
