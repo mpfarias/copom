@@ -265,7 +265,9 @@ export default function RouboFurto() {
     } else if (objeto === 'transeunte') {
       text += `informa que foi vítima de  ${tipo === 'roubado' ? 'ROUBO, e ' : 'FURTO, e '}`;
     } else if (objeto === 'estabelecimento comercial') {
-      text += ` informa que houve um assalto no/na ${estabelecimento}, `;
+      text += ` informa que houve um ${tipo === 'roubado' ? 'ROUBO' : 'FURTO'} no ${estabelecimento}, `;
+    } else if (objeto === 'residência'){
+      text += ` informa que houve ${tipo === 'roubado' ? 'ROUBO' : 'FURTO'} em sua residência, `;
     }
 
     if (individuos === -1) {
@@ -408,6 +410,7 @@ export default function RouboFurto() {
                 onChange={(e) => setObjeto(e.target.value)}
               >
                 <FormControlLabel value="veículo" control={<Radio />} label="Veículo" />
+                <FormControlLabel value="residência" control={<Radio />} label="Residência" />
                 <FormControlLabel value="estabelecimento comercial" control={<Radio />} label="Estabelecimento comercial" />
                 <FormControlLabel value="celular" control={<Radio />} label="Bens pessoais" />
                 <FormControlLabel value="transeunte" control={<Radio />} label="Transeunte" />
@@ -417,7 +420,7 @@ export default function RouboFurto() {
         </Grid>
         <Grid item xs={12} >
           <Stack sx={{ width: '100%' }} spacing={2}>
-            {(objeto === 'veículo' || objeto === 'transeunte' || objeto === 'estabelecimento comercial') && (
+            {(objeto === 'veículo' || objeto === 'transeunte' || objeto === 'estabelecimento comercial' || objeto === 'residência') && (
               <>
                 <Grid item xs={12}>
                   <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Nome solicitante" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nome', e.target.value)} label="Nome solicitante ?" variant="outlined" />
@@ -561,6 +564,7 @@ export default function RouboFurto() {
                   </>
                 )
                 }
+                
                 <Grid item xs={12}>
                   <FormControl sx={{ width: '80%' }}>
                     <FormLabel sx={{ marginBottom: 2 }} id="demo-controlled-radio-buttons-group">Indivíduos:</FormLabel>
@@ -701,9 +705,10 @@ export default function RouboFurto() {
 
                             <TextField
                               id={`outraCaracteristica-${individuoIndex}`}
-                              sx={{marginTop:2,
-                                marginBottom:3,
-                                width:'80%'
+                              sx={{
+                                marginTop: 2,
+                                marginBottom: 3,
+                                width: '80%'
                               }}
                               value={outrasCaracteristicas[individuoIndex]}
                               label="Outra característica"
