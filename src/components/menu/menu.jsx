@@ -87,6 +87,7 @@ export default function Menu() {
           <SearchIcon />
         </IconButton>
       </Paper>
+
       <List>
         {filteredItems.map((item) => (
           <ListItem key={item.text} disablePadding>
@@ -105,7 +106,7 @@ export default function Menu() {
 
   React.useEffect(() => {
     if (!open) {
-      setSearchTerm(''); // Limpa o campo de busca quando o menu fecha
+      setSearchTerm('');
     }
   }, [open]);
 

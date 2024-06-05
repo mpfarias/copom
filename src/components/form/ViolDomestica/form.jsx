@@ -14,9 +14,13 @@ import {
   Grid,
   Button,
   Alert,
+  Switch,
+  Snackbar,
+  Typography,
+  Stack
+
 
 } from '@mui/material';
-import Snackbar from '@mui/material/Snackbar'
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -129,13 +133,13 @@ export default function FormularioViolenciaDomestica() {
 
 * A pessoa de NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + (referencia === '' ? '' : ', PONTO DE REFERÊNCIA: ') + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
 
-        solicitante === 'denunciante' ? 'telefone: ' + telefone + ', ' + (conheceVitima === 'não' && enderecoDenunciante === 'endereço próprio' ? 'residente em: ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', informa que está presenciando uma pessoa ' + (agressao.includes('pedido de socorro') ? ' gritando por socorro, possivelmente sendo agredida' : 'sofrendo ' + agressao.join(', ')) : conheceVitima === 'não' && enderecoDenunciante === 'endereço da vítima' ? ' uma pessoa, residente em ' +  endereco.toUpperCase() + ', ' +regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + (agressao.includes('pedido de socorro') ? ' pedindo por socorro, possivelmente sendo agredida' : ', está sendo vítima de ' + agressao.join(', ')) : 
-        (conheceVitima === 'sim' && enderecoDenunciante === 'endereço da vítima' ? 'informa que sua ' + (vitimaParentesco === '' ? outraVitima : vitimaParentesco) + ', residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', ' + 'está sofrendo ' + agressao.join(', '):
-        (conheceVitima === 'sim' && enderecoDenunciante === 'endereço próprio' ? 'residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', informa que sua ' + (vitimaParentesco === '' ? outraVitima : vitimaParentesco) + (agressao.includes('pedido de socorro') ? ' está pedindo socorro, possivelmente sendo agredida': ' está sofrendo ' + agressao.join(', ')) : '')
-      
-      
-      
-      )):''} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
+        solicitante === 'denunciante' ? 'telefone: ' + telefone + ', ' + (conheceVitima === 'não' && enderecoDenunciante === 'endereço próprio' ? 'residente em: ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', informa que está presenciando uma pessoa ' + (agressao.includes('pedido de socorro') ? ' gritando por socorro, possivelmente sendo agredida' : 'sofrendo ' + agressao.join(', ')) : conheceVitima === 'não' && enderecoDenunciante === 'endereço da vítima' ? ' uma pessoa, residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + (agressao.includes('pedido de socorro') ? ' pedindo por socorro, possivelmente sendo agredida' : ', está sendo vítima de ' + agressao.join(', ')) :
+          (conheceVitima === 'sim' && enderecoDenunciante === 'endereço da vítima' ? 'informa que sua ' + (vitimaParentesco === '' ? outraVitima : vitimaParentesco) + ', residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', ' + 'está sofrendo ' + agressao.join(', ') :
+            (conheceVitima === 'sim' && enderecoDenunciante === 'endereço próprio' ? 'residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', informa que sua ' + (vitimaParentesco === '' ? outraVitima : vitimaParentesco) + (agressao.includes('pedido de socorro') ? ' está pedindo socorro, possivelmente sendo agredida' : ' está sofrendo ' + agressao.join(', ')) : '')
+
+
+
+          )) : ''} pelo(a) ${parentesco === '' ? outroParentesco : parentesco}, ${ferida === 'null' ? 'e que não sabe se está ferida.' : ferida === 'true' ? 'e que está ferida. Precisa de apoio CBMDF.' : 'porém, não está ferida.'}
  ${medida === 'null' ? '* Não sabe se possui medida' : medida === 'true' ? '* Possui medida protetiva' :
         'Não possui medida protetiva'} contra o agressor.
  ${agressorNoLocal === 'null' ? '* Não sabe informar se o' : 'O'} agressor${agressorNoLocal === 'true' || agressorNoLocal === 'null' ? ' ' :
@@ -145,7 +149,7 @@ export default function FormularioViolenciaDomestica() {
  ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, conheceVitima, vitimaParentesco, endereco, outraVitima, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, vitimaParentesco, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
+  }, [solicitante, nomeVitima, conheceVitima, vitimaParentesco, endereco, outraVitima, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
 
   useEffect(() => {
     if (solicitante === 'denunciante' && !agressaoOptions.includes('pedido de socorro')) {
@@ -201,26 +205,31 @@ export default function FormularioViolenciaDomestica() {
         <Grid item xs={12} >
           {solicitante === 'denunciante' && (
             <>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Conhece a vítima?</FormLabel>
-              <RadioGroup
-
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={conheceVitima}
-                onChange={(e) => handleChange('conheceVitima', e.target.value)}
-                sx={{ marginBottom: 2 }}
-              >
-                <FormControlLabel value="não" control={<Radio />} label="Não" />
-                <FormControlLabel value="sim" control={<Radio />} label="Sim" />
-
-              </RadioGroup>
-              {conheceVitima === 'sim' && (
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Conhece a vítima?</FormLabel>
+          <Stack direction="row" spacing={1} marginBottom={4} alignItems="center">
+            <Typography>Não</Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={conheceVitima === "true"}
+                  onChange={(e) => handleChange("conheceVitima", e.target.checked ? "true" : "false")}
+                  name="controlled-switch"
+                />
+              }
+              sx={{
+                display: 'block',
+                marginTop: '8px',
+              }}
+            />
+            <Typography>Sim</Typography>
+          </Stack>
+              {conheceVitima === 'true' && (
                 <>
                   <Grid item xs={12} sm={7}>
                     <FormControl fullWidth>
                       <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Quem é a vítima?</FormLabel>
                       <Select
-                        sx={{ marginBottom: 2 }}
+                        sx={{ marginBottom: 4 }}
                         placeholder="Parentesco"
                         value={vitimaParentesco}
                         onChange={(e) => handleChangeVitima('vitimaParentesco', e.target.value)}
@@ -238,7 +247,7 @@ export default function FormularioViolenciaDomestica() {
                     {showOutraVitimaInput && (
                       <FormControl fullWidth>
                         <TextField
-                        sx={{marginBottom:5}}
+                          sx={{ marginBottom: 5 }}
                           fullWidth
                           value={outraVitima}
                           onChange={(e) => setOutraVitima(e.target.value)}
@@ -246,7 +255,7 @@ export default function FormularioViolenciaDomestica() {
                           variant="outlined"
                         />
                       </FormControl>
-                      )}
+                    )}
                   </Grid>
                 </>
               )}
@@ -478,29 +487,45 @@ export default function FormularioViolenciaDomestica() {
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
 
-          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Tem criança envolvida na agressão ?</FormLabel>
-          <RadioGroup
-            value={criancas}
-            onChange={(e) => handleChange("criancas", e.target.value)}
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="controlled-radio-buttons-group"
-            sx={{ marginBottom: 4 }}
-          >
-            <FormControlLabel value="true" control={<Radio />} label="Sim" />
-            <FormControlLabel value="false" control={<Radio />} label="Não" />
-          </RadioGroup>
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Tem criança envolvida na agressão?</FormLabel>
+          <Stack direction="row" spacing={1} marginBottom={4} alignItems="center">
+            <Typography>Não</Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={criancas === "true"}
+                  onChange={(e) => handleChange("criancas", e.target.checked ? "true" : "false")}
+                  name="controlled-switch"
+                  color='error'
+                />
+              }
+              sx={{
+                display: 'block',
+                marginTop: '8px',
+              }}
+            />
+            <Typography>Sim</Typography>
+          </Stack>
 
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
-          <RadioGroup
-            value={urgencia}
-            onChange={(e) => handleChange("urgencia", e.target.value)}
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="controlled-radio-buttons-group"
-          >
-            <FormControlLabel value="true" control={<Radio />} label="Sim" />
-            <FormControlLabel value="false" control={<Radio />} label="Não" />
-          </RadioGroup>
+          <Stack direction="row" spacing={1} marginBottom={2} alignItems="center">
+            <Typography>Não</Typography>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={urgencia === "true"}
+                  onChange={(e) => handleChange("urgencia", e.target.checked ? "true" : "false")}
+                  name="controlled-switch"
+                  color='error'
+                />
+              }
+              sx={{
+                display: 'block',
 
+              }}
+            />
+            <Typography>Sim</Typography>
+          </Stack>
         </Grid>
 
         <Grid item xs={12} sx={{ mt: 1 }}>
