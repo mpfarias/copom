@@ -123,13 +123,112 @@ function AcidenteTransito() {
                             <FormLabel style={{ fontWeight: 'bold', fontSize: 18 }} id="demo-controlled-switch">
                                 Crime ou embriaguez no local?
                             </FormLabel>
+                        <Stack direction="row" spacing={1} marginBottom={2} alignItems="center">
+                            <Typography>Não</Typography>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={crimeNoLocal === "true"}
+                                        onChange={(e) => handleChange("crimeNoLocal", e.target.checked ? "true" : "false")}
+                                        name="controlled-switch"
+                                    />
+                                }
+                                sx={{
+                                    display: 'block',
+
+                                }}
+                            />
+                            <Typography>Sim</Typography>
+                        </Stack>
+                                    {mostrarAlerta && (
+                        <Alert severity="warning">{text02}</Alert>
+                    )}
+
+                    {crimeNoLocal === 'true' && (
+                        <>
+                            <Grid item xs={12} sm={10}>
+                                <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Nome do solicitante" id="outlined-basic-endereco" label="Qual seu nome?" name="nome" onChange={e => handleChange('nome', e.target.value)} variant="outlined" />
+                                <CopyToClipboard text={nome} onCopy={() => console.log("nome")}>
+                                    <Button variant="contained"
+                                        color="secondary"
+                                        style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                                    </Button>
+                                </CopyToClipboard>
+                            </Grid>
+
+                            <Grid item xs={12} sm={10}>
+                                <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Local do acidente" id="outlined-basic-endereco" label="Qual o local do acidente?" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+                                <CopyToClipboard text={endereco} onCopy={() => console.log("endereco")}>
+                                    <Button variant="contained"
+                                        color="secondary"
+                                        style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                                    </Button>
+                                </CopyToClipboard>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6} marginBottom={4}>
+                                <Grid container spacing={2} alignItems="center">
+                                    <Grid item xs={8}>
+                                        <FormControl fullWidth>
+                                            <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
+                                            <Select
+                                                sx={{ marginBottom: 2 }}
+                                                placeholder="Cidade:"
+                                                value={regiaoAdministrativa}
+                                                onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
+                                                IconComponent={KeyboardArrowDownIcon}
+                                                variant="outlined"
+                                                id="outlined-basic-regiaoAdministrativa"
+                                            >
+                                                {regioesAdministrativas.map(option => (
+                                                    <MenuItem key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid item xs={4}>
+                                        <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
+                                            <Button variant="contained"
+                                                color="secondary"
+                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                                            </Button>
+                                        </CopyToClipboard>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={12} sm={10}>
+                                <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Ponto de referência" id="outlined-basic-endereco" label="Tem ponto de referência?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
+                                <CopyToClipboard text={referencia} onCopy={() => console.log("referência")}>
+                                    <Button variant="contained"
+                                        color="secondary"
+                                        style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                                    </Button>
+                                </CopyToClipboard>
+                            </Grid>
+
+                            <Grid item xs={12} sm={10}>
+                                <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Qual o telefone?" name="telefone" variant="outlined" />
+                                <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
+                                    <Button variant="contained"
+                                        color="secondary"
+                                        style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                                    </Button>
+                                </CopyToClipboard>
+                            </Grid>
+                            <FormLabel style={{ fontWeight: 'bold', fontSize: 18 }} id="demo-controlled-switch">
+                                Houve crime ou embriaguez no local?
+                            </FormLabel>
                             <Stack direction="row" spacing={1} marginBottom={2} alignItems="center">
-                                <Typography>Não</Typography>
+                                <Typography>Embriaguez</Typography>
                                 <FormControlLabel
                                     control={
                                         <Switch
-                                            checked={crimeNoLocal === "true"}
-                                            onChange={(e) => handleChange("crimeNoLocal", e.target.checked ? "true" : "false")}
+                                            checked={crime === "sofrendo"}
+                                            onChange={(e) => handleChange("crime", e.target.checked ? "sofrendo" : "embriagado")}
                                             name="controlled-switch"
                                         />
                                     }
@@ -138,170 +237,71 @@ function AcidenteTransito() {
 
                                     }}
                                 />
-                                <Typography>Sim</Typography>
+                                <Typography>Crime</Typography>
                             </Stack>
-                            {mostrarAlerta && (
-                                <Alert severity="warning">{text02}</Alert>
-                            )}
-
-                            {crimeNoLocal === 'true' && (
+                            {crime === 'sofrendo' && (
                                 <>
                                     <Grid item xs={12} sm={10}>
-                                        <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Nome do solicitante" id="outlined-basic-endereco" label="Qual seu nome?" name="nome" onChange={e => handleChange('nome', e.target.value)} variant="outlined" />
-                                        <CopyToClipboard text={nome} onCopy={() => console.log("nome")}>
-                                            <Button variant="contained"
-                                                color="secondary"
-                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                                            </Button>
-                                        </CopyToClipboard>
-                                    </Grid>
-
-                                    <Grid item xs={12} sm={10}>
-                                        <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Local do acidente" id="outlined-basic-endereco" label="Qual o local do acidente?" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
-                                        <CopyToClipboard text={endereco} onCopy={() => console.log("endereco")}>
-                                            <Button variant="contained"
-                                                color="secondary"
-                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                                            </Button>
-                                        </CopyToClipboard>
-                                    </Grid>
-
-                                    <Grid item xs={12} sm={6} marginBottom={4}>
-                                        <Grid container spacing={2} alignItems="center">
-                                            <Grid item xs={8}>
-                                                <FormControl fullWidth>
-                                                    <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
-                                                    <Select
-                                                        sx={{ marginBottom: 2 }}
-                                                        placeholder="Cidade:"
-                                                        value={regiaoAdministrativa}
-                                                        onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
-                                                        IconComponent={KeyboardArrowDownIcon}
-                                                        variant="outlined"
-                                                        id="outlined-basic-regiaoAdministrativa"
-                                                    >
-                                                        {regioesAdministrativas.map(option => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-
-                                            <Grid item xs={4}>
-                                                <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
-                                                    <Button variant="contained"
-                                                        color="secondary"
-                                                        style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                                                    </Button>
-                                                </CopyToClipboard>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid item xs={12} sm={10}>
-                                        <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Ponto de referência" id="outlined-basic-endereco" label="Tem ponto de referência?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
-                                        <CopyToClipboard text={referencia} onCopy={() => console.log("referência")}>
-                                            <Button variant="contained"
-                                                color="secondary"
-                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                                            </Button>
-                                        </CopyToClipboard>
-                                    </Grid>
-
-                                    <Grid item xs={12} sm={10}>
-                                        <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Qual o telefone?" name="telefone" variant="outlined" />
-                                        <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
-                                            <Button variant="contained"
-                                                color="secondary"
-                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                                            </Button>
-                                        </CopyToClipboard>
-                                    </Grid>
-                                    <FormLabel style={{ fontWeight: 'bold', fontSize: 18 }} id="demo-controlled-switch">
-                                        Houve crime ou embriaguez no local?
-                                    </FormLabel>
-                                    <Stack direction="row" spacing={1} marginBottom={2} alignItems="center">
-                                        <Typography>Embriaguez</Typography>
-                                        <FormControlLabel
-                                            control={
-                                                <Switch
-                                                    checked={crime === "sofrendo"}
-                                                    onChange={(e) => handleChange("crime", e.target.checked ? "sofrendo" : "embriagado")}
-                                                    name="controlled-switch"
-                                                />
-                                            }
-                                            sx={{
-                                                display: 'block',
-
-                                            }}
-                                        />
-                                        <Typography>Crime</Typography>
-                                    </Stack>
-                                    {crime === 'sofrendo' && (
-                                        <>
-                                            <Grid item xs={12} sm={10}>
-                                                <FormGroup>
-                                                    {crimesValues.map(crimeValue => ( // Itera sobre os valores dos crimes
-                                                        <FormControlLabel
-                                                            key={crimeValue}
-                                                            control={
-                                                                <Checkbox
-                                                                    checked={crimesSelecionados.includes(crimeValue)}
-                                                                    onChange={handleCrimeChange(crimeValue)}
-                                                                />
-                                                            }
-                                                            label={crimeValue} // Exibe o valor do crime como label
+                                        <FormGroup>
+                                            {crimesValues.map(crimeValue => ( // Itera sobre os valores dos crimes
+                                                <FormControlLabel
+                                                    key={crimeValue}
+                                                    control={
+                                                        <Checkbox
+                                                            checked={crimesSelecionados.includes(crimeValue)}
+                                                            onChange={handleCrimeChange(crimeValue)}
                                                         />
-                                                    ))}
-                                                </FormGroup>
-                                            </Grid>
-                                        </>
-                                    )}
-
-                                    <Grid item xs={12} sx={{ mb: 4 }}>
-                                        <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
-                                        
-                                        <TextField
-                                            className="narrativa-text"
-                                            sx={{
-                                                backgroundColor: 'rgba(0, 200, 0, 0.1)',
-                                            }}
-                                            multiline
-                                            fullWidth
-                                            value={narrativa}
-                                            InputProps={{
-                                                disabled: true
-                                            }}
-                                        />
+                                                    }
+                                                    label={crimeValue} // Exibe o valor do crime como label
+                                                />
+                                            ))}
+                                        </FormGroup>
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
-                                            <Button variant="contained"
-                                                color="secondary"
-                                                onClick={handleClick}
-                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
-                                            </Button>
-                                        </CopyToClipboard>
-                                    </Grid>
-                                    <Snackbar
-                                        sx={{
-                                            top: '70%',
-                                            marginLeft: '26%'
-                                        }}
-                                        open={open}
-                                        autoHideDuration={2000}
-                                        onClose={handleClose}>
-                                        <Alert severity="warning">Texto COPIADO</Alert>
-                                    </Snackbar>
                                 </>
                             )}
+
+                            <Grid item xs={12} sx={{ mb: 4 }}>
+                                <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+
+                                <TextField
+                                    className="narrativa-text"
+                                    sx={{
+                                        backgroundColor: 'rgba(0, 200, 0, 0.1)',
+                                    }}
+                                    multiline
+                                    fullWidth
+                                    value={narrativa}
+                                    InputProps={{
+                                        disabled: true
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
+                                    <Button variant="contained"
+                                        color="secondary"
+                                        onClick={handleClick}
+                                        style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
+                                    </Button>
+                                </CopyToClipboard>
+                            </Grid>
+                            <Snackbar
+                                sx={{
+                                    top: '70%',
+                                    marginLeft: '26%'
+                                }}
+                                open={open}
+                                autoHideDuration={2000}
+                                onClose={handleClose}>
+                                <Alert severity="warning">Texto COPIADO</Alert>
+                            </Snackbar>
                         </>
                     )}
-                </Grid>
+                </>
+                            )}
             </Grid>
-        </Box>
+        </Grid>
+        </Box >
     )
 }
 
