@@ -14,37 +14,50 @@ import {
     TextField,
     Button,
     Select,
-    MenuItem
+    MenuItem,
+    Snackbar,
+    FormGroup,
+    Checkbox
 } from '@mui/material';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import { regioesAdministrativas } from './Const/Consts';
+import { regioesAdministrativas, crimes } from './Const/Consts';
 
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 function AcidenteTransito() {
     const [state, setState] = useState({
         naturezaAcidente: '',
         crimeNoLocal: 'false',
+        crime: 'embriagado',
         nome: '',
         endereco: '',
         regiaoAdministrativa: 'Plano Piloto',
         referencia: '',
         telefone: '',
-        qtdeVitimas: '',
+        narrativa: '',
         text01: 'PARA ACIONAMENTO DA VIATURA, É NECESSÁRIO QUE ESTEJA OCORRENDO ALGUM CRIME NO LOCAL OU CONDUTORES ESTEJAM EMBRIAGADOS. CASO ESTEJA OCORRENDO APENAS A COLISÃO SEM VÍTIMAS, ORIENTAR O SOLICITANTE A DIRIGIR-SE À DP PARA REGISTRO',
         text02: 'INFORME O SOLICITANTE PARA DESLOCAR À DP OU FAZER O REGISTRO PELA DELEGACIA ONLINE. NÃO ACIONAR A VIATURA!',
     });
 
-    const { naturezaAcidente, crimeNoLocal, nome, endereco, regiaoAdministrativa, referencia, telefone, qtdeVitimas, text01, text02 } = state;
+    const { naturezaAcidente, crimeNoLocal, crime, nome, endereco, regiaoAdministrativa, referencia, telefone, text01, text02, narrativa } = state;
 
     const handleChange = (field, value) => {
         setState(prevState => ({ ...prevState, [field]: value }));
     }
 
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
+    const [crimesSelecionados, setCrimesSelecionados] = useState([]);
+
+    const handleCrimeChange = (crime) => (event) => {
+        if (event.target.checked) {
+            setCrimesSelecionados([...crimesSelecionados, crime]);
+        } else {
+            setCrimesSelecionados(crimesSelecionados.filter(c => c !== crime));
+        }
+    };
 
     useEffect(() => {
         setMostrarAlerta(naturezaAcidente === 'sem vítima' && crimeNoLocal === 'false');
@@ -56,7 +69,27 @@ function AcidenteTransito() {
         setState(prevState => ({ ...prevState, telefone: limitedTelefone }));
     };
 
+    useEffect(() => {
+        const text = `Acidente ${naturezaAcidente}
+    
+        * A pessoa de NOME: ${nome.toUpperCase()}, telefone ${telefone}, informa que houve um acidente ${naturezaAcidente.toUpperCase()} em ${endereco.toUpperCase()}, cidade: ${regiaoAdministrativa.toUpperCase()}, ${referencia.toUpperCase()}, porém pede VIATURA para dar apoio na situação, pois tem ${crime === 'sofrendo' ? `pessoa ${crime} ${crimesSelecionados.join(', ')}` : `condutor ${crime}`} no local.`;
 
+        setState(prevState => ({ ...prevState, narrativa: text }));
+    }, [naturezaAcidente, nome, endereco, referencia, regiaoAdministrativa, telefone, crime, crimesSelecionados]);
+
+    const crimesValues = crimes.map(crime => crime.value);
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     return (
         <Box paddingRight={2} marginTop={4} marginBottom={8}>
@@ -124,7 +157,7 @@ function AcidenteTransito() {
                                     </Grid>
 
                                     <Grid item xs={12} sm={10}>
-                                        <TextField sx={{ marginBottom: 0, marginRight: 2, width: '80%' }} placeholder="Local do acidente" id="outlined-basic-endereco" label="Qual o local do acidente?" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
+                                        <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Local do acidente" id="outlined-basic-endereco" label="Qual o local do acidente?" name="endereco" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
                                         <CopyToClipboard text={endereco} onCopy={() => console.log("endereco")}>
                                             <Button variant="contained"
                                                 color="secondary"
@@ -133,7 +166,7 @@ function AcidenteTransito() {
                                         </CopyToClipboard>
                                     </Grid>
 
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12} sm={6} marginBottom={4}>
                                         <Grid container spacing={2} alignItems="center">
                                             <Grid item xs={8}>
                                                 <FormControl fullWidth>
@@ -176,6 +209,7 @@ function AcidenteTransito() {
                                             </Button>
                                         </CopyToClipboard>
                                     </Grid>
+
                                     <Grid item xs={12} sm={10}>
                                         <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} type="number" inputProps={{ maxLength: 11 }} onChange={handleTelefoneChange} fullWidth id="outlined-basic-telefone" label="Qual o telefone?" name="telefone" variant="outlined" />
                                         <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
@@ -185,17 +219,82 @@ function AcidenteTransito() {
                                             </Button>
                                         </CopyToClipboard>
                                     </Grid>
+                                    <FormLabel style={{ fontWeight: 'bold', fontSize: 18 }} id="demo-controlled-switch">
+                                        Houve crime ou embriaguez no local?
+                                    </FormLabel>
+                                    <Stack direction="row" spacing={1} marginBottom={2} alignItems="center">
+                                        <Typography>Embriaguez</Typography>
+                                        <FormControlLabel
+                                            control={
+                                                <Switch
+                                                    checked={crime === "sofrendo"}
+                                                    onChange={(e) => handleChange("crime", e.target.checked ? "sofrendo" : "embriagado")}
+                                                    name="controlled-switch"
+                                                />
+                                            }
+                                            sx={{
+                                                display: 'block',
 
-                                    <Grid item xs={12} sm={10}>
-                                        <TextField sx={{ marginBottom: 1, marginRight: 2, width: '80%' }} type="number" placeholder="São quantas vítimas no local?" id="outlined-basic-endereco" label="São quantas vítimas no local?" name="qtdeVitimas" onChange={e => handleChange('qtdeVitimas', e.target.value)} variant="outlined" />
-                                        <CopyToClipboard text={qtdeVitimas} onCopy={() => console.log("qtdeVitimas")}>
+                                            }}
+                                        />
+                                        <Typography>Crime</Typography>
+                                    </Stack>
+                                    {crime === 'sofrendo' && (
+                                        <>
+                                            <Grid item xs={12} sm={10}>
+                                                <FormGroup>
+                                                    {crimesValues.map(crimeValue => ( // Itera sobre os valores dos crimes
+                                                        <FormControlLabel
+                                                            key={crimeValue}
+                                                            control={
+                                                                <Checkbox
+                                                                    checked={crimesSelecionados.includes(crimeValue)}
+                                                                    onChange={handleCrimeChange(crimeValue)}
+                                                                />
+                                                            }
+                                                            label={crimeValue} // Exibe o valor do crime como label
+                                                        />
+                                                    ))}
+                                                </FormGroup>
+                                            </Grid>
+                                        </>
+                                    )}
+
+                                    <Grid item xs={12} sx={{ mb: 4 }}>
+                                        <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+                                        
+                                        <TextField
+                                            className="narrativa-text"
+                                            sx={{
+                                                backgroundColor: 'rgba(0, 200, 0, 0.1)',
+                                            }}
+                                            multiline
+                                            fullWidth
+                                            value={narrativa}
+                                            InputProps={{
+                                                disabled: true
+                                            }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
                                             <Button variant="contained"
                                                 color="secondary"
-                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+                                                onClick={handleClick}
+                                                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
                                             </Button>
                                         </CopyToClipboard>
                                     </Grid>
-
+                                    <Snackbar
+                                        sx={{
+                                            top: '70%',
+                                            marginLeft: '26%'
+                                        }}
+                                        open={open}
+                                        autoHideDuration={2000}
+                                        onClose={handleClose}>
+                                        <Alert severity="warning">Texto COPIADO</Alert>
+                                    </Snackbar>
                                 </>
                             )}
                         </>

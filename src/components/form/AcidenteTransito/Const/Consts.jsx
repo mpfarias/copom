@@ -37,3 +37,7 @@ export const regioesAdministrativas = [
     { value: 'Arniqueira', label: 'Arniqueira' },
     { value: 'Arapoanga', label: 'Arapoanga' },
     { value: 'Água Quente', label: 'Água Quente' }]
+
+    export const crimes =  [
+        { value: 'ameaça', label: 'ameaça' },
+        {value: 'agressão física', label: 'agressão física'}]
