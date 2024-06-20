@@ -1,7 +1,7 @@
 export const regioesAdministrativas = [
     { value: 'Plano Piloto', label: 'Plano Piloto' },
     { value: 'Gama', label: 'Gama' },
-    { value: 'Taguatinga', label: 'aguatinga' },
+    { value: 'Taguatinga', label: 'Taguatinga' },
     { value: 'Brazlândia', label: 'Brazlândia' },
     { value: 'Sobradinho', label: 'Sobradinho' },
     { value: 'Planaltina', label: 'Planaltina' },
