@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import Home from "./components/home/Home.jsx";
-import FormularioViolenciaDomestica from "./components/form/ViolDomestica/Form.jsx";
-import SomAlto from './components/form/somAlto/Form.jsx';
-import RouboFurto from './components/form/RouboFurto/Form.jsx';
-import AlarmeAcionado from './components/form/AlarmeAcionado/Form.jsx';
-import MausTratos from './components/form/MausTratos/Form.jsx';
-import AcidenteTransito from './components/form/AcidenteTransito/Form.jsx';
-import Ameaca from './components/form/Ameaca/Form.jsx';
-import ViasDeFato from './components/form/ViasDeFato/Form.jsx';
-import ErrorPage from './components/error/ErrorPage.jsx';
+import Home from "./components/home/home.jsx";
+import FormularioViolenciaDomestica from "./components/Routes/Pmdf/form/ViolDomestica/Form.jsx";
+import SomAlto from './components/Routes/Pmdf/form/somAlto/Form.jsx';
+import RouboFurto from './components/Routes/Pmdf/form/RouboFurto/Form.jsx';
+import AlarmeAcionado from './components/Routes/Pmdf/form/AlarmeAcionado/Form.jsx';
+import MausTratos from './components/Routes/Pmdf/form/MausTratos/Form.jsx';
+import AcidenteTransito from './components/Routes/Pmdf/form/AcidenteTransito/Form.jsx';
+import Ameaca from './components/Routes/Pmdf/form/Ameaca/Form.jsx';
+import ViasDeFato from './components/Routes/Pmdf/form/ViasDeFato/Form.jsx';
+import AtentadoAoPudor from './components/Routes/Pmdf/form/AtentadoAoPudor/Form.jsx';
+
+import ErrorPage from './components/Routes/Pmdf/error/ErrorPage.jsx';
+import TelefonesUteis from './components/Routes/Pmdf/contact/Contact.jsx';
 
 
 const router = createBrowserRouter([
@@ -38,8 +41,8 @@ const router = createBrowserRouter([
         element: <RouboFurto />
       },
       {
-        path:"MausTratos",
-        element:<MausTratos/>
+        path: "MausTratos",
+        element: <MausTratos />
       },
       {
         path: "AlarmeAcionado",
@@ -57,13 +60,21 @@ const router = createBrowserRouter([
         path: "ViasDeFato",
         element: <ViasDeFato />
       },
-
-
+      {
+        path: "TelefonesUteis",
+        element: <TelefonesUteis />
+      },
+      {
+        path: "AtentadoAoPudor",
+        element: <AtentadoAoPudor/>
+      }
     ]
   }
 
 
-])
+], {
+  basename: '/hefesto'
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

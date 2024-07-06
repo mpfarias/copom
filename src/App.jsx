@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet } from 'react-router-dom'
-import Navbar from "./components/navbar/navbar";
-import Footer from "./components/footer/footer";
-import Menu from "./components/menu/menu";
+import Navbar from "./components/Routes/Pmdf/navbar/navbar";
+import Footer from "./components/Routes/Pmdf/footer/footer";
+import Menu from "./components/Routes/Pmdf/menu/menu"
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -25,7 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const ContentWrapper = styled('div')({
-  minHeight: 'calc(86.5vh - 200px)', // 56px é a altura do seu navbar
+  minHeight: 'calc(86.5vh - 200px)',
   position: 'relative',
 });
 
@@ -37,18 +37,15 @@ function App() {
         <Grid item xs={12}>
           <Item className="paper-no-margin"><Navbar /></Item>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={3}>
           <Item className="paper-no-margin"><Menu /></Item>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={9}>
           <Item className="paper-no-margin">
             <ContentWrapper>
-            <Outlet />
+              <Outlet />
             </ContentWrapper>
           </Item>
-        </Grid>
-        <Grid item xs={12} md={1}>
-          <Item></Item>
         </Grid>
         <Grid item xs={12}>
           <Item className="paper-no-margin"><Footer /></Item>
