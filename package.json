@@ -19,6 +19,7 @@
     "@mui/material": "^5.15.15",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "axios": "^1.6.8",
+    "cpf-cnpj-validator": "^1.0.3",
     "imask": "^7.6.0",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",

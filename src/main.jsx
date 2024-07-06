@@ -70,11 +70,7 @@ const router = createBrowserRouter([
       }
     ]
   }
-
-
-], {
-  basename: '/hefesto'
-})
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

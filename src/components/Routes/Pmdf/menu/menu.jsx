@@ -35,6 +35,10 @@ export default function Menu() {
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+  
+  const handleOpenLink = (link) => {
+    window.open(link, '_blank', 'noopener noreferrer, width=800, height=600'); 
+  };
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -50,10 +54,10 @@ export default function Menu() {
     { text: 'Vias de fato / Agressão', icon: <SportsKabaddiIcon />, link: '/ViasDeFato' },
     { text: 'Ameaça', icon: <MoodBadIcon />, link: '/Ameaca' },
     { text: 'Acidente de trânsito', icon: <CarCrashIcon />, link: '/AcidenteTransito' },
-    {text: 'Atentado ao pudor / Estupro', icon: <NoAccountsIcon/>, link: 'AtentadoAoPudor'},
-    
+    { text: 'Atentado ao pudor / Estupro', icon: <NoAccountsIcon />, link: 'AtentadoAoPudor' },
+
   ];
-  
+
   const ordenarItens = (itens) => {
     const itemHome = itens.find(item => item.text === 'Home');
     const outrosItens = itens.filter(item => item.text !== 'Home');
@@ -68,13 +72,13 @@ export default function Menu() {
   );
 
   const DrawerList = (
-    <Box sx={{ width: 280, marginTop:2, paddingLeft:2, marginRight:5 }} role="presentation" onClick={() => {
+    <Box sx={{ width: 280, marginTop: 2, paddingLeft: 2, marginRight: 5 }} role="presentation" onClick={() => {
       if (!isSearchFocused) {
         toggleDrawer(false)();
         setSearchTerm('');
       }
     }}
-  >
+    >
       <Paper
         component="form"
         sx={{
@@ -84,14 +88,14 @@ export default function Menu() {
           marginBottom: 1,
         }}
       >
-        
+
         <InputBase
           sx={{ ml: 2, flex: 1 }}
           placeholder="Pesquisar natureza"
           inputProps={{ 'aria-label': 'search' }}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onFocus={() => setIsSearchFocused(true)} 
+          onFocus={() => setIsSearchFocused(true)}
           onBlur={() => setIsSearchFocused(false)}
         />
         <IconButton sx={{ p: '8px' }} aria-label="search">
@@ -101,7 +105,7 @@ export default function Menu() {
       <List>
         {ordenarItens(filteredItems).map((item, index) => (
           <React.Fragment key={item?.text || index}>
-            {item && ( 
+            {item && (
               <ListItem disablePadding>
                 <ListItemButton component={Link} to={item.link}>
                   <ListItemIcon>
@@ -117,13 +121,13 @@ export default function Menu() {
       </List>
       <Divider />
       <ListItem disablePadding>
-        <ListItemButton component={Link} to="/TelefonesUteis">
+        <ListItemButton onClick={() => handleOpenLink('/TelefonesUteis')} >
           <ListItemIcon>
             <CallIcon />
           </ListItemIcon>
           <ListItemText primary="Telefones úteis" />
         </ListItemButton>
-      </ListItem> 
+      </ListItem>
     </Box>
   );
 
