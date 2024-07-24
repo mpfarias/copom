@@ -1,0 +1,21 @@
+* {
+  font-family: "Maven Pro", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.paper-no-margin {
+    margin: 0;
+  }
+
+  .paper-no-padding {
+    padding: 0;
+  }
+
+  .remove-left-margin {
+    margin-left: 0 !important;
+  }

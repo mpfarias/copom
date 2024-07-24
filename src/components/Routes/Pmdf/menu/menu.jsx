@@ -1,5 +1,7 @@
 import * as React from 'react';
-
+import SendIcon from '@mui/icons-material/Send';
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
 import {
   Box,
   Drawer,
@@ -14,9 +16,7 @@ import {
   Paper,
 } from '@mui/material/';
 
-import SendIcon from '@mui/icons-material/Send';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
+
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -27,18 +27,20 @@ import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import CarCrashIcon from '@mui/icons-material/CarCrash';
 import CallIcon from '@mui/icons-material/Call';
-import NoAccountsIcon from '@mui/icons-material/NoAccounts';
-
+import VaccinesIcon from '@mui/icons-material/Vaccines';
+import HeartBrokenOutlinedIcon from '@mui/icons-material/HeartBrokenOutlined';
+import Face2Icon from '@mui/icons-material/Face2';
+import Diversity2Icon from '@mui/icons-material/Diversity2';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
+import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
+import Man2Icon from '@mui/icons-material/Man2';
 import { Link } from 'react-router-dom';
 
 export default function Menu() {
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
-  
-  const handleOpenLink = (link) => {
-    window.open(link, '_blank', 'noopener noreferrer, width=800, height=600'); 
-  };
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -46,23 +48,31 @@ export default function Menu() {
 
   const drawerItems = [
     { text: 'Home', icon: <HomeIcon />, link: '/' },
-    { text: 'Violência doméstica', icon: <ReportIcon />, link: '/ViolenciaDomestica' },
+    { text: 'Gerar Ocorrência', icon: <DifferenceOutlinedIcon />, link: '/GerarOcorrencia' },
+    { text: 'Violência doméstica', icon: <Face2Icon />, link: '/ViolenciaDomestica' },
     { text: 'Som automotivo / Perturbação', icon: <SpatialAudioIcon />, link: '/SomAlto' },
     { text: 'Roubo/Furto', icon: <LocalPoliceIcon />, link: '/RouboFurto' },
-    { text: 'Animais', icon: <PetsIcon />, link: '/MausTratos' },
+    { text: 'Crimes contra animais', icon: <PetsIcon />, link: '/MausTratos' },
     { text: 'Alarme acionado', icon: <AlarmIcon />, link: '/AlarmeAcionado' },
     { text: 'Vias de fato / Agressão', icon: <SportsKabaddiIcon />, link: '/ViasDeFato' },
     { text: 'Ameaça', icon: <MoodBadIcon />, link: '/Ameaca' },
     { text: 'Acidente de trânsito', icon: <CarCrashIcon />, link: '/AcidenteTransito' },
-    { text: 'Atentado ao pudor / Estupro', icon: <NoAccountsIcon />, link: 'AtentadoAoPudor' },
+    { text: 'Drogas', icon: <VaccinesIcon />, link: '/Drogas' },
+    { text: 'Abandono', icon: <HeartBrokenOutlinedIcon />, link: '/Abandono' },
+    { text: 'Crimes Sexuais', icon: <ReportIcon />, link: '/CrimesSexuais' },
+    { text: 'Homofobia', icon: <Diversity2Icon />, link: '/Homofobia' },
+    { text: 'Racismo', icon: <GroupOutlinedIcon />, link: '/Racismo' },
+    { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
+    { text: 'Pessoa armada', icon: <Man2Icon />, link: '/PessoaArmada' }
 
   ];
 
   const ordenarItens = (itens) => {
     const itemHome = itens.find(item => item.text === 'Home');
-    const outrosItens = itens.filter(item => item.text !== 'Home');
+    const itemOcorrencia = itens.find(item => item.text === 'Gerar Ocorrência');
+    const outrosItens = itens.filter(item => item.text !== 'Home' && item.text !== 'Gerar Ocorrência');
     outrosItens.sort((a, b) => a.text.localeCompare(b.text));
-    return [itemHome, ...outrosItens];
+    return [itemHome, itemOcorrencia, ...outrosItens];
   };
 
   drawerItems.slice(1).sort((a, b) => a.text.localeCompare(b.text));
@@ -72,7 +82,7 @@ export default function Menu() {
   );
 
   const DrawerList = (
-    <Box sx={{ width: 280, marginTop: 2, paddingLeft: 2, marginRight: 5 }} role="presentation" onClick={() => {
+    <Box sx={{ width: 280, marginTop: 2, paddingLeft: 2, marginRight: 5, marginBottom: 5 }} role="presentation" onClick={() => {
       if (!isSearchFocused) {
         toggleDrawer(false)();
         setSearchTerm('');
@@ -102,9 +112,11 @@ export default function Menu() {
           <SearchIcon />
         </IconButton>
       </Paper>
+
       <List>
         {ordenarItens(filteredItems).map((item, index) => (
           <React.Fragment key={item?.text || index}>
+
             {item && (
               <ListItem disablePadding>
                 <ListItemButton component={Link} to={item.link}>
@@ -115,13 +127,13 @@ export default function Menu() {
                 </ListItemButton>
               </ListItem>
             )}
-            {index === 0 && item && <Divider />}
+            {item && item.text === 'Gerar Ocorrência' && <Divider />}
           </React.Fragment>
         ))}
       </List>
       <Divider />
       <ListItem disablePadding>
-        <ListItemButton onClick={() => handleOpenLink('/TelefonesUteis')} >
+        <ListItemButton onClick={() => window.open('TelefonesUteis', '_blank', 'width=1800,height=950')}>
           <ListItemIcon>
             <CallIcon />
           </ListItemIcon>
