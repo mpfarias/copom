@@ -19,11 +19,13 @@ export default function Home() {
   return (
     <Box 
       display="flex"
-      marginLeft="25vh"
-      minHeight="69vh"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="68vh"
+      paddingX={2}
     >
-      <Grid container>
-        <Grid xs={12} sm={10}>
+      <Grid container justifyContent="center">
+        <Grid xs={12} sm={10} md={8} lg={6}>
           <Item>
             <Box
               component="img"
@@ -31,7 +33,7 @@ export default function Home() {
               alt="PMDF Logo"
               sx={{
                 width: 350,
-                marginBottom: 4,
+                marginBottom: 2,
                 maxWidth: '100%',
                 height: 'auto',
                 [theme.breakpoints.down('sm')]: {
@@ -43,7 +45,7 @@ export default function Home() {
                 cursor: 'pointer'
               }}
             />
-            <Box sx={{ marginBottom: 3 }}>
+            <Box sx={{ marginBottom: 1 }}>
               Polícia Militar do Distrito Federal
             </Box>
           </Item>

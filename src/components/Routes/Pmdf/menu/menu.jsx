@@ -154,11 +154,11 @@ export default function Menu() {
       <Button
         variant="contained"
         endIcon={<SendIcon />}
-        sx={{ marginLeft: 5, marginTop: 2 }}
+        sx={{ marginLeft: 5, fontSize:13, marginTop: 2, paddingLeft:1}}
         onClick={toggleDrawer(true)}
         aria-label="Abrir menu"
       >
-        Menu
+        SELECIONE A NATUREZA
       </Button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
