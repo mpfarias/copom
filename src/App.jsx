@@ -40,7 +40,7 @@ function App() {
         <Grid item xs={3}>
           <Item className="paper-no-margin"><Menu /></Item>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <Item className="paper-no-margin">
             <ContentWrapper>
               <Outlet />

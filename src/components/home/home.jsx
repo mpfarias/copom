@@ -13,22 +13,25 @@ export default function Home() {
     ...theme.typography.body2,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    boxShadow:'none'
+    boxShadow: 'none'
   }));
 
   return (
-    <Box  >
+    <Box 
+      display="flex"
+      marginLeft="25vh"
+      minHeight="69vh"
+    >
       <Grid container>
-        <Grid xs={6} display='flex' justifyContent='space-around'>
+        <Grid xs={12} sm={10}>
           <Item>
             <Box
               component="img"
               src={logoPmdf}
               alt="PMDF Logo"
-              display='flex'
               sx={{
-                width:350,
-                marginBottom:4,
+                width: 350,
+                marginBottom: 4,
                 maxWidth: '100%',
                 height: 'auto',
                 [theme.breakpoints.down('sm')]: {
@@ -39,9 +42,11 @@ export default function Home() {
                 },
                 cursor: 'pointer'
               }}
-            /><Box
-            sx={{marginBottom:3}}
-            >Polícia Militar do Distrito Federal</Box></Item>
+            />
+            <Box sx={{ marginBottom: 3 }}>
+              Polícia Militar do Distrito Federal
+            </Box>
+          </Item>
         </Grid>
       </Grid>
     </Box>

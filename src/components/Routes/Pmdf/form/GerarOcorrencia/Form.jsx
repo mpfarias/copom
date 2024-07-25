@@ -106,9 +106,9 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
 
   return (
     <>
-      <Grid item xs={12} sm={6} marginBottom={2}>
+      <Grid item xs={12} sm={8} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <FormControl fullWidth>
               <FormLabel id="demo-controlled-radio-buttons-group">Unidade:</FormLabel>
               <Select
@@ -133,7 +133,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
       </Grid>
 
       <Grid item xs={12} sm={10}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TextField onKeyPress={handleKeyPress} inputProps={{ maxLength: 6 }} sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Somente números" id="outlined-basic-endereco" label="Qual o prefixo?" name="prefixo" onChange={e => handleChange('prefixo', e.target.value)} variant="outlined" />
           <CopyToClipboard text={prefixo} onCopy={() => console.log("prefixo")}>
             <Button variant="contained"
@@ -145,9 +145,9 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         </Grid>
       </Grid>
 
-      <Grid item xs={12} sm={6} marginBottom={2}>
+      <Grid item xs={12} sm={8} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <FormControl fullWidth>
               <FormLabel id="demo-controlled-radio-buttons-group">Qual o tipo de serviço?</FormLabel>
               <Select
@@ -173,9 +173,9 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         </Grid>
       </Grid>
 
-      <Grid item xs={12} sm={6} marginBottom={2}>
+      <Grid item xs={12} sm={8} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <FormControl fullWidth>
               <FormLabel id="demo-controlled-radio-buttons-group">Graduação:</FormLabel>
               <Select
@@ -200,7 +200,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
       </Grid>
 
       <Grid item xs={12} sm={10}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Nome de Guerra" id="outlined-basic-endereco" label="Qual o Nome de Guerra?" name="nome" onChange={e => handleChange('nome', e.target.value)} variant="outlined" />
           <CopyToClipboard text={nome} onCopy={() => console.log("nome")}>
             <Button variant="contained"
@@ -213,7 +213,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
       </Grid>
 
       <Grid item xs={12} sm={10}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TextField onKeyPress={handleKeyPress} inputProps={{ maxLength: 7 }} sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Matrícula" id="outlined-basic-endereco" label="Qual a matrícula?" name="matricula" onChange={e => handleChange('matricula', e.target.value)} variant="outlined" />
           <CopyToClipboard text={matricula} onCopy={() => console.log("matricula")}>
             <Button variant="contained"
@@ -225,9 +225,9 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         </Grid>
       </Grid>
 
-      <Grid item xs={12} sm={6} marginBottom={2}>
+      <Grid item xs={12} sm={8} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <FormControl fullWidth>
               <FormLabel id="demo-controlled-radio-buttons-group">Selecione a Natureza da Ocorrência:</FormLabel>
               <Select
@@ -255,7 +255,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
 
       <Grid item xs={12} sm={10} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <FormControl sx={{ width: '80%' }}>
               <FormLabel sx={{ marginBottom: 2 }} id="demo-controlled-radio-buttons-group" style={{ fontWeight: 'bold', fontSize: 18, }}>Quantos indivíduos detidos?</FormLabel>
               <RadioGroup
@@ -273,9 +273,9 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         </Grid>
       </Grid>
 
-      <Grid item xs={12} sm={6} marginBottom={2}>
+      <Grid item xs={12} sm={8} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <FormControl fullWidth>
               <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
               <Select
@@ -302,7 +302,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
       </Grid>
 
       <Grid item xs={12} sm={10}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Endereço" id="outlined-basic-endereco" label="Qual o endereço da situação?" name="nome" onChange={e => handleChange('endereco', e.target.value)} variant="outlined" />
           <CopyToClipboard text={endereco} onCopy={() => console.log("endereco")}>
             <Button variant="contained"
@@ -315,7 +315,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
       </Grid>
 
       <Grid item xs={12} sm={10}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Ponto de referência" id="outlined-basic-endereco" label="Tem ponto de referência?" name="referencia" onChange={e => handleChange('referencia', e.target.value)} variant="outlined" />
           <CopyToClipboard text={referencia} onCopy={() => console.log("referência")}>
             <Button variant="contained"
@@ -328,7 +328,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
       </Grid>
 
       <Grid item xs={12} sm={10}>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} onChange={e => handleChange('telefone', e.target.value)} inputProps={{ maxLength: 11 }} onKeyPress={handleKeyPress} fullWidth id="outlined-basic-telefone" label="Qual o telefone?" name="telefone" variant="outlined" />
           <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
             <Button variant="contained"
@@ -361,9 +361,9 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         <Typography>Sim</Typography>
       </Stack>
       {deslocarDelegacia === 'true' && (
-        <Grid item xs={12} sm={6} marginBottom={2}>
+        <Grid item xs={12} sm={8} marginBottom={2}>
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <FormControl fullWidth>
                 <FormLabel id="demo-controlled-radio-buttons-group">Qual delegacia deslocou?</FormLabel>
                 <Select
@@ -390,7 +390,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         </Grid>
       )}
 
-      <Grid item xs={7} sx={{ mb: 4 }}>
+      <Grid item xs={10} sx={{ mb: 4 }}>
         <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
         <TextField
           className="narrativa-text"

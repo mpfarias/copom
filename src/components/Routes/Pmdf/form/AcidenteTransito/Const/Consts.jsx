@@ -39,9 +39,9 @@ export const regioesAdministrativas = [
     { value: 'Água Quente', label: 'Água Quente' }]
 
 export const crimes = [
-    { value: 'ameaça', label: 'ameaça' },
-    { value: 'agressão física', label: 'agressão física' },
-    { value: 'outro', label: 'outro' }
+    { value: 'ameaça', label: 'Ameaça' },
+    { value: 'agressão física', label: 'Agressão física' },
+    { value: 'outro', label: 'Outro' }
 ]
 
 export const tiposDeDanos = [
@@ -50,7 +50,7 @@ export const tiposDeDanos = [
     { value: 'semáforo', label: 'Colisão contra semáforo' },
     { value: 'jardim público', label: 'Colisão contra jardim público' },
     { value: 'veículo oficial', label: 'Colisão contra veículo oficial' },
-    { value: 'outro', label: 'outro'}
+    { value: 'outro', label: 'Outro'}
 ]
 
 export const estadoVitimaOption = [

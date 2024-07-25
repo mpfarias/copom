@@ -59,21 +59,6 @@ function AcidenteTransito() {
     const [crimesSelecionados, setCrimesSelecionados] = useState([]);
     const [danosSelecionados, setDanosSelecionados] = useState([]);
 
-    const handleCrimeChange = (crime) => (event) => {
-        if (event.target.checked) {
-            setCrimesSelecionados([...crimesSelecionados, crime]);
-        } else {
-            setCrimesSelecionados(crimesSelecionados.filter(c => c !== crime));
-        }
-    };
-
-    const handleDanoChange = (crime) => (event) => {
-        if (event.target.checked) {
-            setDanosSelecionados([...danosSelecionados, crime]);
-        } else {
-            setDanosSelecionados(danosSelecionados.filter(c => c !== crime));
-        }
-    };
 
     useEffect(() => {
         setMostrarAlerta(naturezaAcidente === 'sem vítima' && crimeNoLocal === 'false');
@@ -111,6 +96,27 @@ function AcidenteTransito() {
         }));
     };
 
+
+    const handleCrimeChange = (crimeValue) => {
+        setCrimesSelecionados(prevState =>
+            prevState.includes(crimeValue)
+                ? prevState.filter(crime => crime !== crimeValue)
+                : [...prevState, crimeValue]
+        );
+    };
+
+
+    const handleDanoChange = (danoValue) => {
+        setDanosSelecionados(prevState =>
+            prevState.includes(danoValue)
+                ? prevState.filter(crime => crime !== danoValue)
+                : [...prevState, danoValue]
+        );
+    };
+    
+    const [outroCrime, setOutroCrime] = useState('');
+    const [outroDano, setOutroDano] = useState('');
+
     const [outroEstadoVitima, setOutroEstadoVitima] = useState('');
 
     const [outroTipoAcidente, setOutroTipoAcidente] = useState('');
@@ -145,13 +151,26 @@ function AcidenteTransito() {
     
         * A pessoa de NOME: ${nome.toUpperCase()}, telefone ${telefone}, informa que houve um acidente ${naturezaAcidente.toUpperCase()} em ${endereco.toUpperCase()}, cidade: ${regiaoAdministrativa.toUpperCase()}, ${referencia.toUpperCase()},`
         if (crime === 'dano' && naturezaAcidente === 'sem vítima') {
-            text += `porém viatura deve deslocar ao local pois houve dano ao patrimônio público
+            let danosText = crime === 'dano'
+                    ? `${danosSelecionados.filter(c => c !== 'outro').join(', ')}`
+                    : `condutor embriagado`;
+                if (danosSelecionados.includes('outro')) {
+                    danosText += `, ${outroDano}`;
+                }
+            text += ` porém viatura deve deslocar ao local pois houve DANO AO PATRIMÔNIO PÚBLICO.
             
-            Colisão contra ${danosSelecionados.join(', colisão contra ')}.
+            Colisão contra ${danosText}.
             `
         } else
             if (crimeNoLocal === 'true') {
-                text += `porém pede VIATURA para dar apoio na situação, pois tem ${crime === 'crime' ? `pessoa sofrendo ${crimesSelecionados.join(', ')}` : `condutor embriagado`} no local.`;
+                let crimesText = crime === 'crime'
+                    ? `pessoa sofrendo ${crimesSelecionados.filter(c => c !== 'outro').join(', ')}`
+                    : `condutor embriagado`;
+                if (crimesSelecionados.includes('outro')) {
+                    crimesText += `, ${outroCrime}`;
+                }
+            
+                text += `porém pede VIATURA para dar apoio na situação, pois tem ${crimesText} no local.`;
             } else if (vitimas >= 1 && vitimas <= 5) {
                 text += ` e pede CBMDF e PMDF no local, com total de ${vitimas} ${vitimas == 1 ? `vítima` : `vítimas`} com`
             } else if (vitimas == -1) {
@@ -159,7 +178,7 @@ function AcidenteTransito() {
             } else if (vitimas > 5) {
                 text += ` e pede CBMDF e PMDF no local, pois tem várias vítimas no local, com `
             }
-        text += ` ${estadosVitimaParaNarrativa.join(', ')}. `
+        text += ` ${estadosVitimaParaNarrativa.join(', ')} `
 
         if (naturezaAcidente === 'com vítima') {
             text += `
@@ -168,7 +187,7 @@ function AcidenteTransito() {
         }
 
         setState(prevState => ({ ...prevState, narrativa: text }));
-    }, [naturezaAcidente, nome, endereco, referencia, regiaoAdministrativa, telefone, crime, vitimas, crimeNoLocal, estadoVitima, tipoAcidente, outroEstadoVitima, outroTipoAcidente, danosSelecionados, crimesSelecionados]);
+    }, [naturezaAcidente, nome, endereco, referencia, regiaoAdministrativa, outroCrime, outroDano, telefone, crime, vitimas, crimeNoLocal, estadoVitima, tipoAcidente, outroEstadoVitima, outroTipoAcidente, danosSelecionados, crimesSelecionados]);
 
     return (
         <Box paddingRight={2} marginTop={4} marginBottom={8}>
@@ -333,14 +352,23 @@ function AcidenteTransito() {
                                                         <FormControlLabel
                                                             key={danoValue}
                                                             control={
-                                                                <Checkbox
+                                                                <Checkbox                                                                    
                                                                     checked={danosSelecionados.includes(danoValue)}
-                                                                    onChange={handleDanoChange(danoValue)}
+                                                                    onChange={() => handleDanoChange(danoValue)}
                                                                 />
                                                             }
                                                             label={danoValue}
                                                         />
                                                     ))}
+                                                    {danosSelecionados.includes('outro') && (
+                                                        <TextField
+                                                            label="Especifique o dano"
+                                                            value={outroDano}
+                                                            onChange={(e) => setOutroDano(e.target.value)}
+                                                            fullWidth
+                                                            sx={{ mt: 2 }}
+                                                        />
+                                                    )}
                                                 </FormGroup>
                                             </Grid>
                                         </>
@@ -359,14 +387,24 @@ function AcidenteTransito() {
                                                             control={
                                                                 <Checkbox
                                                                     checked={crimesSelecionados.includes(crimeValue)}
-                                                                    onChange={handleCrimeChange(crimeValue)}
+                                                                    onChange={() => handleCrimeChange(crimeValue)}
                                                                 />
                                                             }
-                                                            label={crimeValue}
+                                                            label={crimeValue.charAt(0).toUpperCase() + crimeValue.slice(1).toLowerCase()}
                                                         />
                                                     ))}
+                                                    {crimesSelecionados.includes('outro') && (
+                                                        <TextField
+                                                            label="Especifique o crime"
+                                                            value={outroCrime}
+                                                            onChange={(e) => setOutroCrime(e.target.value)}
+                                                            fullWidth
+                                                            sx={{ mt: 2 }}
+                                                        />
+                                                    )}
                                                 </FormGroup>
                                             </Grid>
+
                                         </>
                                     )}
 
