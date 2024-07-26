@@ -43,5 +43,6 @@ export const listaNaturezas = [
     { value: 'Perturbação do sossego em residência', label: 'Perturbação do sossego em residência' },
     { value: 'Perturbação do sossego em veículo', label: 'Perturbação do sossego em veículo' },
     { value: 'Perturbação do sossego em estabelecimento comercial', label: 'Perturbação do sossego em estabelecimento comercial' },
+    { value: 'Embriaguez ao volante', label: 'Embriaguez ao volante' },
 
 ]

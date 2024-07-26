@@ -54,7 +54,7 @@ export default function Menu() {
     { text: 'Roubo/Furto', icon: <LocalPoliceIcon />, link: '/RouboFurto' },
     { text: 'Crimes contra animais', icon: <PetsIcon />, link: '/MausTratos' },
     { text: 'Alarme acionado', icon: <AlarmIcon />, link: '/AlarmeAcionado' },
-    { text: 'Vias de fato / Agressão', icon: <SportsKabaddiIcon />, link: '/ViasDeFato' },
+    { text: 'Vias de Fato', icon: <SportsKabaddiIcon />, link: '/ViasDeFato' },
     { text: 'Ameaça', icon: <MoodBadIcon />, link: '/Ameaca' },
     { text: 'Acidente de trânsito', icon: <CarCrashIcon />, link: '/AcidenteTransito' },
     { text: 'Drogas', icon: <VaccinesIcon />, link: '/Drogas' },
@@ -63,7 +63,8 @@ export default function Menu() {
     { text: 'Homofobia', icon: <Diversity2Icon />, link: '/Homofobia' },
     { text: 'Racismo', icon: <GroupOutlinedIcon />, link: '/Racismo' },
     { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
-    { text: 'Pessoa armada', icon: <Man2Icon />, link: '/PessoaArmada' }
+    { text: 'Pessoa armada', icon: <Man2Icon />, link: '/PessoaArmada' },
+    { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' }
 
   ];
 

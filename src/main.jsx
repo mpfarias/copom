@@ -24,6 +24,7 @@ import Suicidio from './components/Routes/Pmdf/form/Suicídio/Form.jsx';
 import GerarOcorrencia from './components/Routes/Pmdf/form/GerarOcorrencia/Form.jsx';
 import NoMenuLayout from './components/Routes/Pmdf/contact/NoMenuLayout.jsx';
 import PessoaArmada from './components/Routes/Pmdf/form/PessoaArmada/Form.jsx';
+import Agressao from './components/Routes/Pmdf/form/Agressao/Form.jsx';
 
 
 
@@ -50,7 +51,8 @@ const router = createBrowserRouter([
       { path: "Homofobia", element: <Homofobia /> },
       { path: "Racismo", element: <Racismo /> },
       { path: "Suicidio", element: <Suicidio /> },
-      { path: "PessoaArmada", element: <PessoaArmada /> }
+      { path: "PessoaArmada", element: <PessoaArmada /> },
+      { path: "Agressao", element: <Agressao /> }
     ]
   },
   {
