@@ -91,7 +91,7 @@ function GerarOcorrencia() {
     let text = `Solicitação policial para gerar número de ocorrência:
 
 Policial: ${graduacao} ${nome}, Matrícula: ${matricula}
-Unidade: ${batalhao} - ${equipe} - Prefixo ${prefixo}
+Unidade: ${batalhao} - ${equipe === 'Nenhum' ? '' : (equipe === 'Grifo de PATAMO' ? 'GRIFO' : equipe)} ${equipe === 'Grifo de PATAMO' ? prefixo : 'Prefixo ' + prefixo}
 Telefone: ${telefone}
 ${natureza} em ${endereco}, ${referencia} - ${regiaoAdministrativa}
 ${individuos === '-1' ? 'Nenhum indivíduo' : (individuos === '1' ? individuos + ' indivíduo' : (individuos < 5 ? individuos + ' indivíduos' : 'Mais de 5 indivíduos'))} detido${individuos === '-1' && individuos === '1' ? '' : (individuos > 1 ? 's' : '')}
@@ -132,19 +132,6 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         </Grid>
       </Grid>
 
-      <Grid item xs={12} sm={10}>
-        <Grid item xs={12}>
-          <TextField onKeyPress={handleKeyPress} inputProps={{ maxLength: 6 }} sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Somente números" id="outlined-basic-endereco" label="Qual o prefixo?" name="prefixo" onChange={e => handleChange('prefixo', e.target.value)} variant="outlined" />
-          <CopyToClipboard text={prefixo} onCopy={() => console.log("prefixo")}>
-            <Button variant="contained"
-              color="secondary"
-              onClick={handleClick}
-              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-            </Button>
-          </CopyToClipboard>
-        </Grid>
-      </Grid>
-
       <Grid item xs={12} sm={8} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
@@ -170,6 +157,19 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
               </Select>
             </FormControl>
           </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} sm={10}>
+        <Grid item xs={12}>
+          <TextField onKeyPress={handleKeyPress} inputProps={{ maxLength: 6 }} sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Somente números" id="outlined-basic-endereco" label="Qual o prefixo?" name="prefixo" onChange={e => handleChange('prefixo', e.target.value)} variant="outlined" />
+          <CopyToClipboard text={prefixo} onCopy={() => console.log("prefixo")}>
+            <Button variant="contained"
+              color="secondary"
+              onClick={handleClick}
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+            </Button>
+          </CopyToClipboard>
         </Grid>
       </Grid>
 
