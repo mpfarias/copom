@@ -38,14 +38,14 @@ function App() {
         <Grid item xs={12} md={3}>
           <Item><Menu /></Item>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
           <Item>
             <ContentWrapper>
               <Outlet />
             </ContentWrapper>
           </Item>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={1}>
           <Item></Item>
         </Grid>
       </Grid>

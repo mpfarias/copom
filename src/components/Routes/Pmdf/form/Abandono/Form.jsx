@@ -63,7 +63,7 @@ function Abandono() {
 
   return (
     <>
-      <Grid item xs={12} marginBottom={2}>
+      <Grid item xs={12} marginBottom={2} marginLeft={4}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
             <FormLabel style={{
@@ -93,7 +93,7 @@ function Abandono() {
 
           <Grid item xs={12} sm={6}>
             <Grid container spacing={2} alignItems="center">
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <FormControl fullWidth>
                   <FormLabel id="demo-controlled-radio-buttons-group">Quem é a vítima?</FormLabel>
                   <Select
@@ -125,8 +125,16 @@ function Abandono() {
               </Button>
             </CopyToClipboard>
           </Grid>
+
           <Grid item xs={12}>
-            <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Endereço" fullWidth id="outlined-basic-endereco" onChange={e => handleChange('endereco', e.target.value)} label="Qual o local do abandono?" variant="outlined" />
+            <TextField
+              sx={{ marginBottom: 2, marginRight: 2, width: '80%' }}
+              placeholder="Endereço"
+              fullWidth
+              id="outlined-basic-endereco"
+              onChange={e => handleChange('endereco', e.target.value)}
+              label="Qual o local do abandono?"
+              variant="outlined" />
             <CopyToClipboard text={endereco} onCopy={() => console.log('Endereço copiado!')}>
               <Button variant="contained"
                 color="secondary"
@@ -134,37 +142,34 @@ function Abandono() {
               </Button>
             </CopyToClipboard>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={8}>
-                <FormControl fullWidth>
-                  <FormLabel id="demo-controlled-radio-buttons-group" style={{ fontWeight: 'bold', fontSize: 18, }}>Qual a cidade da ocorrência?</FormLabel>
-                  <Select
-                    sx={{ marginBottom: 2 }}
-                    placeholder="Cidade:"
-                    value={regiaoAdministrativa}
-                    onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
-                    IconComponent={KeyboardArrowDownIcon}
-                    variant="outlined"
-                    id="outlined-basic-regiaoAdministrativa"
-                  >
-                    {regioesAdministrativas.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={4}>
-                <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
-                  <Button variant="contained"
-                    color="secondary"
-                    style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                  </Button>
-                </CopyToClipboard>
-              </Grid>
-            </Grid>
+
+          <Grid item xs={12}>
+            <FormLabel id="demo-controlled-radio-buttons-group" style={{ fontWeight: 'bold', fontSize: 18, }}>Qual a cidade da ocorrência?</FormLabel>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Select
+              sx={{ marginBottom: 2, width: '50%', marginRight: 2, }}
+              fullWidth
+              placeholder="Cidade:"
+              value={regiaoAdministrativa}
+              onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
+              IconComponent={KeyboardArrowDownIcon}
+              variant="outlined"
+              id="outlined-basic-regiaoAdministrativa"
+            >
+              {regioesAdministrativas.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+            <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
+              <Button variant="contained"
+                color="secondary"
+                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+              </Button>
+            </CopyToClipboard>
           </Grid>
 
           <Grid item xs={12}>
@@ -198,7 +203,7 @@ function Abandono() {
 
           <Grid item xs={12} sm={6} marginBottom={2}>
             <Grid container spacing={2} alignItems="center">
-              <Grid item xs={8}>
+              <Grid item xs={12}>
                 <FormControl fullWidth>
                   <FormLabel id="demo-controlled-radio-buttons-group">A pessoa abandonada precisa de cuidados médicos?</FormLabel>
                   <Select
