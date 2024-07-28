@@ -116,9 +116,7 @@ function AcidenteTransito() {
     
     const [outroCrime, setOutroCrime] = useState('');
     const [outroDano, setOutroDano] = useState('');
-
     const [outroEstadoVitima, setOutroEstadoVitima] = useState('');
-
     const [outroTipoAcidente, setOutroTipoAcidente] = useState('');
 
     useEffect(() => {

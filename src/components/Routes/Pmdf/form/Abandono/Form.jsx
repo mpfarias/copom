@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Grid, FormLabel, FormControlLabel, FormControl, Box, RadioGroup, Radio, Select, MenuItem, TextField, Button, Snackbar, Alert } from '@mui/material';
 
@@ -47,7 +47,10 @@ function Abandono() {
     }
   };
 
+  const [outraVitima, setOutraVitima] = useState('');
+  
   const singleOption = listaSolicitante[1];
+
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -60,6 +63,16 @@ function Abandono() {
     }
     setOpen(false);
   };
+
+  useEffect(() => {
+
+    let text = `Abandono de ${vitima}.
+    Solicitante ${nome}, telefone: ${telefone} informa que tem um ${vitima} abandonado em ${endereco} - ${regiaoAdministrativa} - ${referencia}.
+    De acordo com o solicitante, ${ajuda === 'sim' ? 'a vítima necessita de cuidados médicos. Acionar apoio CBMDF.': (ajuda === 'não' ? 'a vítima está bem e não precisa de cuidados médicos' : 'este não sabe informar o estado de saúde da vítima.') }
+    `;
+
+    setState(prevState => ({ ...prevState, narrativa: text }));
+  }, [vitima, nome, endereco, regiaoAdministrativa, referencia, telefone, ajuda])
 
   return (
     <>
@@ -113,6 +126,17 @@ function Abandono() {
                   </Select>
                 </FormControl>
               </Grid>
+              {vitima === 'outro'  && (
+          <Grid item xs={12} sx={{marginBottom: 2}}>
+            <TextField
+              fullWidth
+              label="Por favor, especifique a vítima"
+              variant="outlined"
+              value={outraVitima}
+              onChange={(e) => setOutraVitima(e.target.value)}
+            />
+          </Grid>
+        )}
             </Grid>
           </Grid>
 
@@ -144,7 +168,7 @@ function Abandono() {
           </Grid>
 
           <Grid item xs={12}>
-            <FormLabel id="demo-controlled-radio-buttons-group" style={{ fontWeight: 'bold', fontSize: 18, }}>Qual a cidade da ocorrência?</FormLabel>
+            <FormLabel id="demo-controlled-radio-buttons-group">Qual a cidade da ocorrência?</FormLabel>
           </Grid>
 
           <Grid item xs={12}>
@@ -226,7 +250,7 @@ function Abandono() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={7} sx={{ mb: 4 }}>
+          <Grid item xs={12} sx={{ mb: 4 }}>
             <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
             <TextField
               className="narrativa-text"
