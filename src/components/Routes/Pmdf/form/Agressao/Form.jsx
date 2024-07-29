@@ -8,6 +8,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { listaSolicitante } from '../../../../Consts/Solicitante';
 import { regioesAdministrativas } from '../AcidenteTransito/Const/Consts';
 import { listaVitimasComMulher } from '../../../../Consts/Vitimas';
+import { listaParentesco } from '../../../../Consts/Parentesco';
 
 
 
@@ -17,6 +18,7 @@ function Agressao() {
     solicitante: '',
     nome: '',
     endereco: '',
+    parentesco: 'marido',
     regiaoAdministrativa: 'Plano Piloto',
     referencia: '',
     telefone: '',
@@ -24,10 +26,13 @@ function Agressao() {
     narrativa: ''
   });
 
-  const { solicitante, nome, endereco, regiaoAdministrativa, referencia, telefone, vitima } = state;
+  const { solicitante, nome, endereco, regiaoAdministrativa, referencia, telefone, parentesco } = state;
 
   const [open, setOpen] = useState(false);
   const [selectedVitimas, setSelectedVitimas] = useState([]);
+  const [showOutraVitima, setShowOutraVitima] = useState(false);
+  const [outroParentesco, setOutroParentesco] = useState('');
+  const [showOutroParentesco, setShowOutroParentesco] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -41,12 +46,18 @@ function Agressao() {
   };
 
   const handleChange = (field, value) => {
-    if (field === 'matricula') {
-      const uppercasedValue = value.toUpperCase();
-      if (/^[\dX]*$/.test(uppercasedValue) && uppercasedValue.length <= 11) {
-        setMatricula(uppercasedValue);
-        setState(prevState => ({ ...prevState, [field]: uppercasedValue }));
-      }
+    if (field === 'outroParentesco') {
+      setOutroParentesco(value);
+      setState(prevState => ({
+        ...prevState,
+        parentesco: value === '' ? parentesco : value
+      }));
+    } else if (field === 'parentesco') {
+      setShowOutroParentesco(value === '');
+      setState(prevState => ({
+        ...prevState,
+        parentesco: value === '' ? outroParentesco : value
+      }));
     } else {
       setState(prevState => ({ ...prevState, [field]: value }));
     }
@@ -64,6 +75,12 @@ function Agressao() {
     setSelectedVitimas(prevSelected =>
       checked ? [...prevSelected, value] : prevSelected.filter(item => item !== value)
     );
+    const newSelectedVitimas = selectedVitimas.includes(value)
+      ? selectedVitimas.filter(vitima => vitima !== value)
+      : [...selectedVitimas, value];
+
+    setSelectedVitimas(newSelectedVitimas);
+    setShowOutraVitima(newSelectedVitimas.includes('outro'));
   };
 
   return (
@@ -183,23 +200,63 @@ function Agressao() {
             <Grid item xs={12}>
               <FormLabel style={{ fontWeight: 'bold', fontSize: 18 }} id="demo-row-radio-buttons-group-label">Quem é a vítima?</FormLabel>
               <FormControl component="fieldset" variant="standard">
-            <Box>
-              {listaVitimasComMulher.map(option => (
-                <FormControlLabel
-                  key={option.value}
-                  control={
-                    <Checkbox
-                      checked={selectedVitimas.includes(option.value)}
-                      onChange={handleCheckboxChange}
-                      value={option.value}
+                <Box>
+                  {listaVitimasComMulher.map(option => (
+                    <FormControlLabel
+                      key={option.value}
+                      control={
+                        <Checkbox
+                          checked={selectedVitimas.includes(option.value)}
+                          onChange={handleCheckboxChange}
+                          value={option.value}
+                        />
+                      }
+                      label={option.label}
                     />
-                  }
-                  label={option.label}
-                />
-              ))}
-            </Box>
-          </FormControl>
+                  ))}
+                  {showOutraVitima && (
+                    <TextField
+                      label="Especifique a outra vítima"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                    />
+                  )}
+                </Box>
+              </FormControl>
             </Grid>
+          </Grid>
+
+          <Grid item xs={12} sm={7}>
+            <FormControl fullWidth>
+              <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Quem é o agressor?</FormLabel>
+              <Select
+                sx={{ marginBottom: 2 }}
+                placeholder="Parentesco"
+                value={parentesco}
+                onChange={(e) => handleChange('parentesco', e.target.value)}
+                IconComponent={KeyboardArrowDownIcon}
+                variant="outlined"
+              >
+                {listaParentesco
+                  .map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+            {showOutroParentesco && (
+              <FormControl fullWidth>
+                <TextField
+                  fullWidth
+                  value={outroParentesco}
+                  onChange={(e) => setOutroParentesco(e.target.value)}
+                  label="Outro Parentesco"
+                  variant="outlined"
+                />
+              </FormControl>
+            )}
           </Grid>
 
         </Grid>
