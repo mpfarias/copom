@@ -32,5 +32,6 @@ export const listaDelegacias = [
     {value: '38ª DP', label: '38ª DP'},
     {value:'DEAM', label:'DEAM'},
     {value:'DCA', label:'DCA'},
+    {value:'DCA II', label:'DCA II'},
     {value:'DPE', label:'DPE'}
 ]
