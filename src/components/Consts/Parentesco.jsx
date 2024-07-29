@@ -20,7 +20,6 @@ export const listaVitimas = [
     {value: 'mãe', label: 'Mãe'},
     {value: 'irmã', label: 'Irmã'},
     {value: 'avó', label: 'Avó'},
-    {value: 'tia', label: 'Tia'},
     {value: 'vizinha', label: 'Vizinha'},
     {value: '', label: 'Outro'},
 ]

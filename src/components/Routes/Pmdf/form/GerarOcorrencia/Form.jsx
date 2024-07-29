@@ -57,9 +57,10 @@ function GerarOcorrencia() {
 
   const handleChange = (field, value) => {
     if (field === 'matricula') {
-      if (/^\d*$/.test(value) && value.length <= 11) {
-        setMatricula(value);
-        setState(prevState => ({ ...prevState, [field]: value }));
+      const uppercasedValue = value.toUpperCase();
+      if (/^[\dX]*$/.test(uppercasedValue) && uppercasedValue.length <= 11) {
+        setMatricula(uppercasedValue);
+        setState(prevState => ({ ...prevState, [field]: uppercasedValue }));
       }
     } else {
       setState(prevState => ({ ...prevState, [field]: value }));
@@ -68,7 +69,7 @@ function GerarOcorrencia() {
 
   const handleKeyPress = (event) => {
     const charCode = event.which ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 88 && charCode !== 120) { 
       event.preventDefault();
     }
   };
@@ -99,7 +100,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
 `;
 
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [graduacao, nome, endereco, referencia, regiaoAdministrativa, telefone, batalhao, prefixo, equipe, natureza, qtdeIndividuos, individuos, deslocarDelegacia, delegacia]);
+  }, [graduacao, nome, endereco, referencia, regiaoAdministrativa, matricula, telefone, batalhao, prefixo, equipe, natureza, qtdeIndividuos, individuos, deslocarDelegacia, delegacia]);
 
 
 
@@ -214,12 +215,25 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
 
       <Grid item xs={12} sm={10}>
         <Grid item xs={12}>
-          <TextField onKeyPress={handleKeyPress} inputProps={{ maxLength: 7 }} sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} placeholder="Matrícula" id="outlined-basic-endereco" label="Qual a matrícula?" name="matricula" onChange={e => handleChange('matricula', e.target.value)} variant="outlined" />
+          <TextField
+            sx={{ marginBottom: 4, marginRight: 2, width: '80%', textTransform: 'uppercase' }} // Apply uppercase styling
+            onKeyPress={handleKeyPress}
+            inputProps={{ maxLength: 7 }}
+            placeholder="Matrícula"
+            id="outlined-basic-endereco"
+            label="Qual a matrícula?"
+            name="matricula"
+            onChange={e => handleChange('matricula', e.target.value)}
+            variant="outlined"
+          />
           <CopyToClipboard text={matricula} onCopy={() => console.log("matricula")}>
-            <Button variant="contained"
+            <Button
+              variant="contained"
               color="secondary"
               onClick={handleClick}
-              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+              style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}
+            >
+              <FileCopyIcon />
             </Button>
           </CopyToClipboard>
         </Grid>
