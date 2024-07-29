@@ -8,7 +8,6 @@ export const listaNaturezas = [
     { value: 'Corrupção ativa', label: 'Corrupção ativa' },
     { value: 'Desacato', label: 'Desacato' },
     { value: 'Desobediência', label: 'Desobediência' },
-    { value: 'Desobediência', label: 'Desobediência' },
     { value: 'Homicídio', label: 'Homicídio' },
     { value: 'Homofobia', label: 'Homofobia' },
     { value: 'Latrocínio', label: 'Latrocínio' },
