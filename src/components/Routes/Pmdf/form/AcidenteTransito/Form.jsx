@@ -264,7 +264,7 @@ function AcidenteTransito() {
                                         </CopyToClipboard>
                                     </Grid>
 
-                                    <Grid item xs={12} sm={6} marginBottom={4}>
+                                    <Grid item xs={12} sm={12} marginBottom={4}>
                                         <Grid container spacing={2} alignItems="center">
                                             <Grid item xs={8}>
                                                 <FormControl fullWidth>
@@ -289,7 +289,6 @@ function AcidenteTransito() {
                                                     </Select>
                                                 </FormControl>
                                             </Grid>
-
                                             <Grid item xs={4}>
                                                 <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
                                                     <Button variant="contained"

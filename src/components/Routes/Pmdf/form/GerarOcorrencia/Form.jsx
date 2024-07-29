@@ -69,7 +69,7 @@ function GerarOcorrencia() {
 
   const handleKeyPress = (event) => {
     const charCode = event.which ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 88 && charCode !== 120) { 
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 88 && charCode !== 120) {
       event.preventDefault();
     }
   };
@@ -216,7 +216,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
       <Grid item xs={12} sm={10}>
         <Grid item xs={12}>
           <TextField
-            sx={{ marginBottom: 4, marginRight: 2, width: '80%', textTransform: 'uppercase' }} // Apply uppercase styling
+            sx={{ marginBottom: 4, marginRight: 2, width: '80%' }}
             onKeyPress={handleKeyPress}
             inputProps={{ maxLength: 7 }}
             placeholder="Matrícula"
@@ -287,19 +287,19 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         </Grid>
       </Grid>
 
-      <Grid item xs={12} sm={8} marginBottom={2}>
+      <Grid item xs={12} sm={12} marginBottom={4}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <FormControl fullWidth>
               <FormLabel id="demo-controlled-radio-buttons-group">Cidade:</FormLabel>
               <Select
                 sx={{ marginBottom: 2 }}
-                placeholder="Cidade::"
+                placeholder="Cidade:"
                 value={regiaoAdministrativa}
                 onChange={(e) => handleChange('regiaoAdministrativa', e.target.value)}
                 IconComponent={KeyboardArrowDownIcon}
                 variant="outlined"
-                id="outlined-basic-batalhoes"
+                id="outlined-basic-regiaoAdministrativa"
               >
                 {regioesAdministrativas
                   .slice()
@@ -311,6 +311,15 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
                   ))}
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <CopyToClipboard text={regiaoAdministrativa} onCopy={() => console.log('Cidade copiada!')}>
+              <Button variant="contained"
+                color="secondary"
+                onClick={handleClick}
+                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+              </Button>
+            </CopyToClipboard>
           </Grid>
         </Grid>
       </Grid>
