@@ -66,6 +66,7 @@ export default function FormularioViolenciaDomestica() {
     medida: '',
     agressorNoLocal: '',
     ferida: '',
+    gestante:'',
     criancas: '',
     urgencia: '',
     narrativa: '',
@@ -78,7 +79,7 @@ export default function FormularioViolenciaDomestica() {
   const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
   const [showOutraVitimaInput, setShowOutraVitimaInput] = useState(false);
-  const { nomeVitima, conheceVitima, vitimaParentesco, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, narrativa, text01, text02 } = state;
+  const { nomeVitima, conheceVitima, vitimaParentesco, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, gestante, criancas, urgencia, narrativa, text01, text02 } = state;
 
   const handleChange = (field, value) => {
     if (field === 'outroParentesco') {
@@ -146,9 +147,10 @@ export default function FormularioViolenciaDomestica() {
  ${gritos.length > 0 ? '* É possível ouvir ' + gritos.join(' e ') : ''}
  ${criancas === 'true' ? '* Há crianças no local' : ''}
  ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
+ ${gestante === 'true' ? '* Solicitante está GESTANTE' : ''}
 `;
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, conheceVitima, vitimaParentesco, endereco, outraVitima, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, vitimaParentesco, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
+  }, [solicitante, nomeVitima, conheceVitima, vitimaParentesco, endereco, outraVitima, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, gestante, vitimaParentesco, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
 
   useEffect(() => {
     if (solicitante === 'denunciante' && !agressaoOptions.includes('pedido de socorro')) {
@@ -397,6 +399,7 @@ export default function FormularioViolenciaDomestica() {
         <Grid item xs={12}>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Vítima possui medida protetiva contra o agressor ?</FormLabel>
           <RadioGroup
+            row
             value={medida}
             onChange={(e) => handleChange("medida", e.target.value)}
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -409,6 +412,7 @@ export default function FormularioViolenciaDomestica() {
           </RadioGroup>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">O agressor encontra-se no local ?</FormLabel>
           <RadioGroup
+            row
             value={agressorNoLocal}
             onChange={(e) => handleChange("agressorNoLocal", e.target.value)}
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -421,6 +425,7 @@ export default function FormularioViolenciaDomestica() {
           </RadioGroup>
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">O agressor está armado com arma de fogo/faca ?</FormLabel>
           <RadioGroup
+            row
             value={armado}
             onChange={(e) => handleChange("armado", e.target.value)}
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -434,6 +439,7 @@ export default function FormularioViolenciaDomestica() {
 
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">A vítima está ferida ?</FormLabel>
           <RadioGroup
+            row
             value={ferida}
             onChange={(e) => handleChange("ferida", e.target.value)}
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -445,8 +451,23 @@ export default function FormularioViolenciaDomestica() {
             <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
           </RadioGroup>
 
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">A vítima está gestante ?</FormLabel>
+          <RadioGroup
+            row
+            value={gestante}
+            onChange={(e) => handleChange("gestante", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            sx={{ marginBottom: 4 }}
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+            <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
+          </RadioGroup>
+
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Tem criança envolvida na agressão ?</FormLabel>
           <RadioGroup
+            row
             value={criancas}
             onChange={(e) => handleChange("criancas", e.target.value)}
             aria-labelledby="demo-controlled-radio-buttons-group"
@@ -459,6 +480,7 @@ export default function FormularioViolenciaDomestica() {
 
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
           <RadioGroup
+            row
             value={urgencia}
             onChange={(e) => handleChange("urgencia", e.target.value)}
             aria-labelledby="demo-controlled-radio-buttons-group"
