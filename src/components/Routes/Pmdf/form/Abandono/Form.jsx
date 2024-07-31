@@ -17,7 +17,7 @@ import { listaOpcoes } from '../../../../Consts/Opcoes';
 
 function Abandono() {
   const [state, setState] = useState({
-    solicitante: '',
+    solicitante: 'denunciante',
     nome: '',
     endereco: '',
     regiaoAdministrativa: 'Plano Piloto',
@@ -25,6 +25,7 @@ function Abandono() {
     telefone: '',
     vitima: 'menor',
     ajuda: 'não',
+    outraVitima:'',
     narrativa: ''
   });
 
@@ -66,13 +67,15 @@ function Abandono() {
 
   useEffect(() => {
 
+    let finalVitima = vitima === '' && outraVitima ? outraVitima : vitima;
     let text = `Abandono de ${vitima}.
-    Solicitante ${nome}, telefone: ${telefone} informa que tem um ${vitima} abandonado em ${endereco} - ${regiaoAdministrativa} - ${referencia}.
+    Solicitante ${nome}, telefone: ${telefone} informa que tem um ${finalVitima} abandonado em ${endereco} - ${regiaoAdministrativa} - ${referencia}.
     De acordo com o solicitante, ${ajuda === 'sim' ? 'a vítima necessita de cuidados médicos. Acionar apoio CBMDF.': (ajuda === 'não' ? 'a vítima está bem e não precisa de cuidados médicos' : 'este não sabe informar o estado de saúde da vítima.') }
     `;
 
     setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [vitima, nome, endereco, regiaoAdministrativa, referencia, telefone, ajuda])
+  }, [vitima, nome, endereco, regiaoAdministrativa, referencia, telefone, ajuda, outraVitima])
+
 
   return (
     <>
@@ -126,7 +129,7 @@ function Abandono() {
                   </Select>
                 </FormControl>
               </Grid>
-              {vitima === 'outro'  && (
+              {vitima === ''  && (
           <Grid item xs={12} sx={{marginBottom: 2}}>
             <TextField
               fullWidth
