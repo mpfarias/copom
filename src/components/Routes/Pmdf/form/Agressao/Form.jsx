@@ -85,6 +85,15 @@ function Agressao() {
     setShowOutraVitima(newSelectedVitimas.includes('outro'));
   };
 
+  const handleParentescoChange = (event) => {
+    const { value } = event.target;
+    const newSelectedParentescos = listaParentesco.filter(option => value.includes(option.value));
+    setSelectedParentescos(newSelectedParentescos);
+    setShowOutroParentesco(value.includes(''));
+    handleChange('parentesco', value);
+};
+
+
   useEffect(() => {
     let finalArma = arma === '' && outraArma ? outraArma : arma;
     let selectedVitimasText = selectedVitimas.join(', ');
@@ -252,7 +261,7 @@ function Agressao() {
               sx={{ marginBottom: 2, width: 300 }}
               placeholder="Parentesco"
               value={parentesco}
-              onChange={(e) => handleChange('parentesco', e.target.value)}
+              onChange={(e) => handleParentescoChange ('parentesco', e.target.value)}
               IconComponent={KeyboardArrowDownIcon}
               variant="outlined"
             >
