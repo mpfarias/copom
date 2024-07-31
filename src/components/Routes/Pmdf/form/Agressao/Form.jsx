@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, TextField, FormLabel, FormGroup, Checkbox, FormControl, Select, MenuItem, Box, RadioGroup, Radio, FormControlLabel, Button, Snackbar, Alert } from '@mui/material';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -9,30 +9,32 @@ import { listaSolicitante } from '../../../../Consts/Solicitante';
 import { regioesAdministrativas } from '../AcidenteTransito/Const/Consts';
 import { listaVitimasComMulher } from '../../../../Consts/Vitimas';
 import { listaParentesco } from '../../../../Consts/Parentesco';
-
-
+import { listaOpcaoArmas, listaArmasBrancas } from '../../../../Consts/Opcoes';
 
 
 function Agressao() {
   const [state, setState] = useState({
-    solicitante: '',
+    solicitante: 'vítima',
     nome: '',
     endereco: '',
     parentesco: 'marido',
     regiaoAdministrativa: 'Plano Piloto',
     referencia: '',
     telefone: '',
-    vitima: '',
+    listaArmas: 'não',
+    arma: 'faca',
+    outraArma:'',
     narrativa: ''
   });
 
-  const { solicitante, nome, endereco, regiaoAdministrativa, referencia, telefone, parentesco } = state;
+  const { solicitante, nome, endereco, regiaoAdministrativa, referencia, telefone, parentesco, listaArmas, arma, narrativa } = state;
 
   const [open, setOpen] = useState(false);
   const [selectedVitimas, setSelectedVitimas] = useState([]);
   const [showOutraVitima, setShowOutraVitima] = useState(false);
   const [outroParentesco, setOutroParentesco] = useState('');
   const [showOutroParentesco, setShowOutroParentesco] = useState(false);
+  const [outraArma, setOutraArma] = useState('');
 
   const handleClick = () => {
     setOpen(true);
@@ -83,6 +85,22 @@ function Agressao() {
     setShowOutraVitima(newSelectedVitimas.includes('outro'));
   };
 
+  useEffect(() => {
+    let finalArma = arma === '' && outraArma ? outraArma : arma;
+    let selectedVitimasText = selectedVitimas.join(', ');
+    let article = selectedVitimas.includes('mulher') ? 'uma' : 'um';
+    let listaArmasText = listaArmas === 'não' ? '' : `ATENÇÃO!! Agressor armado com ${listaArmas === 'arma branca' ? finalArma : (listaArmas === 'arma de fogo' ? 'arma de fogo' : outraArma)}`;
+
+    let text = `A pessoa de nome ${nome} informa que ${solicitante === 'vítima'
+      ? 'está sendo vítima de agressão pelo(a) ' + parentesco + '.'
+      : `${article} ${selectedVitimasText}`
+      }${listaArmasText ? '\n' + listaArmasText : ''}
+    Endereço: ${endereco} - ${regiaoAdministrativa}${referencia === '' ? '' : ' - ' + referencia}
+    Telefone: ${telefone}
+    `;
+
+    setState(prevState => ({ ...prevState, narrativa: text }));
+  }, [nome, solicitante, selectedVitimas, parentesco, endereco, regiaoAdministrativa, referencia, telefone, listaArmas, outraArma, arma])
   return (
     <>
       <Grid item xs={12} marginBottom={2} marginLeft={4}>
@@ -184,81 +202,179 @@ function Agressao() {
           </Grid>
 
           <Grid item xs={12} sm={10}>
-            <Grid item xs={12}>
-              <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} onChange={e => handleChange('telefone', e.target.value)} inputProps={{ maxLength: 11 }} onKeyPress={handleKeyPress} fullWidth id="outlined-basic-telefone" label="Qual o telefone?" name="telefone" variant="outlined" />
-              <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
-                <Button variant="contained"
-                  color="secondary"
-                  onClick={handleClick}
-                  style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
-                </Button>
-              </CopyToClipboard>
-            </Grid>
+            <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} onChange={e => handleChange('telefone', e.target.value)} inputProps={{ maxLength: 11 }} onKeyPress={handleKeyPress} fullWidth id="outlined-basic-telefone" label="Qual o telefone?" name="telefone" variant="outlined" />
+            <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
+              <Button variant="contained"
+                color="secondary"
+                onClick={handleClick}
+                style={{ backgroundColor: '#32CD32', color: '#FFFFFF', marginBottom: 15 }}><FileCopyIcon />
+              </Button>
+            </CopyToClipboard>
+          </Grid>
+          {solicitante === 'denunciante' && (
+            <>
+              <Grid item xs={12} sm={10}>
+                <FormLabel style={{ fontWeight: 'bold', fontSize: 18 }} id="demo-row-radio-buttons-group-label">Quem é a vítima?</FormLabel>
+              </Grid>
+
+              <Grid item xs={12} sm={10}>
+                {listaVitimasComMulher.map(option => (
+                  <FormControlLabel
+                    key={option.value}
+                    control={
+                      <Checkbox
+                        checked={selectedVitimas.includes(option.value)}
+                        onChange={handleCheckboxChange}
+                        value={option.value}
+                      />
+                    }
+                    label={option.label}
+                  />
+                ))}
+                {showOutraVitima && (
+                  <TextField
+                    label="Especifique a outra vítima"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                  />
+                )}
+              </Grid>
+            </>
+          )
+          }
+          <Grid item xs={12} sm={10}>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Quem é o agressor?</FormLabel>
           </Grid>
 
           <Grid item xs={12} sm={10}>
-            <Grid item xs={12}>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18 }} id="demo-row-radio-buttons-group-label">Quem é a vítima?</FormLabel>
-              <FormControl component="fieldset" variant="standard">
-                <Box>
-                  {listaVitimasComMulher.map(option => (
-                    <FormControlLabel
-                      key={option.value}
-                      control={
-                        <Checkbox
-                          checked={selectedVitimas.includes(option.value)}
-                          onChange={handleCheckboxChange}
-                          value={option.value}
-                        />
-                      }
-                      label={option.label}
-                    />
-                  ))}
-                  {showOutraVitima && (
-                    <TextField
-                      label="Especifique a outra vítima"
-                      variant="outlined"
-                      fullWidth
-                      margin="normal"
-                    />
-                  )}
-                </Box>
-              </FormControl>
-            </Grid>
+            <Select
+              sx={{ marginBottom: 2, width: 300 }}
+              placeholder="Parentesco"
+              value={parentesco}
+              onChange={(e) => handleChange('parentesco', e.target.value)}
+              IconComponent={KeyboardArrowDownIcon}
+              variant="outlined"
+            >
+              {listaParentesco
+                .map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+            </Select>
           </Grid>
 
-          <Grid item xs={12} sm={7}>
-            <FormControl fullWidth>
-              <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Quem é o agressor?</FormLabel>
-              <Select
-                sx={{ marginBottom: 2 }}
-                placeholder="Parentesco"
-                value={parentesco}
-                onChange={(e) => handleChange('parentesco', e.target.value)}
-                IconComponent={KeyboardArrowDownIcon}
-                variant="outlined"
-              >
-                {listaParentesco
-                  .map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+          <Grid item xs={12} sm={10}>
             {showOutroParentesco && (
-              <FormControl fullWidth>
+              <FormControl >
                 <TextField
-                  fullWidth
+                  sx={{ width: 300 }}
                   value={outroParentesco}
                   onChange={(e) => setOutroParentesco(e.target.value)}
-                  label="Outro Parentesco"
+                  label="Outro agressor"
                   variant="outlined"
                 />
               </FormControl>
             )}
           </Grid>
 
+          <Grid item xs={12} sm={10}>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Está utilizando alguma arma?</FormLabel>
+          </Grid>
+
+          <Grid item xs={12} sm={10}>
+            <Select
+              sx={{ marginBottom: 2, width: 300 }}
+              placeholder="Arma"
+              value={listaArmas}
+              onChange={(e) => handleChange('listaArmas', e.target.value)}
+              IconComponent={KeyboardArrowDownIcon}
+              variant="outlined"
+            >
+              {listaOpcaoArmas
+                .map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+            </Select>
+          </Grid>
+          {listaArmas === 'arma branca' && (
+            <>
+              <Grid item xs={12} sm={10}>
+                <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Qual arma?</FormLabel>
+              </Grid>
+
+              <Grid item xs={12} sm={10}>
+                <Select
+                  sx={{ marginBottom: 2, width: 300 }}
+                  placeholder="Arma"
+                  value={arma}
+                  onChange={(e) => handleChange('arma', e.target.value)}
+                  IconComponent={KeyboardArrowDownIcon}
+                  variant="outlined"
+                >
+                  {listaArmasBrancas
+                    .map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Grid>
+              {arma === ''  && (
+          <Grid item xs={12} sx={{marginBottom: 2}}>
+            <TextField
+              fullWidth
+              label="Por favor, especifique a arma"
+              variant="outlined"
+              value={outraArma}
+              onChange={(e) => setOutraArma(e.target.value)}
+            />
+          </Grid>
+        )}
+            </>
+          )
+          }
+          <Grid item xs={12} sx={{ mb: 4 }}>
+            <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group" component="legend">Copie o texto abaixo e cole no campo NARRATIVA do CAD:</FormLabel>
+            <TextField
+              className="narrativa-text"
+              sx={{
+                backgroundColor: 'rgba(0, 200, 0, 0.1)',
+              }}
+              multiline
+              fullWidth
+              value={narrativa}
+              InputProps={{
+                disabled: true
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Grid item xs={8}>
+              <CopyToClipboard text={narrativa} onCopy={() => console.log("narrativa")}>
+                <Button variant="contained"
+                  color="secondary"
+                  onClick={handleClick}
+                  style={{ backgroundColor: '#32CD32', color: '#FFFFFF', width: '100%', marginBottom: 15 }}>Copiar texto
+                </Button>
+              </CopyToClipboard>
+            </Grid>
+          </Grid>
+
+          <Snackbar
+            sx={{
+              top: '70%',
+              marginLeft: '26%'
+            }}
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}>
+            <Alert severity="warning">Texto COPIADO</Alert>
+          </Snackbar>
         </Grid>
       </Grid>
     </>

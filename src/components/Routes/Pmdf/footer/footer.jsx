@@ -21,12 +21,12 @@ const Item = styled(Sheet)(({ theme }) => ({
 export default function Footer() {
     return (
         <Grid container sx={{ flex: 1}}>
-            <Grid item xs={12} md={4}>
+            <Grid item md={4}>
                 <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
+                    <Item></Item>
                         <Item>Polícia Militar do Distrito Federal
                             <Item></Item>
-                                <Item></Item>
                         </Item>
                     </Stack>
                 </Box>
@@ -34,22 +34,19 @@ export default function Footer() {
             <Grid item md={4}>
                 <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
+                    <Item></Item>
                         <Item>HEFESTO - Sistema de Criação e Despacho de Ocorrências
                             <Item></Item>
-                                <Item>
-                            </Item>
                         </Item>
                     </Stack>
                 </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item md={4}>
                 <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
                         <Item>Desenvolvido por:
-                            <Item>2º Sgt Marcelo Pires de Farias - (61) 9 9972-9293
-                                <Item>2º Sgt Rafael Gadelha de Menezes - (61) 9 9277-1680
-                                </Item>
-                            </Item>
+                            <Item>2º Sgt Marcelo Pires de Farias - (61) 9 9972-9293</Item>
+                                <Item>2º Sgt Rafael Gadelha de Menezes - (61) 9 9277-1680</Item>
                         </Item>
                     </Stack>
                 </Box>

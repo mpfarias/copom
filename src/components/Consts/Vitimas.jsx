@@ -2,7 +2,7 @@ export const listaVitimas = [
     { value: 'menor', label:'Menor'},
     { value: 'idoso', label:'Idoso'},
     { value: 'incapaz', label:'Incapaz'},
-    { value: 'outro', label:'Outro'},
+    { value: '', label:'Outro'},
 ]
 
 export const listaVitimasComMulher = [
@@ -10,6 +10,5 @@ export const listaVitimasComMulher = [
     { value: 'menor', label:'Menor'},
     { value: 'idoso', label:'Idoso'},
     { value: 'incapaz', label:'Incapaz'},
-    { value: 'solicitante', label:'Solicitante'},
     { value: 'outro', label:'Outro'},
 ]

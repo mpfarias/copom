@@ -49,7 +49,7 @@ function App() {
           <Item></Item>
         </Grid>
       </Grid>
-      <Item sx={{mb: '3.4%'}}>
+      <Item sx={{mb: '1.4%'}}>
         <Footer />
       </Item>
     </Box>
