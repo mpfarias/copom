@@ -218,7 +218,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
           <TextField
             sx={{ marginBottom: 4, marginRight: 2, width: '80%' }}
             onKeyPress={handleKeyPress}
-            inputProps={{ maxLength: 7 }}
+            inputProps={{ maxLength: 15 }}
             placeholder="Matrícula"
             id="outlined-basic-endereco"
             label="Qual a matrícula?"

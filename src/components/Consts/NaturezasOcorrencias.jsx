@@ -45,5 +45,7 @@ export const listaNaturezas = [
     { value: 'Embriaguez ao volante', label: 'Embriaguez ao volante' },
     { value: 'Transporte ilegal de passageiros', label: 'Transporte ilegal de passageiros' },
     { value: 'Pessoa suspeita', label: 'Pessoa suspeita' },
+    { value: 'Apreensão de arma branca', label: 'Apreensão de arma branca' },
+    { value: 'Exercício ilegal da profissão', label: 'Exercício ilegal da profissão' },
 
 ]
