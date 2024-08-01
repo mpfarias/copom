@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
-import {Box, Grid} from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import { styled } from '@mui/joy/styles';
 
@@ -23,43 +23,44 @@ export default function Footer() {
     const [ip, setIp] = useState('');
     const [currentTime, setCurrentTime] = useState(new Date());
 
-  // Função para atualizar a hora
-  const updateClock = () => {
-    setCurrentTime(new Date());
-  };
-
-  
-  useEffect(() => {
-
-    const timerID = setInterval(updateClock, 1000);
-
-    return () => clearInterval(timerID);
-  }, []);
-
-  const formattedTime = currentTime.toLocaleTimeString();
-  const formattedDate = currentTime.toLocaleDateString();
-
-  useEffect(() => {
-    // Função para buscar o IP
-    const fetchIp = async () => {
-      try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        setIp(data.ip);
-      } catch (error) {
-        console.error('Erro ao obter o IP:', error);
-      }
+    // Função para atualizar a hora
+    const updateClock = () => {
+        setCurrentTime(new Date());
     };
 
-    fetchIp();
-  }, []);
+
+    useEffect(() => {
+
+        const timerID = setInterval(updateClock, 1000);
+
+        return () => clearInterval(timerID);
+    }, []);
+
+    const formattedTime = currentTime.toLocaleTimeString();
+    const formattedDate = currentTime.toLocaleDateString();
+
+    useEffect(() => {
+        // Função para buscar o IP
+        const fetchIp = async () => {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                setIp(data.ip);
+            } catch (error) {
+                console.error('Erro ao obter o IP:', error);
+            }
+        };
+
+        fetchIp();
+    }, []);
     return (
-        <Grid container sx={{ flex: 1}}>
+        <Grid container sx={{ flex: 1 }}>
             <Grid item md={4}>
                 <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
-                    <Item></Item>
+                        
                         <Item>Polícia Militar do Distrito Federal
+                            <Item></Item>
                             <Item></Item>
                         </Item>
                     </Stack>
@@ -68,9 +69,10 @@ export default function Footer() {
             <Grid item md={4}>
                 <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
-                    <Item></Item>
-                        <Item>HEFESTO - Sistema de Criação e Despacho de Ocorrências
+
+                        <Item>HEFESTO - Sistema de Gereciamento de Atedimento de Ocorrências
                             <Item>IP: {ip ? ip : 'Carregando...'} - {formattedDate} - {formattedTime}</Item>
+                            <Item></Item>
                         </Item>
                     </Stack>
                 </Box>
@@ -80,7 +82,7 @@ export default function Footer() {
                     <Stack spacing={0}>
                         <Item>Desenvolvido por:
                             <Item>2º Sgt Marcelo Pires de Farias - (61) 9 9972-9293</Item>
-                                <Item>2º Sgt Rafael Gadelha de Menezes - (61) 9 9277-1680</Item>
+                            <Item>2º Sgt Rafael Gadelha de Menezes - (61) 9 9277-1680</Item>
                         </Item>
                     </Stack>
                 </Box>
