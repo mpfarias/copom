@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
 import { Box } from "@mui/material";
 
 const Navbar = () => {
+
   return (
     <Box
       sx={{
@@ -30,7 +31,7 @@ const Navbar = () => {
       <Box component="section" sx={{ paddingBottom: 2, }}>
         HEFESTO - Registro de Ocorrências
       </Box>
-
+      
     </Box>
   );
 };

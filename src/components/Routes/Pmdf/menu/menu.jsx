@@ -16,7 +16,7 @@ import {
   Paper,
 } from '@mui/material/';
 
-
+import ChatIcon from '@mui/icons-material/Chat';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -36,8 +36,15 @@ import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivism
 import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
 import Man2Icon from '@mui/icons-material/Man2';
 import { Link } from 'react-router-dom';
+import { Textarea } from '@mui/joy';
+
 
 export default function Menu() {
+
+  const [state, setState] = React.useState({
+    bottom: false,
+  });
+
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
@@ -45,6 +52,41 @@ export default function Menu() {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  const toggleDrawerBottom = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role="presentation"
+    >
+      <List>
+        
+          <ListItem>
+              <ListItemIcon>
+                <Textarea sx={{width:500, height:300}}/>
+                <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              sx={{ marginLeft: 5, fontSize: 13, marginTop: '15%', paddingLeft: 1, height:40, width:200 }}
+              onClick={toggleDrawerBottom(anchor, true)}
+              aria-label="Opa"
+              >
+                Enviar sugestão
+                </Button>
+              </ListItemIcon>
+              <ListItemText />
+          </ListItem>
+        
+      </List>
+    </Box>
+  );
 
   const drawerItems = [
     { text: 'Home', icon: <HomeIcon />, link: '/' },
@@ -151,19 +193,46 @@ export default function Menu() {
   }, [open]);
 
   return (
-    <div>
-      <Button
-        variant="contained"
-        endIcon={<SendIcon />}
-        sx={{ marginLeft: 5, fontSize:13, marginTop: 2, paddingLeft:1}}
-        onClick={toggleDrawer(true)}
-        aria-label="Abrir menu"
-      >
-        SELECIONE A NATUREZA
-      </Button>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
-      </Drawer>
-    </div>
+    <>
+      <div>
+        <Button
+          variant="contained"
+          endIcon={<SendIcon />}
+          sx={{ marginLeft: 5, fontSize: 13, marginTop: 2, paddingLeft: 1 }}
+          onClick={toggleDrawer(true)}
+          aria-label="Abrir menu"
+        >
+          SELECIONE A NATUREZA
+        </Button>
+        <Drawer open={open} onClose={toggleDrawer(false)}>
+          {DrawerList}
+        </Drawer>
+      </div>
+
+      <div>
+        {['bottom'].map((anchor) => (
+          <React.Fragment key={anchor}>
+            <Button
+              variant="contained"
+              endIcon={<ChatIcon />}
+              sx={{ marginLeft: 5, fontSize: 13, marginTop: 8, paddingLeft: 1 }}
+              onClick={toggleDrawerBottom(anchor, true)}
+              aria-label="Opa"
+              >
+                clique aqui para sugestões
+                </Button>
+              
+            <Drawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawerBottom(anchor, false)}
+            >
+              {list(anchor)}
+            </Drawer>
+          </React.Fragment>
+        ))}
+      </div>
+
+    </>
   );
 }

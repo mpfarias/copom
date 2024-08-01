@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import {Box, Grid} from '@mui/material';
@@ -19,6 +20,21 @@ const Item = styled(Sheet)(({ theme }) => ({
 
 
 export default function Footer() {
+    const [ip, setIp] = useState('');
+  useEffect(() => {
+    // Função para buscar o IP
+    const fetchIp = async () => {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        setIp(data.ip);
+      } catch (error) {
+        console.error('Erro ao obter o IP:', error);
+      }
+    };
+
+    fetchIp();
+  }, []);
     return (
         <Grid container sx={{ flex: 1}}>
             <Grid item md={4}>
@@ -36,7 +52,7 @@ export default function Footer() {
                     <Stack spacing={0}>
                     <Item></Item>
                         <Item>HEFESTO - Sistema de Criação e Despacho de Ocorrências
-                            <Item></Item>
+                            <Item>IP: {ip ? ip : 'Carregando...'}</Item>
                         </Item>
                     </Stack>
                 </Box>

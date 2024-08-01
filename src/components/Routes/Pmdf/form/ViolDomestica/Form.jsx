@@ -132,7 +132,7 @@ export default function FormularioViolenciaDomestica() {
   useEffect(() => {
     const text = `Tipo de solicitante: ${solicitante === 'vitima' ? 'Vítima' : 'Denunciante'}
 
-${solicitante === 'vitima' ? '* A pessoa que ligou é a VÍTIMA de violencia doméstica.' : '* A pessoa que ligou está DENUNCIANDO uma violencia doméstica.'} 
+${solicitante === 'vitima' ? 'A pessoa que ligou é VÍTIMA de violencia doméstica.' : 'A pessoa que ligou está DENUNCIANDO uma violencia doméstica.'} 
 NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: ' + endereco.toUpperCase() + ', RA: ' + regiaoAdministrativa.toUpperCase() + (referencia === '' ? '' : ', PONTO DE REFERÊNCIA: ') + referencia.toUpperCase() + ', TELEFONE: ' + telefone + ', informa que está sendo vítima de ' + agressao.join(', ') :
 
         solicitante === 'denunciante' ? 'telefone: ' + telefone + ', ' + (conheceVitima === 'não' && enderecoDenunciante === 'endereço próprio' ? 'residente em: ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + ', informa que está presenciando uma pessoa ' + (agressao.includes('pedido de socorro') ? ' gritando por socorro, possivelmente sendo agredida' : 'sofrendo ' + agressao.join(', ')) : conheceVitima === 'não' && enderecoDenunciante === 'endereço da vítima' ? ' uma pessoa, residente em ' + endereco.toUpperCase() + ', ' + regiaoAdministrativa.toUpperCase() + ', ' + referencia.toUpperCase() + (agressao.includes('pedido de socorro') ? ' pedindo por socorro, possivelmente sendo agredida' : ', está sendo vítima de ' + agressao.join(', ')) :
