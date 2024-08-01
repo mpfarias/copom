@@ -15,11 +15,3 @@ export const listaParentesco = [
     { value: '', label: 'Outro' },
     { value: 'desconhecido', label: 'Desconhecido' },
 ]
-
-export const listaVitimas = [
-    { value: 'mãe', label: 'Mãe' },
-    { value: 'irmã', label: 'Irmã' },
-    { value: 'avó', label: 'Avó' },
-    { value: 'vizinha', label: 'Vizinha' },
-    { value: '', label: 'Outro' },
-]

@@ -23,7 +23,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { regioesAdministrativas } from '../RouboFurto/Const/Consts';
-import { listaParentesco, listaVitimas } from '../../../../Consts/Parentesco';
+import { listaParentesco } from '../../../../Consts/Parentesco';
+import { listaVitimasFemininas } from '../../../../Consts/Vitimas';
 
 export default function FormularioViolenciaDomestica() {
   const [open, setOpen] = useState(false);
@@ -232,7 +233,7 @@ export default function FormularioViolenciaDomestica() {
                         IconComponent={KeyboardArrowDownIcon}
                         variant="outlined"
                       >
-                        {listaVitimas
+                        {listaVitimasFemininas
                           .slice()
                           .sort((a, b) => a.label.localeCompare(b.label))
                           .map(option => (
