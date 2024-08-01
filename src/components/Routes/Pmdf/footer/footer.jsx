@@ -21,6 +21,24 @@ const Item = styled(Sheet)(({ theme }) => ({
 
 export default function Footer() {
     const [ip, setIp] = useState('');
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Função para atualizar a hora
+  const updateClock = () => {
+    setCurrentTime(new Date());
+  };
+
+  
+  useEffect(() => {
+
+    const timerID = setInterval(updateClock, 1000);
+
+    return () => clearInterval(timerID);
+  }, []);
+
+  const formattedTime = currentTime.toLocaleTimeString();
+  const formattedDate = currentTime.toLocaleDateString();
+
   useEffect(() => {
     // Função para buscar o IP
     const fetchIp = async () => {
@@ -52,7 +70,7 @@ export default function Footer() {
                     <Stack spacing={0}>
                     <Item></Item>
                         <Item>HEFESTO - Sistema de Criação e Despacho de Ocorrências
-                            <Item>IP: {ip ? ip : 'Carregando...'}</Item>
+                            <Item>IP: {ip ? ip : 'Carregando...'} - {formattedDate} - {formattedTime}</Item>
                         </Item>
                     </Stack>
                 </Box>
