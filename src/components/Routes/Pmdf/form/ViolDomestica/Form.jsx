@@ -165,7 +165,6 @@ NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: 
   }, [solicitante, agressaoOptions]);
 
 
-
   return (
 
     <Box paddingRight={2} marginTop={4}>
