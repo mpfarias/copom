@@ -55,10 +55,9 @@ export default function Footer() {
     }, []);
     return (
         <Grid container sx={{ flex: 1 }}>
-            <Grid item md={4}>
+            <Grid item md={3}>
                 <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
-                        
                         <Item>Polícia Militar do Distrito Federal
                             <Item></Item>
                             <Item></Item>
@@ -66,10 +65,10 @@ export default function Footer() {
                     </Stack>
                 </Box>
             </Grid>
-            <Grid item md={4}>
-                <Box sx={{ width: '100%', marginBottom: 0 }}>
-                    <Stack spacing={0}>
 
+            <Grid item md={5}>
+                <Box sx={{ width: '100%', marginBottom: 0}}>
+                    <Stack spacing={0}>
                         <Item>HEFESTO - Sistema de Gereciamento de Atedimento de Ocorrências
                             <Item>IP: {ip ? ip : 'Carregando...'} - {formattedDate} - {formattedTime}</Item>
                             <Item></Item>
@@ -77,8 +76,9 @@ export default function Footer() {
                     </Stack>
                 </Box>
             </Grid>
+
             <Grid item md={4}>
-                <Box sx={{ width: '100%', marginBottom: 0 }}>
+                <Box sx={{ width: '100%', marginBottom: 0}}>
                     <Stack spacing={0}>
                         <Item>Desenvolvido por:
                             <Item>2º Sgt Marcelo Pires de Farias - (61) 9 9972-9293</Item>

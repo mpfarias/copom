@@ -30,7 +30,7 @@ const ContentWrapper = styled('div')({
 
 function App() {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflow: 'hidden' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Item>
         <Navbar />
       </Item>
@@ -38,7 +38,7 @@ function App() {
         <Grid item xs={12} md={3}>
           <Item><Menu /></Item>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={6}>
           <Item>
             <ContentWrapper>
               <Outlet />
@@ -49,7 +49,7 @@ function App() {
           <Item></Item>
         </Grid>
       </Grid>
-      <Item sx={{mb: '3.4%'}}>
+      <Item>
         <Footer />
       </Item>
     </Box>
