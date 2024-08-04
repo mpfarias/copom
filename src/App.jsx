@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { Outlet } from 'react-router-dom';
 import Navbar from "./components/Routes/Pmdf/navbar/navbar";
 import Footer from "./components/Routes/Pmdf/footer/footer";
@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import "./styles/styles.css";
+import axios from "axios";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -29,8 +30,29 @@ const ContentWrapper = styled('div')({
 });
 
 function App() {
+  const [comentarios, setComentarios] = useState([]);
+  const [message, setMessage] = useState('');
+
+  const getHome = async () => {
+    await axios.get("http://localhost:8080/Admins/comentarios")
+      .then((response) => {
+        setComentarios(response.data);
+        console.log(response.data);
+      }).catch((err) => {
+        if (err.response) {
+          setMessage(err.response.data.message);
+        } else {
+          setMessage("API não conectada!");
+        }
+      });
+  };
+
+  useEffect(() => {
+    getHome();
+  }, []);
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Item>
         <Navbar />
       </Item>
@@ -41,7 +63,7 @@ function App() {
         <Grid item xs={12} md={6}>
           <Item>
             <ContentWrapper>
-              <Outlet />
+              <Outlet comentarios={comentarios} />
             </ContentWrapper>
           </Item>
         </Grid>
@@ -49,7 +71,7 @@ function App() {
           <Item></Item>
         </Grid>
       </Grid>
-      <Item>
+      <Item component="footer" sx={{ width: '100%', padding: 2 }}>
         <Footer />
       </Item>
     </Box>

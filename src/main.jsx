@@ -25,8 +25,9 @@ import GerarOcorrencia from './components/Routes/Pmdf/form/GerarOcorrencia/Form.
 import NoMenuLayout from './components/Routes/Pmdf/contact/NoMenuLayout.jsx';
 import PessoaArmada from './components/Routes/Pmdf/form/PessoaArmada/Form.jsx';
 import Agressao from './components/Routes/Pmdf/form/Agressao/Form.jsx';
-
-
+import Comments from './components/Routes/Pmdf/internal/admin/coments/Comments.jsx';
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const router = createBrowserRouter([
   {
@@ -52,7 +53,8 @@ const router = createBrowserRouter([
       { path: "Racismo", element: <Racismo /> },
       { path: "Suicidio", element: <Suicidio /> },
       { path: "PessoaArmada", element: <PessoaArmada /> },
-      { path: "Agressao", element: <Agressao /> }
+      { path: "Agressao", element: <Agressao /> },
+      { path: "Admins/Comentarios", element: <Comments /> }
     ]
   },
   {
