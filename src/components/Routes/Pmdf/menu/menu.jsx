@@ -1,7 +1,7 @@
 import * as React from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
+import { Alert, Snackbar, InputBase } from '@mui/material';
 import {
   Box,
   Drawer,
@@ -14,8 +14,8 @@ import {
   ListItemText,
   IconButton,
   Paper,
+  TextareaAutosize,
 } from '@mui/material/';
-
 import ChatIcon from '@mui/icons-material/Chat';
 import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
@@ -32,14 +32,16 @@ import HeartBrokenOutlinedIcon from '@mui/icons-material/HeartBrokenOutlined';
 import Face2Icon from '@mui/icons-material/Face2';
 import Diversity2Icon from '@mui/icons-material/Diversity2';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
+import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import Man2Icon from '@mui/icons-material/Man2';
 import { Link } from 'react-router-dom';
-import { Textarea } from '@mui/joy';
-
+import axios from 'axios';
 
 export default function Menu() {
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = React.useState('success');
 
   const [state, setState] = React.useState({
     bottom: false,
@@ -48,6 +50,9 @@ export default function Menu() {
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+  const [textareaValue, setTextareaValue] = React.useState('');
+  const [ip, setIp] = React.useState('');
+  const [currentTime, setCurrentTime] = React.useState(new Date());
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -57,7 +62,6 @@ export default function Menu() {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
 
@@ -67,23 +71,28 @@ export default function Menu() {
       role="presentation"
     >
       <List>
-        
-          <ListItem>
-              <ListItemIcon>
-                <Textarea sx={{width:500, height:300}}/>
-                <Button
+        <ListItem>
+          <ListItemIcon>
+            <TextareaAutosize
+              minRows={10}
+              placeholder="Escreva seu comentário aqui"
+              style={{ width: 500 }}
+              value={textareaValue}
+              onChange={(e) => setTextareaValue(e.target.value)}
+            />
+            <Button
               variant="contained"
+              name="comentario"
               endIcon={<SendIcon />}
-              sx={{ marginLeft: 5, fontSize: 13, marginTop: '15%', paddingLeft: 1, height:40, width:200 }}
-              onClick={toggleDrawerBottom(anchor, true)}
+              sx={{ marginLeft: 5, fontSize: 13, marginTop: '15%', paddingLeft: 1, height: 40, width: 200 }}
+              onClick={handleSendComment}
               aria-label="Opa"
-              >
-                Enviar sugestão
-                </Button>
-              </ListItemIcon>
-              <ListItemText />
-          </ListItem>
-        
+            >
+              Enviar sugestão
+            </Button>
+          </ListItemIcon>
+          <ListItemText />
+        </ListItem>
       </List>
     </Box>
   );
@@ -106,8 +115,7 @@ export default function Menu() {
     { text: 'Racismo', icon: <GroupOutlinedIcon />, link: '/Racismo' },
     { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
     { text: 'Pessoa armada', icon: <Man2Icon />, link: '/PessoaArmada' },
-    { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' }
-
+    { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' },
   ];
 
   const ordenarItens = (itens) => {
@@ -117,8 +125,6 @@ export default function Menu() {
     outrosItens.sort((a, b) => a.text.localeCompare(b.text));
     return [itemHome, itemOcorrencia, ...outrosItens];
   };
-
-  drawerItems.slice(1).sort((a, b) => a.text.localeCompare(b.text));
 
   const filteredItems = drawerItems.filter(item =>
     item.text.toLowerCase().includes(searchTerm.toLowerCase())
@@ -141,7 +147,6 @@ export default function Menu() {
           marginBottom: 1,
         }}
       >
-
         <InputBase
           sx={{ ml: 2, flex: 1 }}
           placeholder="Pesquisar natureza"
@@ -159,7 +164,6 @@ export default function Menu() {
       <List>
         {ordenarItens(filteredItems).map((item, index) => (
           <React.Fragment key={item?.text || index}>
-
             {item && (
               <ListItem disablePadding>
                 <ListItemButton component={Link} to={item.link}>
@@ -192,6 +196,49 @@ export default function Menu() {
     }
   }, [open]);
 
+  React.useEffect(() => {
+    // Função para buscar o IP
+    const fetchIp = async () => {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        setIp(data.ip);
+      } catch (error) {
+        console.error('Erro ao obter o IP:', error);
+      }
+    };
+
+    fetchIp();
+  }, []);
+
+  const handleSendComment = async () => {
+    const currentDate = new Date();
+    
+    try {
+      await axios.post('http://localhost:8080/Admins/comentarios/comentarios', {
+        comentario: textareaValue,
+        ipMaquina: ip,
+        dataRegistro: currentDate,
+      });
+      setTextareaValue('');
+      setState({ ...state, bottom: false });
+      showSnackbar('Sugestão enviada com sucesso', 'success');
+    } catch (error) {
+      console.error('Erro ao enviar o comentário:', error);
+      showSnackbar('Sugestão não enviada', 'error');
+    }
+  };
+
+  const handleSnackbarClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const showSnackbar = (message, severity) => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
+    setOpenSnackbar(true);
+  };
+
   return (
     <>
       <div>
@@ -218,10 +265,10 @@ export default function Menu() {
               sx={{ marginLeft: 5, fontSize: 13, marginTop: 8, paddingLeft: 1 }}
               onClick={toggleDrawerBottom(anchor, true)}
               aria-label="Opa"
-              >
-                clique aqui para sugestões
-                </Button>
-              
+            >
+              Clique aqui para sugestões
+            </Button>
+
             <Drawer
               anchor={anchor}
               open={state[anchor]}
@@ -233,6 +280,20 @@ export default function Menu() {
         ))}
       </div>
 
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        action={
+          <Button color="inherit" onClick={handleSnackbarClose}>
+            Fechar
+          </Button>
+        }
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

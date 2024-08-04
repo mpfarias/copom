@@ -37,7 +37,6 @@ function App() {
     await axios.get("http://localhost:8080/Admins/comentarios")
       .then((response) => {
         setComentarios(response.data);
-        console.log(response.data);
       }).catch((err) => {
         if (err.response) {
           setMessage(err.response.data.message);
