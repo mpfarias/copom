@@ -1,7 +1,7 @@
 import * as React from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import SearchIcon from '@mui/icons-material/Search';
-import { Alert, Snackbar, InputBase } from '@mui/material';
+import { Alert, Snackbar, InputBase, Typography } from '@mui/material';
 import {
   Box,
   Drawer,
@@ -52,6 +52,8 @@ export default function Menu() {
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
   const [textareaValue, setTextareaValue] = React.useState('');
   const [ip, setIp] = React.useState('');
+  const [localIp, setLocalIp] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [currentTime, setCurrentTime] = React.useState(new Date());
 
   const toggleDrawer = (newOpen) => () => {
@@ -73,23 +75,28 @@ export default function Menu() {
       <List>
         <ListItem>
           <ListItemIcon>
-            <TextareaAutosize
-              minRows={10}
-              placeholder="Escreva seu comentário aqui"
-              style={{ width: 500 }}
-              value={textareaValue}
-              onChange={(e) => setTextareaValue(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              name="comentario"
-              endIcon={<SendIcon />}
-              sx={{ marginLeft: 5, fontSize: 13, marginTop: '15%', paddingLeft: 1, height: 40, width: 200 }}
-              onClick={handleSendComment}
-              aria-label="Opa"
-            >
-              Enviar sugestão
-            </Button>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h6" gutterBottom>
+                Sua sugestão ou opinião é sempre bem vinda!
+              </Typography>
+              <TextareaAutosize
+                minRows={10}
+                placeholder="Deixe aqui a sua sugestão ou sua opinião."
+                style={{ width: 500 }}
+                value={textareaValue}
+                onChange={(e) => setTextareaValue(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                name="comentario"
+                endIcon={<SendIcon />}
+                sx={{ marginLeft: 5, fontSize: 13, marginTop: '15%', paddingLeft: 1, height: 40, width: 200 }}
+                onClick={handleSendComment}
+                
+              >
+                Enviar sugestão
+              </Button>
+            </Box>
           </ListItemIcon>
           <ListItemText />
         </ListItem>
@@ -197,7 +204,6 @@ export default function Menu() {
   }, [open]);
 
   React.useEffect(() => {
-    // Função para buscar o IP
     const fetchIp = async () => {
       try {
         const response = await fetch('https://api.ipify.org?format=json');
@@ -208,8 +214,28 @@ export default function Menu() {
       }
     };
 
-    fetchIp();
-  }, []);
+    
+  const fetchLocalIp = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/getLocalIp');
+      setLocalIp(response.data.ip);
+    } catch (error) {
+      console.error('Error fetching local IP:', error);
+    }
+  };
+  const fetchUsername = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/getUsername');
+      setUsername(response.data.username);
+    } catch (error) {
+      console.error('Error fetching username:', error);
+    }
+  };
+
+  fetchIp();
+  fetchLocalIp();
+  fetchUsername();
+}, []);
 
   const handleSendComment = async () => {
     const currentDate = new Date();
@@ -217,12 +243,15 @@ export default function Menu() {
     try {
       await axios.post('http://localhost:8080/Admins/comentarios/comentarios', {
         comentario: textareaValue,
-        ipMaquina: ip,
+        ipMaquina: localIp,
+        ipRede: ip,
         dataRegistro: currentDate,
+        usuario: username,
       });
       setTextareaValue('');
       setState({ ...state, bottom: false });
       showSnackbar('Sugestão enviada com sucesso', 'success');
+      console.error(localIp);
     } catch (error) {
       console.error('Erro ao enviar o comentário:', error);
       showSnackbar('Sugestão não enviada', 'error');
@@ -262,11 +291,11 @@ export default function Menu() {
             <Button
               variant="contained"
               endIcon={<ChatIcon />}
-              sx={{ marginLeft: 5, fontSize: 13, marginTop: 8, paddingLeft: 1 }}
+              sx={{ marginLeft: 5, fontSize: 12, marginTop: 8, paddingLeft: 1 }}
               onClick={toggleDrawerBottom(anchor, true)}
               aria-label="Opa"
             >
-              Clique aqui para sugestões
+              Clique aqui para deixar sua sugestão
             </Button>
 
             <Drawer
