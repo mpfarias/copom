@@ -52,9 +52,7 @@ export default function Menu() {
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
   const [textareaValue, setTextareaValue] = React.useState('');
   const [ip, setIp] = React.useState('');
-  const [localIp, setLocalIp] = React.useState('');
-  const [username, setUsername] = React.useState('');
-  const [currentTime, setCurrentTime] = React.useState(new Date());
+  const [localIp, setLocalIp] = React.useState('');  
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -206,52 +204,32 @@ export default function Menu() {
   React.useEffect(() => {
     const fetchIp = async () => {
       try {
-        const response = await fetch('https://api.ipify.org?format=json');
+        const response = await fetch('http://10.95.91.61:3000/getClientIp');
         const data = await response.json();
         setIp(data.ip);
+        console.log(data.ip)
       } catch (error) {
         console.error('Erro ao obter o IP:', error);
       }
     };
 
-    
-  const fetchLocalIp = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/getLocalIp');
-      setLocalIp(response.data.ip);
-    } catch (error) {
-      console.error('Error fetching local IP:', error);
-    }
-  };
-  const fetchUsername = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/getUsername');
-      setUsername(response.data.username);
-    } catch (error) {
-      console.error('Error fetching username:', error);
-    }
-  };
-
   fetchIp();
-  fetchLocalIp();
-  fetchUsername();
+
 }, []);
 
   const handleSendComment = async () => {
     const currentDate = new Date();
     
     try {
-      await axios.post('http://localhost:8080/Admins/comentarios/comentarios', {
+      await axios.post('http://10.95.91.61:3000/Admins/comentarios/comentarios', {
         comentario: textareaValue,
-        ipMaquina: localIp,
         ipRede: ip,
         dataRegistro: currentDate,
-        usuario: username,
       });
       setTextareaValue('');
       setState({ ...state, bottom: false });
       showSnackbar('Sugestão enviada com sucesso', 'success');
-      console.error(localIp);
+      console.error(ip);
     } catch (error) {
       console.error('Erro ao enviar o comentário:', error);
       showSnackbar('Sugestão não enviada', 'error');
@@ -285,7 +263,7 @@ export default function Menu() {
         </Drawer>
       </div>
 
-      <div>
+     <div>
         {['bottom'].map((anchor) => (
           <React.Fragment key={anchor}>
             <Button

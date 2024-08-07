@@ -18,16 +18,13 @@ const Item = styled(Sheet)(({ theme }) => ({
     fontSize: 12
 }));
 
-
 export default function Footer() {
     const [ip, setIp] = useState('');
     const [currentTime, setCurrentTime] = useState(new Date());
 
-    // Função para atualizar a hora
     const updateClock = () => {
         setCurrentTime(new Date());
     };
-
 
     useEffect(() => {
 
@@ -40,7 +37,6 @@ export default function Footer() {
     const formattedDate = currentTime.toLocaleDateString();
 
     useEffect(() => {
-        // Função para buscar o IP
         const fetchIp = async () => {
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
@@ -53,10 +49,11 @@ export default function Footer() {
 
         fetchIp();
     }, []);
+
     return (
-        <Grid container sx={{ flex: 1 }}>
+        <Grid container>
             <Grid item md={3}>
-                <Box sx={{ width: '100%', marginBottom: 0 }}>
+                <Box>
                     <Stack spacing={0}>
                         <Item>Polícia Militar do Distrito Federal
                             <Item></Item>
@@ -67,9 +64,9 @@ export default function Footer() {
             </Grid>
 
             <Grid item md={5}>
-                <Box sx={{ width: '100%', marginBottom: 0}}>
+                <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
-                        <Item>HEFESTO - Sistema de Gereciamento de Atedimento de Ocorrências
+                        <Item>HEFESTO - Sistema de Gerenciamento de Atendimento de Ocorrências
                             <Item>IP: {ip ? ip : 'Carregando...'} - {formattedDate} - {formattedTime}</Item>
                             <Item></Item>
                         </Item>
@@ -78,7 +75,7 @@ export default function Footer() {
             </Grid>
 
             <Grid item md={4}>
-                <Box sx={{ width: '100%', marginBottom: 0}}>
+                <Box sx={{ width: '100%', marginBottom: 0 }}>
                     <Stack spacing={0}>
                         <Item>Desenvolvido por:
                             <Item>2º Sgt Marcelo Pires de Farias - (61) 9 9972-9293</Item>

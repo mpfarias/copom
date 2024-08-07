@@ -21,7 +21,7 @@ function Comments() {
 
   const getHome = async (page) => {
     try {
-      const response = await axios.get(`http://localhost:8080/Admins/comentarios?page=${page}&limit=${limit}`);
+      const response = await axios.get(`http://10.95.91.61:3000/Admins/comentarios?page=${page}&limit=${limit}`);
       setComentarios(response.data.data);
       setTotalPages(response.data.totalPages);
     } catch (err) {
@@ -67,7 +67,7 @@ function Comments() {
 
           let alertSeverity;
           const testeRegex = /teste\d*/i;
-          if (comentario.comentario === 'teste' || testeRegex.test(comentario.comentario) ) {
+          if (comentario.comentario === 'teste' || testeRegex.test(comentario.comentario)) {
             alertSeverity = 'error';
           } else {
             alertSeverity = 'success';
@@ -87,23 +87,22 @@ function Comments() {
                 },
               }}
             >
-              <Paper >
+              <Paper>
                 <Stack
                   direction="row"
                   divider={<Divider orientation="vertical" flexItem />}
                   spacing={2}
-                  sx={{ mb: 2 }}
+                  sx={{ mb: 2, width:800 }}
                 >
-                  <Item><Alert icon={false} severity={alertSeverity}>
-                    {comentario.id}
-                  </Alert></Item>
-                  <Item>IP da Rede: {comentario.ipMaquina}</Item>
+                  <Alert icon={false} severity={alertSeverity}>
+                    {alertSeverity === 'success' ? comentario.id : 'TESTE'}
+                  </Alert>
+                  <Item sx={{ height: 20 }}>IP da Rede:  {comentario.ipRede}</Item>
                 </Stack>
                 <Alert severity="info" sx={{ mb: 2 }}>
                   <AlertTitle>Comentário</AlertTitle>
                   {comentario.comentario}
                   <AlertTitle></AlertTitle>
-                  Autor: {comentario.usuario}
                 </Alert>
                 <Stack
                   direction="row"
@@ -111,7 +110,6 @@ function Comments() {
                   spacing={2}
                 >
                   <Item>Data do Registro: {formattedDate}, às {formattedTime}</Item>
-                  <Item>IP da Máquina: {comentario.ipRede}</Item>
                 </Stack>
               </Paper>
             </Box>
@@ -120,7 +118,7 @@ function Comments() {
       ) : (
         <div>{message || "Nenhum comentário encontrado"}</div>
       )}
-      <Stack spacing={2} sx={{ mb: 2 }}>
+      <Stack spacing={2} sx={{ mb: 2, mt: 4 }}>
         <Pagination
           count={totalPages}
           page={page}

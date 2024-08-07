@@ -47,5 +47,8 @@ export const listaNaturezas = [
     { value: 'Pessoa suspeita', label: 'Pessoa suspeita' },
     { value: 'Apreensão de arma branca', label: 'Apreensão de arma branca' },
     { value: 'Exercício ilegal da profissão', label: 'Exercício ilegal da profissão' },
-
+    { value: 'Em apuração', label: 'Em apuração (Delegacia)' },
+    { value: 'Cumprimento de mandado de busca e apreensão', label: 'Cumprimento de mandado de busca e apreensão' },
+    { value: 'Cumprimento de mandado de busca e apreensão de menor', label: 'Cumprimento de mandado de busca e apreensão de menor' },
+    { value: 'Cumprimento de mandado de prisão', label: 'Cumprimento de mandado de prisão' },
 ]
