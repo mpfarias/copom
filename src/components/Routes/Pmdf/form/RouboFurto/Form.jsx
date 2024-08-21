@@ -31,7 +31,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function RouboFurto() {
 
-  const [objeto, setObjeto] = useState('');
+  const [objeto, setObjeto] = useState('veículo');
   const [solicitante, setSolicitante] = useState('vitima');
   const [caracteristicasIndividuos, setCaracteristicasIndividuos] = useState([]);
   const [corVeiculo, setCorVeiculo] = useState('branco'); 
@@ -99,6 +99,7 @@ export default function RouboFurto() {
   const [selectedOptionCabelo, setSelectedOptionCabelo] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
   const [nomesTimes, setNomesTimes] = useState(Array.from({ length: parseInt(individuos) }, () => ''));
   const [showCamisaTime, setShowCamisaTime] = useState(false)
+  const [outroObjeto, setOutroObjeto] = useState('');
 
   const handleChangeCima = (individuoIndex, event) => {
     const novoValor = event.target.value;
@@ -257,8 +258,15 @@ export default function RouboFurto() {
   const generateNarrative = () => {
     const corExibida = corVeiculo === 'outra' ? outraCor.toUpperCase() : opcoesCorVeiculo.find(op => op.value === corVeiculo)?.value.toUpperCase();
 
-    let text = `${solicitante.toUpperCase()}
-     Solicitante ${nome.toUpperCase()}, endereço: ${endereco.toUpperCase()}, ${regiaoAdministrativa}, ${referencia.toUpperCase()}, Telefone: ${telefone},`
+    let text = ``;
+    
+    if(objeto !== ''){
+      text +=`${solicitante.toUpperCase()}`
+    }else{
+      text+=``;
+    }
+    
+    text+=` Solicitante ${nome.toUpperCase()}, endereço: ${endereco.toUpperCase()}, ${regiaoAdministrativa}, ${referencia.toUpperCase()}, Telefone: ${telefone},`
 
     if (objeto === 'veículo') {
       text += `informa que teve seu veículo ${tipo === 'roubado' ? 'tomado de ASSALTO (ROUBO)' : 'furtado'}, trata-se de um ${modelo.toUpperCase()} ${corExibida.toUpperCase() || 'COR NÃO INFORMADA'}, ${placa === '' ? 'não soube informar a placa' : 'placa: ' + placa.toUpperCase()}, `;
@@ -268,6 +276,8 @@ export default function RouboFurto() {
       text += ` informa que houve um ${tipo === 'roubado' ? 'ROUBO' : 'FURTO'} no ${estabelecimento}, `;
     } else if (objeto === 'residência'){
       text += ` informa que houve ${tipo === 'roubado' ? 'ROUBO' : 'FURTO'} em sua residência, `;
+    } else if (objeto === ''){
+      text += `informa que está ocorrendo furto de ${outroObjeto} no local,  `;
     }
 
     if (individuos === -1) {
@@ -306,8 +316,11 @@ export default function RouboFurto() {
 
       }
     }
-
+    if(objeto !== ''){
     text += `\nPede divulgação na rede rádio, foi orientado a comparecer à DP para registro.`;
+    }else{
+      text += ` Pede VTR no local`
+    }
     return text;
   };
 
@@ -319,6 +332,7 @@ export default function RouboFurto() {
     setState(prevState => ({ ...prevState, narrativa: updatedNarrative }));
   }, [solicitante,
     objeto,
+    outroObjeto,
     tipo,
     nome,
     endereco,
@@ -400,7 +414,7 @@ export default function RouboFurto() {
             <FormControl>
               <FormLabel id="demo-row-radio-buttons-group-label" style={{ fontWeight: 'bold', fontSize: 18, }}>Qual foi o Objeto do roubo/furto ?</FormLabel>
               <RadioGroup
-                row
+                
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
                 id="objeto"
@@ -412,13 +426,22 @@ export default function RouboFurto() {
                 <FormControlLabel value="estabelecimento comercial" control={<Radio />} label="Estabelecimento comercial" />
                 <FormControlLabel value="celular" control={<Radio />} label="Bens pessoais" />
                 <FormControlLabel value="transeunte" control={<Radio />} label="Transeunte" />
+                <FormControlLabel value="" control={<Radio />} label="Outros" />
               </RadioGroup>
+              {objeto === '' && (
+          <TextField
+            label="Descreva o objeto"
+            value={outroObjeto}
+            onChange={(e) => setOutroObjeto(e.target.value)}
+            sx={{ mt: 2 }}
+          />
+        )}
             </FormControl>
           </Box>
         </Grid>
         <Grid item xs={12} >
           <Stack sx={{ width: '100%' }} spacing={2}>
-            {(objeto === 'veículo' || objeto === 'transeunte' || objeto === 'estabelecimento comercial' || objeto === 'residência') && (
+            {(objeto === 'veículo' || objeto === 'transeunte' || objeto === 'estabelecimento comercial' || objeto === 'residência' || objeto ===  '') && (
               <>
                 <Grid item xs={12}>
                   <TextField sx={{ marginBottom: 2, marginRight: 2, width: '80%' }} placeholder="Nome solicitante" fullWidth id="outlined-basic-nome" onChange={e => handleChange('nome', e.target.value)} label="Qual o nome do solicitante ?" variant="outlined" />

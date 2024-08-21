@@ -15,7 +15,8 @@ import {
   Typography,
   Switch,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Box
 
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -109,11 +110,9 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
     setState(prevState => ({ ...prevState, narrativa: text }));
   }, [graduacao, nome, endereco, referencia, regiaoAdministrativa, matricula, telefone, batalhao, prefixo, equipe, natureza, qtdeIndividuos, individuos, deslocarDelegacia, delegacia]);
 
-
-
-
   return (
     <>
+    <Box marginLeft={4}>
       <Grid item xs={12} sm={8} marginBottom={2}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12}>
@@ -467,6 +466,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
         onClose={handleClose}>
         <Alert severity="warning">Texto COPIADO</Alert>
       </Snackbar>
+      </Box>
     </>
   )
 }

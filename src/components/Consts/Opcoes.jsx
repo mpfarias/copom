@@ -18,3 +18,9 @@ export const listaArmasBrancas = [
     { value: 'ferramenta', label: 'Ferramenta' },
     { value: '', label: 'Outro' },
 ]
+
+export const listaAmeacas = [
+    {value: 'de morte', label: 'Morte'},
+    {value: 'de agressão', label: 'Agressão'},
+    {value: '', label: 'Outra'},
+]

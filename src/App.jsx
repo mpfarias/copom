@@ -34,7 +34,7 @@ function App() {
   const [message, setMessage] = useState('');
 
   const getHome = async () => {
-    await axios.get("http://localhost:8080/Admins/comentarios")
+    await axios.get("http://10.95.91.61:5173/Admins/comentarios")
       .then((response) => {
         setComentarios(response.data);
       }).catch((err) => {
@@ -70,7 +70,7 @@ function App() {
           <Item></Item>
         </Grid>
       </Grid>
-      <Item component="footer" sx={{ width: '100%', padding: 2 }}>
+      <Item component="footer" sx={{ width: '100%' }}>
         <Footer />
       </Item>
     </Box>
