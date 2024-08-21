@@ -1,7 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom';
+import App from './App.jsx';
 
 import Home from "./components/home/home.jsx";
 import FormularioViolenciaDomestica from "./components/Routes/Pmdf/form/ViolDomestica/Form.jsx";
@@ -26,16 +26,14 @@ import NoMenuLayout from './components/Routes/Pmdf/contact/NoMenuLayout.jsx';
 import PessoaArmada from './components/Routes/Pmdf/form/PessoaArmada/Form.jsx';
 import Agressao from './components/Routes/Pmdf/form/Agressao/Form.jsx';
 import Comments from './components/Routes/Pmdf/internal/admin/coments/Comments.jsx';
-import { useState } from 'react'
-import { useEffect } from 'react'
 
 const router = createBrowserRouter([
   {
-    patch: "/",
+    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <Home /> },
+      { path: "Main", element: <Home /> },
       { path: "GerarOcorrencia", element: <GerarOcorrencia /> },
       { path: "ViolenciaDomestica", element: <FormularioViolenciaDomestica /> },
       { path: "SomAlto", element: <SomAlto /> },
@@ -64,11 +62,15 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <TelefonesUteis /> }
     ]
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" />,
   }
-])
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
-)
+);

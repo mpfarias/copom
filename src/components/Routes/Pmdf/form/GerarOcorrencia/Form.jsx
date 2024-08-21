@@ -30,10 +30,12 @@ import { listaDelegacias } from '../../../../Consts/Delegacias';
 import { qtdeIndividuos } from '../RouboFurto/Const/Consts';
 
 import { regioesAdministrativas } from '../AcidenteTransito/Const/Consts';
+import AutoFillPhoneInput from '../../websocket/conn';
 
 function GerarOcorrencia() {
 
   const [matricula, setMatricula] = useState('');
+  const [telefone, setTelefone] = useState('');
 
   const [state, setState] = useState({
     batalhao: "1º Batalhão",
@@ -53,9 +55,14 @@ function GerarOcorrencia() {
     narrativa: '',
   });
 
-  const { batalhao, graduacao, nome, natureza, regiaoAdministrativa, endereco, referencia, telefone, prefixo, equipe, individuos, deslocarDelegacia, delegacia, narrativa } = state;
+  const { batalhao, graduacao, nome, natureza, regiaoAdministrativa, endereco, referencia, prefixo, equipe, individuos, deslocarDelegacia, delegacia, narrativa } = state;
 
   const handleChange = (field, value) => {
+
+    if (field === 'telefone') {
+      setTelefone(value);
+    };
+
     if (field === 'matricula') {
       const uppercasedValue = value.toUpperCase();
       if (/^[\dX]*$/.test(uppercasedValue) && uppercasedValue.length <= 11) {
@@ -352,7 +359,16 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
 
       <Grid item xs={12} sm={10}>
         <Grid item xs={12}>
-          <TextField sx={{ marginBottom: 4, marginRight: 2, width: '80%' }} onChange={e => handleChange('telefone', e.target.value)} inputProps={{ maxLength: 11 }} onKeyPress={handleKeyPress} fullWidth id="outlined-basic-telefone" label="Qual o telefone?" name="telefone" variant="outlined" />
+          <AutoFillPhoneInput
+          sx={{ marginBottom: 4, marginRight: 2, width: '80%' }}
+          value={telefone} 
+          onChange={e => handleChange('telefone', e.target.value)}
+          inputProps={{ maxLength: 11 }}
+          onKeyPress={handleKeyPress}
+          fullWidth id="outlined-basic-telefone"
+          label="Confirme o número do telefone"
+          name="telefone"
+          variant="outlined" />
           <CopyToClipboard text={telefone} onCopy={() => console.log('Telefone copiado!')}>
             <Button variant="contained"
               color="secondary"
