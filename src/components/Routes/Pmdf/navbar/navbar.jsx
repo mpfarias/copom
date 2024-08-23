@@ -128,27 +128,27 @@ const Navbar = () => {
           width: '110%',
           display: 'flex',
           justifyContent: 'space-around',
-          border: '1px solid red'
+          
         }}
       >
-        <Box sx={{border: '1px solid red'}}>
+        <Box>
           <Typography
             sx={{
               marginRight: 0,
               fontSize: "calc(4px + 1vw)",
               color: "#ffffff",
-              border: '1px solid red'
+              
             }}
           >
             {callData ? `Identificação da chamada:
              nº: ${callData.callerId}` : `Identificação da  nenhuma chamada `}
           </Typography>
         </Box>
-        <Box sx={{border: '1px solid red'}}>
+        <Box>
           <Button
             variant="contained"
             sx={{
-              border: '1px solid red',
+              
               width: 400,
               height: 40,
               backgroundColor: isPaused ? 'red' : 'green',
@@ -161,7 +161,7 @@ const Navbar = () => {
             {isPaused ? 'Sair da Pausa' : 'Pausar'}
           </Button>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', border: '1px solid red' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center'}}>
           <Button
             variant="contained"
             sx={{
