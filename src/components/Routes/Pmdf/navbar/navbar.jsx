@@ -84,7 +84,7 @@ const Navbar = () => {
         action: 'hangupCall',
         channel: callData?.channel,  // Canal da chamada a ser desligada
       }));
-      
+
       // Desabilitar os botões após o desligamento
       setIsCallActive(false); // Desabilita os botões desligar e transferir
     } else {
@@ -123,41 +123,45 @@ const Navbar = () => {
       <Box
         component="section"
         sx={{
-          paddingBottom: 2,
+          paddingBottom: 1,
           textAlign: 'left',
-          width: '100%',
+          width: '110%',
           display: 'flex',
-          alignItems: 'center',
           justifyContent: 'space-around',
+          border: '1px solid red'
         }}
       >
-        <Typography
-          sx={{
-            marginRight: 2,
-            fontSize: "calc(14px + 1vw)",
-            color: "#ffffff",
-          }}
-        >
-          {callData ? `Identificação da chamada: ${callData.callerId}` : 'Identificação da chamada:'}
-        </Typography>
-
-        <Button
-          variant="contained"
-          sx={{
-            width: 500,
-            height: 60,
-            marginLeft: 2,
-            backgroundColor: isPaused ? 'red' : 'green',
-            '&:hover': {
-              backgroundColor: isPaused ? 'darkred' : 'darkblue',
-            },
-          }}
-          onClick={handlePauseClick}
-        >
-          {isPaused ? 'Sair da Pausa' : 'Pausar'}
-        </Button>
-
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{border: '1px solid red'}}>
+          <Typography
+            sx={{
+              marginRight: 0,
+              fontSize: "calc(4px + 1vw)",
+              color: "#ffffff",
+              border: '1px solid red'
+            }}
+          >
+            {callData ? `Identificação da chamada:
+             nº: ${callData.callerId}` : `Identificação da  nenhuma chamada `}
+          </Typography>
+        </Box>
+        <Box sx={{border: '1px solid red'}}>
+          <Button
+            variant="contained"
+            sx={{
+              border: '1px solid red',
+              width: 400,
+              height: 40,
+              backgroundColor: isPaused ? 'red' : 'green',
+              '&:hover': {
+                backgroundColor: isPaused ? 'darkred' : 'darkblue',
+              },
+            }}
+            onClick={handlePauseClick}
+          >
+            {isPaused ? 'Sair da Pausa' : 'Pausar'}
+          </Button>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', border: '1px solid red' }}>
           <Button
             variant="contained"
             sx={{
