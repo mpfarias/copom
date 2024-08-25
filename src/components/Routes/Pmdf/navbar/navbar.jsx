@@ -113,7 +113,7 @@ const Navbar = () => {
       </Box>
 
       <Box component="section" sx={{ marginBottom: 0 }}>
-        Secretaria de Segurança Pública
+        Polícia Militar do Distrito Federal
       </Box>
 
       <Box component="section" sx={{ paddingBottom: 2 }}>

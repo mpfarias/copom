@@ -8,4 +8,5 @@ export const listaEquipes = [
     {value: 'Nenhum', label: 'Nenhum'},
     {value: 'Grifo de PATAMO', label: 'Grifo de PATAMO'},
     {value: 'ROTAM', label: 'ROTAM'},
+    {value: 'GTAM', label: 'GTAM'},
 ]

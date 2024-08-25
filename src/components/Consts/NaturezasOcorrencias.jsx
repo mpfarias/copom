@@ -51,4 +51,8 @@ export const listaNaturezas = [
     { value: 'Cumprimento de mandado de busca e apreensão', label: 'Cumprimento de mandado de busca e apreensão' },
     { value: 'Cumprimento de mandado de busca e apreensão de menor', label: 'Cumprimento de mandado de busca e apreensão de menor' },
     { value: 'Cumprimento de mandado de prisão', label: 'Cumprimento de mandado de prisão' },
+    { value: 'Apreensão de veículo irregular', label: 'Apreensão de veículo irregular' },
+    { value: 'Remoção de veículo', label: 'Remoção de veículo' },
+    { value: 'Furto em interior de veículo', label: 'Furto em interior de veículo' },
+    { value: 'Furto', label: 'Furto' },
 ]
