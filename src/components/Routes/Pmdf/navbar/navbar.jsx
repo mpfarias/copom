@@ -135,13 +135,14 @@ const Navbar = () => {
           <Typography
             sx={{
               marginRight: 0,
+              paddingTop:2,
               fontSize: "calc(4px + 1vw)",
               color: "#ffffff",
               
             }}
           >
             {callData ? `Identificação da chamada:
-             nº: ${callData.callerId}` : `Identificação da  nenhuma chamada `}
+             nº: ${callData.callerId}` : `Nenhuma chamada `}
           </Typography>
         </Box>
         <Box>

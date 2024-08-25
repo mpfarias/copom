@@ -37,6 +37,7 @@ import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivism
 import Man2Icon from '@mui/icons-material/Man2';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Cancel } from '@mui/icons-material';
 
 export default function Menu() {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -119,7 +120,7 @@ export default function Menu() {
     { text: 'Homofobia', icon: <Diversity2Icon />, link: '/Homofobia' },
     { text: 'Racismo', icon: <GroupOutlinedIcon />, link: '/Racismo' },
     { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
-    { text: 'Pessoa armada', icon: <Man2Icon />, link: '/PessoaArmada' },
+    { text: 'Pessoa armada', icon: <Cancel />, link: '/PessoaArmada' },
     { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' },
   ];
 
