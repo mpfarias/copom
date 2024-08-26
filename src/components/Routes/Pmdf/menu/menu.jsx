@@ -35,9 +35,11 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import Man2Icon from '@mui/icons-material/Man2';
+import { Cancel } from '@mui/icons-material';
+
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Cancel } from '@mui/icons-material';
+
 
 export default function Menu() {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -106,6 +108,8 @@ export default function Menu() {
   const drawerItems = [
     { text: 'Home', icon: <HomeIcon />, link: '/' },
     { text: 'Gerar Ocorrência', icon: <DifferenceOutlinedIcon />, link: '/GerarOcorrencia' },
+    { text: 'Verificar Pessoa', icon: <SearchIcon />, link: '/BuscarPessoa' },
+    { text: 'Verificar Veículo', icon: <SearchIcon />, link: '/BuscarVeiculo' },
     { text: 'Violência doméstica', icon: <Face2Icon />, link: '/ViolenciaDomestica' },
     { text: 'Som automotivo / Perturbação', icon: <SpatialAudioIcon />, link: '/SomAlto' },
     { text: 'Roubo/Furto', icon: <LocalPoliceIcon />, link: '/RouboFurto' },
@@ -127,9 +131,11 @@ export default function Menu() {
   const ordenarItens = (itens) => {
     const itemHome = itens.find(item => item.text === 'Home');
     const itemOcorrencia = itens.find(item => item.text === 'Gerar Ocorrência');
-    const outrosItens = itens.filter(item => item.text !== 'Home' && item.text !== 'Gerar Ocorrência');
+    const itemPessoa = itens.find(item => item.text === 'Verificar Pessoa');
+    const itemVeiculo = itens.find(item => item.text === 'Verificar Veículo');
+    const outrosItens = itens.filter(item => item.text !== 'Home' && item.text !== 'Gerar Ocorrência' && item.text !== 'Verificar Pessoa' && item.text !== 'Verificar Veículo');
     outrosItens.sort((a, b) => a.text.localeCompare(b.text));
-    return [itemHome, itemOcorrencia, ...outrosItens];
+    return [itemHome, itemOcorrencia, itemPessoa, itemVeiculo, ...outrosItens];
   };
 
   const filteredItems = drawerItems.filter(item =>
@@ -180,7 +186,7 @@ export default function Menu() {
                 </ListItemButton>
               </ListItem>
             )}
-            {item && item.text === 'Gerar Ocorrência' && <Divider />}
+            {item && item.text === 'Verificar Veículo' && <Divider />}
           </React.Fragment>
         ))}
       </List>
@@ -253,7 +259,7 @@ export default function Menu() {
         <Button
           variant="contained"
           endIcon={<SendIcon />}
-          sx={{ marginLeft: 5, fontSize: 13, marginTop: 2, paddingLeft: 1 }}
+          sx={{ marginLeft: 5, fontSize: 12, marginTop: 2, paddingLeft: 1 }}
           onClick={toggleDrawer(true)}
           aria-label="Abrir menu"
         >
@@ -270,11 +276,11 @@ export default function Menu() {
             <Button
               variant="contained"
               endIcon={<ChatIcon />}
-              sx={{ marginLeft: 5, fontSize: 12, marginTop: 8, paddingLeft: 1 }}
+              sx={{ marginLeft: 5, fontSize: 12, marginTop: 5, paddingLeft: 1 }}
               onClick={toggleDrawerBottom(anchor, true)}
               aria-label="Opa"
             >
-              Clique aqui para deixar sua sugestão
+              Sugestões e correções
             </Button>
 
             <Drawer

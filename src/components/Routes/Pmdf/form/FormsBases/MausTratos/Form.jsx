@@ -17,7 +17,7 @@ import {
 
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { regioesAdministrativas } from '../../../../../Consts/RegioesAdministrativas';
 
@@ -319,4 +319,3 @@ export default function MausTratos() {
 
   );
 }
-

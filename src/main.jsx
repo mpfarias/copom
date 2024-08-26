@@ -26,7 +26,8 @@ import Comments from './components/Routes/Pmdf/internal/admin/coments/Comments.j
 import Abandono from './components/Routes/Pmdf/form/FormsBases/Abandono/Form.jsx';
 import Racismo from './components/Routes/Pmdf/form/FormsBases/Racismo/Form.jsx';
 import AlarmeAcionado from './components/Routes/Pmdf/form/FormsBases/AlarmeAcionado/Form.jsx';
-
+import BuscarVeiculo from './components/Routes/Pmdf/Search/BuscarVeiculo/BuscarVeiculo.jsx';
+import BuscarPessoa from './components/Routes/Pmdf/Search/BuscarPessoa/BuscarPessoa.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,8 @@ const router = createBrowserRouter([
     children: [
       { path: "Main", element: <Home /> },
       { path: "GerarOcorrencia", element: <GerarOcorrencia /> },
+      { path: "BuscarVeiculo", element: <BuscarVeiculo /> },
+      { path: "BuscarPessoa", element: <BuscarPessoa /> },
       { path: "ViolenciaDomestica", element: <FormularioViolenciaDomestica /> },
       { path: "SomAlto", element: <SomAlto /> },
       { path: "RouboFurto", element: <RouboFurto /> },

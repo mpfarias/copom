@@ -70,6 +70,7 @@ export default function FormularioViolenciaDomestica() {
     gestante:'',
     criancas: '',
     urgencia: '',
+    substancia: '',
     narrativa: '',
     text01: 'NATUREZA CAD: VIOLÊNCIA DOMÉSTICA',
     text02: 'NATUREZA CAD: DMPP - DESCUMPRIMENTO DE MEDIDA PROTETIVA - VIOLAÇÃO DE ZONA DE EXCLUSÃO'
@@ -80,7 +81,7 @@ export default function FormularioViolenciaDomestica() {
   const [enderecoDenunciante, setEnderecoDenunciante] = useState('');
   const [showOutroInput, setShowOutroInput] = useState(false);
   const [showOutraVitimaInput, setShowOutraVitimaInput] = useState(false);
-  const { nomeVitima, conheceVitima, vitimaParentesco, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, gestante, criancas, urgencia, narrativa, text01, text02 } = state;
+  const { nomeVitima, conheceVitima, vitimaParentesco, endereco, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, parentesco, medida, agressorNoLocal, ferida, gestante, substancia, criancas, urgencia, narrativa, text01, text02 } = state;
 
   const handleChange = (field, value) => {
     if (field === 'outroParentesco') {
@@ -148,11 +149,13 @@ NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: 
         ' não '}encontra-se no local${armado === 'null' ? ', e não sabe se está armado.' : armado === 'true' ? ', e está armado, equipe agir com cautela.' : '.'}
  ${gritos.length > 0 ? '* É possível ouvir ' + gritos.join(' e ') : ''}
  ${criancas === 'true' ? '* Há crianças no local' : ''}
+ ${substancia === 'true' ? '* Agressor sob influência de drogas/álcool.' : (substancia === 'não' ? '' : '')}
  ${urgencia === 'true' ? '* ATENÇÃO: PRIORIDADE/URGÊNCIA NO ATENDIMENTO!' : ''}
  ${gestante === 'true' ? '* Solicitante está GESTANTE' : ''}
 `;
-    setState(prevState => ({ ...prevState, narrativa: text }));
-  }, [solicitante, nomeVitima, conheceVitima, vitimaParentesco, endereco, outraVitima, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, gestante, vitimaParentesco, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, outroParentesco]);
+const formattedText = text.split('\n').map(line => line.trim()).filter(line => line !== '').join('\n');
+    setState(prevState => ({ ...prevState, narrativa: formattedText }));
+  }, [solicitante, nomeVitima, conheceVitima, vitimaParentesco, endereco, outraVitima, enderecoDenunciante, referencia, regiaoAdministrativa, telefone, agressao, gritos, armado, gestante, vitimaParentesco, parentesco, medida, agressorNoLocal, ferida, criancas, urgencia, substancia, outroParentesco]);
 
   useEffect(() => {
     if (solicitante === 'denunciante' && !agressaoOptions.includes('pedido de socorro')) {
@@ -164,6 +167,7 @@ NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: 
     }
   }, [solicitante, agressaoOptions]);
 
+ 
 
   return (
 
@@ -479,6 +483,20 @@ NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: 
             <FormControlLabel value="false" control={<Radio />} label="Não" />
           </RadioGroup>
 
+          <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Agressor sob influência de substância entorpecente/álcool ?</FormLabel>
+          <RadioGroup
+            row
+            value={substancia}
+            onChange={(e) => handleChange("substancia", e.target.value)}
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            sx={{ marginBottom: 4 }}
+          >
+            <FormControlLabel value="true" control={<Radio />} label="Sim" />
+            <FormControlLabel value="false" control={<Radio />} label="Não" />
+            <FormControlLabel value="null" control={<Radio />} label="Não sabe" />
+          </RadioGroup>
+
           <FormLabel style={{ fontWeight: 'bold', fontSize: 18, }} id="demo-controlled-radio-buttons-group">Urgência no atedimento?</FormLabel>
           <RadioGroup
             row
@@ -507,7 +525,7 @@ NOME: ${nomeVitima.toUpperCase()}, ${solicitante === 'vitima' ? ' RESIDENTE EM: 
             }}
             multiline
             fullWidth
-            value={narrativa}
+            value={state.narrativa}
             InputProps={{
               disabled: true
             }}
