@@ -106,7 +106,7 @@ export default function Menu() {
   );
 
   const drawerItems = [
-    { text: 'Home', icon: <HomeIcon />, link: '/' },
+    { text: 'Home', icon: <HomeIcon />, link: '/Main' },
     { text: 'Gerar Ocorrência', icon: <DifferenceOutlinedIcon />, link: '/GerarOcorrencia' },
     { text: 'Verificar Pessoa', icon: <SearchIcon />, link: '/BuscarPessoa' },
     { text: 'Verificar Veículo', icon: <SearchIcon />, link: '/BuscarVeiculo' },

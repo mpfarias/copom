@@ -1,74 +1,128 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
+import { useNavigate } from 'react-router-dom'; // Para redirecionar após login bem-sucedido
+import { Container, TextField, Button, Typography, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+
+const Login = () => {
+  const [userData, setUserData] = useState({
+    usuario: '',
+    senha: '',
+    ramal: '',
+    nome: ''
+  });
+
+  const navigate = useNavigate(); // Hook para navegação
+
+  const handleChange = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:3001/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const result = await response.json();
+
+      console.log('Resposta do backend:', result);
+
+      if (response.status === 200) {
+        // Login bem-sucedido
+        
+        // Armazena informações do usuário e ramal
+        localStorage.setItem('nome', result.nome);
+        localStorage.setItem('ramal', result.ramal);
+        localStorage.setItem('usuario', result.usuario);
 
 
-function Login() {
-    const [usuario, setUsuario] = useState('');
-    const [senha, setSenha] = useState('');
-    const [ramal, setRamal] = useState('5062');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
-    const { login } = useAuth(); // Obtém a função de login do contexto
+        console.log(`Usuário logado: ${result.nome}, Ramal selecionado: ${result.ramal}`);
+        console.log('Armazenando no localStorage:', result.nome, result.ramal, result.usuario);
+        navigate('/Main'); // Redireciona para a página principal
+      } else {
+        // Falha no login
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error('Erro ao realizar login:', error);
+      alert('Erro ao realizar login. Tente novamente mais tarde.');
+    }
+  };
 
-    const handleLogin = async () => {
-        try {
-            const response = await fetch('http://localhost:3001/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ usuario, senha, ramal })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            if (data.success) {
-                console.log("Login bem-sucedido, autenticando...");
-                login(); // Marca o usuário como autenticado
-                console.log("Redirecionando para /dashboard");
-                navigate('/Main'); // Redireciona para a página principal da aplicação
-            } else {
-                console.log("Login falhou: ", data.message);
-                setError(data.message);
-            }
-            
-        } catch (error) {
-            console.error('Erro ao tentar logar:', error);
-            setError('Erro ao tentar logar. Tente novamente.');
-        }
-    };
-
-    return (
-        <div>
-            <h2>Login</h2>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <input
-                type="text"
-                placeholder="Usuário"
-                value={usuario}
-                onChange={(e) => setUsuario(e.target.value)}
-            />
-            <br />
-            <input
-                type="password"
-                placeholder="Senha"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-            />
-            <br />
-            <select value={ramal} onChange={(e) => setRamal(e.target.value)}>
-                <option value="5062">5062</option>
-                <option value="5061">5061</option>
-                <option value="5060">5060</option>
-            </select>
-            <br />
-            <button onClick={handleLogin}>Login</button>
-        </div>
-    );
-}
+  return (
+    <Container maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="usuario"
+            label="Usuário"
+            name="usuario"
+            autoComplete="username"
+            autoFocus
+            value={userData.usuario}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="senha"
+            label="Senha"
+            type="password"
+            id="senha"
+            autoComplete="current-password"
+            value={userData.senha}
+            onChange={handleChange}
+          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="ramal-label">Ramal</InputLabel>
+            <Select
+              labelId="ramal-label"
+              id="ramal"
+              name="ramal"
+              value={userData.ramal}
+              label="Ramal"
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value={5960}>5960</MenuItem>
+              <MenuItem value={5961}>5961</MenuItem>
+              <MenuItem value={5962}>5962</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Entrar
+          </Button>
+        </Box>
+      </Box>
+    </Container>
+  );
+};
 
 export default Login;

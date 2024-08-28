@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom';
 import App from './App.jsx';
 
-
 import Home from "./components/home/home.jsx";
-import Index from './components/index/Index.jsx';
 import FormularioViolenciaDomestica from "./components/Routes/Pmdf/form/FormsBases/ViolDomestica/Form.jsx";
 import SomAlto from './components/Routes/Pmdf/form/FormsBases/somAlto/Form.jsx';
 import RouboFurto from './components/Routes/Pmdf/form/FormsBases/RouboFurto/Form.jsx';
@@ -30,11 +28,25 @@ import Racismo from './components/Routes/Pmdf/form/FormsBases/Racismo/Form.jsx';
 import AlarmeAcionado from './components/Routes/Pmdf/form/FormsBases/AlarmeAcionado/Form.jsx';
 import BuscarVeiculo from './components/Routes/Pmdf/Search/BuscarVeiculo/BuscarVeiculo.jsx';
 import BuscarPessoa from './components/Routes/Pmdf/Search/BuscarPessoa/BuscarPessoa.jsx';
+import Login from './components/Routes/Pmdf/login/login.jsx';
+import PrivateRoute from './components/context/privateRoute.jsx';
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <Login />,  // Rota para o Login, fora da estrutura da aplicação principal
+  },
+  {
     path: "/",
-    element: <App />,
+    element: <Navigate to="/login" />,  // Redireciona a raiz para a página de login
+  },
+  {
+    path: "/",
+    element: (
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       { path: "Main", element: <Home /> },
@@ -59,12 +71,15 @@ const router = createBrowserRouter([
       { path: "PessoaArmada", element: <PessoaArmada /> },
       { path: "Agressao", element: <Agressao /> },
       { path: "Admins/Comentarios", element: <Comments /> },
-      { path: "Index", element: <Index /> }
     ]
   },
   {
     path: "TelefonesUteis",
-    element: <NoMenuLayout />,
+    element: (
+      <PrivateRoute>
+        <NoMenuLayout />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       { path: "", element: <TelefonesUteis /> }
@@ -72,7 +87,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Navigate to="/" />,
+    element: <Navigate to="/login" />, // Redireciona qualquer rota não encontrada para a página de login
   }
 ]);
 
