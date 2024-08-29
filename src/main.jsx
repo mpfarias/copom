@@ -30,6 +30,7 @@ import BuscarVeiculo from './components/Routes/Pmdf/Search/BuscarVeiculo/BuscarV
 import BuscarPessoa from './components/Routes/Pmdf/Search/BuscarPessoa/BuscarPessoa.jsx';
 import Login from './components/Routes/Pmdf/login/login.jsx';
 import PrivateRoute from './components/context/privateRoute.jsx';
+import CadastrarUsuario from './components/Routes/Pmdf/form/Cadastro/CadastrarUsuario.jsx';
 
 const router = createBrowserRouter([
   {
@@ -43,19 +44,53 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <PrivateRoute>
+      <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
         <App />
       </PrivateRoute>
     ),
     errorElement: <ErrorPage />,
     children: [
       { path: "Main", element: <Home /> },
-      { path: "GerarOcorrencia", element: <GerarOcorrencia /> },
-      { path: "BuscarVeiculo", element: <BuscarVeiculo /> },
-      { path: "BuscarPessoa", element: <BuscarPessoa /> },
-      { path: "ViolenciaDomestica", element: <FormularioViolenciaDomestica /> },
-      { path: "SomAlto", element: <SomAlto /> },
-      { path: "RouboFurto", element: <RouboFurto /> },
+      {
+        path: "GerarOcorrencia", element: (
+          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <GerarOcorrencia />
+          </PrivateRoute>
+        )
+      },
+
+      {
+        path: "BuscarVeiculo", element: (
+          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
+            <BuscarVeiculo />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: "BuscarPessoa", element: (
+          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
+            <BuscarPessoa />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: "ViolenciaDomestica", element: (
+          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <FormularioViolenciaDomestica />
+          </PrivateRoute>)
+      },
+      {
+        path: "SomAlto", element: (
+          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <SomAlto />
+          </PrivateRoute>
+        )
+      },
+      { path: "RouboFurto", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <RouboFurto />
+          </PrivateRoute>
+      ) },
       { path: "MausTratos", element: <MausTratos /> },
       { path: "AlarmeAcionado", element: <AlarmeAcionado /> },
       { path: "AcidenteTransito", element: <AcidenteTransito /> },
@@ -71,12 +106,18 @@ const router = createBrowserRouter([
       { path: "PessoaArmada", element: <PessoaArmada /> },
       { path: "Agressao", element: <Agressao /> },
       { path: "Admins/Comentarios", element: <Comments /> },
+      { path: "CadastrarUsuario", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor']}>
+            <CadastrarUsuario />
+          </PrivateRoute>
+      ) },
+
     ]
   },
   {
     path: "TelefonesUteis",
     element: (
-      <PrivateRoute>
+      <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
         <NoMenuLayout />
       </PrivateRoute>
     ),

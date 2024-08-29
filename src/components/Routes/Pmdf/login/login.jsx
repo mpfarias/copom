@@ -7,7 +7,8 @@ const Login = () => {
     usuario: '',
     senha: '',
     ramal: '',
-    nome: ''
+    nome: '',
+    nivel:''
   });
 
   const navigate = useNavigate(); // Hook para navegação
@@ -42,10 +43,11 @@ const Login = () => {
         localStorage.setItem('nome', result.nome);
         localStorage.setItem('ramal', result.ramal);
         localStorage.setItem('usuario', result.usuario);
+        localStorage.setItem('nivel', result.nivel);
 
 
         console.log(`Usuário logado: ${result.nome}, Ramal selecionado: ${result.ramal}`);
-        console.log('Armazenando no localStorage:', result.nome, result.ramal, result.usuario);
+        console.log('Armazenando no localStorage:', result.nivel, result.nome, result.ramal, result.usuario);
         navigate('/Main'); // Redireciona para a página principal
       } else {
         // Falha no login

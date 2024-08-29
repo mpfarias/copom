@@ -15,19 +15,21 @@ const Navbar = () => {
   const ramal = localStorage.getItem('ramal');
 
   useEffect(() => {
-    const websocket = new WebSocket('ws://localhost:8080');
-    setWs(websocket);
+    const websocket = new WebSocket('ws://localhost:8080'); // Criando uma nova conexão WebSocket
+    setWs(websocket); // Armazenando a conexão WebSocket no estado
 
+    // Definindo o comportamento quando o WebSocket receber uma mensagem
     websocket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setCallData(data);
-      setIsCallActive(true);
+      const data = JSON.parse(event.data); // Convertendo a mensagem recebida em objeto JSON
+      setCallData(data); // Armazenando os dados da chamada no estado
+      setIsCallActive(true); // Marcando a chamada como ativa
     };
 
+    // Função de limpeza que fecha o WebSocket quando o componente é desmontado
     return () => {
       websocket.close();
     };
-  }, []);
+  }, []); // O array vazio como segundo argumento garante que este useEffect execute apenas uma vez, ao montar o componente
 
   const handlePauseClick = () => {
     setIsPaused(!isPaused);
