@@ -21,9 +21,21 @@ const Navbar = () => {
     // Definindo o comportamento quando o WebSocket receber uma mensagem
     websocket.onmessage = (event) => {
       const data = JSON.parse(event.data); // Convertendo a mensagem recebida em objeto JSON
-      setCallData(data); // Armazenando os dados da chamada no estado
-      setIsCallActive(true); // Marcando a chamada como ativa
+
+      console.log('Mensagem recebida no frontend:', data); // Verifica o conteúdo de `data`
+
+      if (data && data.callerId && data.channel) {
+        setCallData(data); // Armazena os dados da chamada no estado
+        setIsCallActive(true); // Marca a chamada como ativa
+      }
+      // Verifica se a chamada foi encerrada
+      else if (data && data.callEnded) {
+        console.log('Chamada encerrada, desativando botões:', data.callEnded); // Certifique-se de que este log está sendo atingido
+        setCallData(null); // Limpa os dados da chamada
+        setIsCallActive(false); // Marca a chamada como inativa
+      }
     };
+
 
     // Função de limpeza que fecha o WebSocket quando o componente é desmontado
     return () => {
@@ -157,7 +169,7 @@ const Navbar = () => {
             fontWeight: 400,
             color: "#ffffff",
             flex: 1,
-            marginBottom:2
+            marginBottom: 2
           }}
         >
           {callData ? `${nomeUsuario}. Identificação da chamada: nº: ${callData.callerId}` : `${nomeUsuario}. Nenhuma chamada`}
@@ -196,7 +208,7 @@ const Navbar = () => {
             letterSpacing: "0.05em",
           }}
           onClick={handleHangupClick}
-          disabled={!isCallActive}
+          disabled={!isCallActive} // Este botão deve ser desativado quando `isCallActive` for false
         >
           Desligar
         </Button>
@@ -217,20 +229,20 @@ const Navbar = () => {
             letterSpacing: "0.05em",
           }}
           onClick={handleTransferClick}
-          disabled={!isCallActive}
+          disabled={!isCallActive} // Este botão deve ser desativado quando `isCallActive` for false
         >
           Transferir
         </Button>
       </Box>
       <Box
-       sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "0",
-        
-      }}>
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0",
+
+        }}>
         <Typography
           sx={{
             fontSize: "2rem",
@@ -240,14 +252,14 @@ const Navbar = () => {
           }}
         >
           Ramal <Box
-          component="span"
-          sx={{
-            
-            borderRadius:'5px',
-            background:'white',
-            color:'black',
-            padding:1
-          }}
+            component="span"
+            sx={{
+
+              borderRadius: '5px',
+              background: 'white',
+              color: 'black',
+              padding: 1
+            }}
           >{ramal}</Box>
         </Typography>
         <LogoutButton />
