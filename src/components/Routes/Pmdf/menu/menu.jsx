@@ -1,6 +1,5 @@
 import * as React from 'react';
 import SendIcon from '@mui/icons-material/Send';
-import SearchIcon from '@mui/icons-material/Search';
 import { Alert, Snackbar, InputBase, Typography } from '@mui/material';
 import {
   Box,
@@ -17,22 +16,23 @@ import {
   TextareaAutosize,
 } from '@mui/material/';
 import ChatIcon from '@mui/icons-material/Chat';
-import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
+import CallIcon from '@mui/icons-material/Call';
+import HomeIcon from '@mui/icons-material/Home';
+import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
+import SearchIcon from '@mui/icons-material/Search';
+import Face2Icon from '@mui/icons-material/Face2';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
+import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
 import PetsIcon from '@mui/icons-material/Pets';
 import AlarmIcon from '@mui/icons-material/Alarm';
-import ReportIcon from '@mui/icons-material/Report';
-import HomeIcon from '@mui/icons-material/Home';
 import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import CarCrashIcon from '@mui/icons-material/CarCrash';
-import CallIcon from '@mui/icons-material/Call';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import HeartBrokenOutlinedIcon from '@mui/icons-material/HeartBrokenOutlined';
-import Face2Icon from '@mui/icons-material/Face2';
+import ReportIcon from '@mui/icons-material/Report';
 import Diversity2Icon from '@mui/icons-material/Diversity2';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import Man2Icon from '@mui/icons-material/Man2';
 import { Cancel } from '@mui/icons-material';
@@ -40,22 +40,18 @@ import { Cancel } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
 export default function Menu() {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
   const [snackbarSeverity, setSnackbarSeverity] = React.useState('success');
-
   const [state, setState] = React.useState({
     bottom: false,
   });
-
   const [open, setOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
   const [textareaValue, setTextareaValue] = React.useState('');
   const [ip, setIp] = React.useState('');
-  const [localIp, setLocalIp] = React.useState('');  
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -68,45 +64,35 @@ export default function Menu() {
     setState({ ...state, [anchor]: open });
   };
 
-  const list = (anchor) => (
-    <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-      role="presentation"
-    >
-      <List>
-        <ListItem>
-          <ListItemIcon>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography variant="h6" gutterBottom>
-                Sua sugestão ou opinião é sempre bem vinda!
-              </Typography>
-              <TextareaAutosize
-                minRows={10}
-                placeholder="Deixe aqui a sua sugestão ou sua opinião."
-                style={{ width: 500 }}
-                value={textareaValue}
-                onChange={(e) => setTextareaValue(e.target.value)}
-              />
-              <Button
-                variant="contained"
-                name="comentario"
-                endIcon={<SendIcon />}
-                sx={{ marginLeft: 5, fontSize: 13, marginTop: '15%', paddingLeft: 1, height: 40, width: 200 }}
-                onClick={handleSendComment}
-                
-              >
-                Enviar sugestão
-              </Button>
-            </Box>
-          </ListItemIcon>
-          <ListItemText />
-        </ListItem>
-      </List>
-    </Box>
-  );
+  const permissions = {
+    Administrador: ['Home', 'Gerar Ocorrência',
+      'Verificar Pessoa',
+      'Verificar Veículo',
+      'Cadastrar Usuario',
+      'Violência doméstica',
+      'Roubo/Furto',
+      'Som automotivo / Perturbação',
+      'Crimes contra animais',
+      'Alarme acionado',
+      'Vias de Fato',
+      'Ameaça',
+      'Acidente de trânsito',
+      'Drogas',
+      'Abandono',
+      'Crimes Sexuais',
+      'Homofobia',
+      'Racismo',
+      'Suicidio',
+      'Pessoa armada',
+      'Agressão',
+    ],
+    Gestor: ['Home', 'Gerar Ocorrência', 'Violência doméstica', 'Roubo/Furto', 'Som automotivo / Perturbação'],
+  };
+
+  const nivel = localStorage.getItem('nivel');
 
   const drawerItems = [
-    { text: 'Home', icon: <HomeIcon />, link: '/' },
+    { text: 'Home', icon: <HomeIcon />, link: '/Main' },
     { text: 'Gerar Ocorrência', icon: <DifferenceOutlinedIcon />, link: '/GerarOcorrencia' },
     { text: 'Verificar Pessoa', icon: <SearchIcon />, link: '/BuscarPessoa' },
     { text: 'Verificar Veículo', icon: <SearchIcon />, link: '/BuscarVeiculo' },
@@ -126,20 +112,52 @@ export default function Menu() {
     { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
     { text: 'Pessoa armada', icon: <Cancel />, link: '/PessoaArmada' },
     { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' },
+    { text: 'Cadastrar Usuario', icon: <Man2Icon />, link: '/CadastrarUsuario' },
   ];
 
-  const ordenarItens = (itens) => {
-    const itemHome = itens.find(item => item.text === 'Home');
-    const itemOcorrencia = itens.find(item => item.text === 'Gerar Ocorrência');
-    const itemPessoa = itens.find(item => item.text === 'Verificar Pessoa');
-    const itemVeiculo = itens.find(item => item.text === 'Verificar Veículo');
-    const outrosItens = itens.filter(item => item.text !== 'Home' && item.text !== 'Gerar Ocorrência' && item.text !== 'Verificar Pessoa' && item.text !== 'Verificar Veículo');
-    outrosItens.sort((a, b) => a.text.localeCompare(b.text));
-    return [itemHome, itemOcorrencia, itemPessoa, itemVeiculo, ...outrosItens];
-  };
 
   const filteredItems = drawerItems.filter(item =>
     item.text.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const availableMenus = filteredItems.filter((item) =>
+    permissions[nivel]?.includes(item.text)
+  );
+
+  const renderSuggestionDrawer = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role="presentation"
+    >
+      {/*<List>
+        <ListItem>
+          <ListItemIcon>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h6" gutterBottom>
+                Sua sugestão ou opinião é sempre bem vinda!
+              </Typography>
+              <TextareaAutosize
+                minRows={10}
+                placeholder="Deixe aqui a sua sugestão ou sua opinião."
+                style={{ width: 500 }}
+                value={textareaValue}
+                onChange={(e) => setTextareaValue(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                name="comentario"
+                endIcon={<SendIcon />}
+                sx={{ marginLeft: 5, fontSize: 13, marginTop: '15%', paddingLeft: 1, height: 40, width: 200 }}
+                onClick={handleSendComment}
+              >
+                Enviar sugestão
+              </Button>
+            </Box>
+          </ListItemIcon>
+          <ListItemText />
+        </ListItem>
+      </List>*/}
+    </Box>
   );
 
   const DrawerList = (
@@ -148,8 +166,7 @@ export default function Menu() {
         toggleDrawer(false)();
         setSearchTerm('');
       }
-    }}
-    >
+    }}>
       <Paper
         component="form"
         sx={{
@@ -174,7 +191,7 @@ export default function Menu() {
       </Paper>
 
       <List>
-        {ordenarItens(filteredItems).map((item, index) => (
+        {availableMenus.map((item, index) => (
           <React.Fragment key={item?.text || index}>
             {item && (
               <ListItem disablePadding>
@@ -186,7 +203,7 @@ export default function Menu() {
                 </ListItemButton>
               </ListItem>
             )}
-            {item && item.text === 'Verificar Veículo' && <Divider />}
+            {item && item.text === 'Cadastrar Usuario ' && <Divider />}
           </React.Fragment>
         ))}
       </List>
@@ -208,25 +225,24 @@ export default function Menu() {
     }
   }, [open]);
 
-  React.useEffect(() => {
+ /* React.useEffect(() => {
     const fetchIp = async () => {
       try {
         const response = await fetch('http://10.95.91.61:3000/getClientIp');
         const data = await response.json();
         setIp(data.ip);
-        console.log(data.ip)
+        console.log(data.ip);
       } catch (error) {
         console.error('Erro ao obter o IP:', error);
       }
     };
 
-  fetchIp();
-
-}, []);
+    fetchIp();
+  }, []);
 
   const handleSendComment = async () => {
     const currentDate = new Date();
-    
+
     try {
       await axios.post('http://10.95.91.61:3000/Admins/comentarios/comentarios', {
         comentario: textareaValue,
@@ -252,7 +268,7 @@ export default function Menu() {
     setSnackbarSeverity(severity);
     setOpenSnackbar(true);
   };
-
+*/
   return (
     <>
       <div>
@@ -270,7 +286,7 @@ export default function Menu() {
         </Drawer>
       </div>
 
-     <div>
+      <div>
         {['bottom'].map((anchor) => (
           <React.Fragment key={anchor}>
             <Button
@@ -288,13 +304,13 @@ export default function Menu() {
               open={state[anchor]}
               onClose={toggleDrawerBottom(anchor, false)}
             >
-              {list(anchor)}
+              {renderSuggestionDrawer(anchor)}
             </Drawer>
           </React.Fragment>
         ))}
       </div>
 
-      <Snackbar
+     {/* <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
@@ -307,7 +323,7 @@ export default function Menu() {
         <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
           {snackbarMessage}
         </Alert>
-      </Snackbar>
+      </Snackbar>*/}
     </>
   );
 }
