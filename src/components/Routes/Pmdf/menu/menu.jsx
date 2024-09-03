@@ -17,28 +17,12 @@ import {
 } from '@mui/material/';
 import ChatIcon from '@mui/icons-material/Chat';
 import CallIcon from '@mui/icons-material/Call';
-import HomeIcon from '@mui/icons-material/Home';
-import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
 import SearchIcon from '@mui/icons-material/Search';
-import Face2Icon from '@mui/icons-material/Face2';
-import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
-import LocalPoliceIcon from '@mui/icons-material/LocalPolice';
-import PetsIcon from '@mui/icons-material/Pets';
-import AlarmIcon from '@mui/icons-material/Alarm';
-import SportsKabaddiIcon from '@mui/icons-material/SportsKabaddi';
-import MoodBadIcon from '@mui/icons-material/MoodBad';
-import CarCrashIcon from '@mui/icons-material/CarCrash';
-import VaccinesIcon from '@mui/icons-material/Vaccines';
-import HeartBrokenOutlinedIcon from '@mui/icons-material/HeartBrokenOutlined';
-import ReportIcon from '@mui/icons-material/Report';
-import Diversity2Icon from '@mui/icons-material/Diversity2';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
-import Man2Icon from '@mui/icons-material/Man2';
-import { Cancel } from '@mui/icons-material';
-
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { drawerItems } from './Consts/itemGeral';
+import { permissions } from './Consts/permissions';
+import { secondaryDrawerItems } from './Consts/adminItems';
 
 export default function Menu() {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -64,72 +48,25 @@ export default function Menu() {
     setState({ ...state, [anchor]: open });
   };
 
-  const permissions = {
-    Administrador: ['Home', 'Gerar Ocorrência',
-      'Verificar Pessoa',
-      'Verificar Veículo',
-      'Cadastrar Usuario',
-      'Violência doméstica',
-      'Roubo/Furto',
-      'Som automotivo / Perturbação',
-      'Crimes contra animais',
-      'Alarme acionado',
-      'Vias de Fato',
-      'Ameaça',
-      'Acidente de trânsito',
-      'Drogas',
-      'Abandono',
-      'Crimes Sexuais',
-      'Homofobia',
-      'Racismo',
-      'Suicidio',
-      'Pessoa armada',
-      'Agressão',
-    ],
-    Gestor: ['Home', 'Gerar Ocorrência', 'Violência doméstica', 'Roubo/Furto', 'Som automotivo / Perturbação'],
-  };
-
-  const nivel = localStorage.getItem('nivel');
-
-  const drawerItems = [
-    { text: 'Home', icon: <HomeIcon />, link: '/Main' },
-    { text: 'Gerar Ocorrência', icon: <DifferenceOutlinedIcon />, link: '/GerarOcorrencia' },
-    { text: 'Verificar Pessoa', icon: <SearchIcon />, link: '/BuscarPessoa' },
-    { text: 'Verificar Veículo', icon: <SearchIcon />, link: '/BuscarVeiculo' },
-    { text: 'Violência doméstica', icon: <Face2Icon />, link: '/ViolenciaDomestica' },
-    { text: 'Som automotivo / Perturbação', icon: <SpatialAudioIcon />, link: '/SomAlto' },
-    { text: 'Roubo/Furto', icon: <LocalPoliceIcon />, link: '/RouboFurto' },
-    { text: 'Crimes contra animais', icon: <PetsIcon />, link: '/MausTratos' },
-    { text: 'Alarme acionado', icon: <AlarmIcon />, link: '/AlarmeAcionado' },
-    { text: 'Vias de Fato', icon: <SportsKabaddiIcon />, link: '/ViasDeFato' },
-    { text: 'Ameaça', icon: <MoodBadIcon />, link: '/Ameaca' },
-    { text: 'Acidente de trânsito', icon: <CarCrashIcon />, link: '/AcidenteTransito' },
-    { text: 'Drogas', icon: <VaccinesIcon />, link: '/Drogas' },
-    { text: 'Abandono', icon: <HeartBrokenOutlinedIcon />, link: '/Abandono' },
-    { text: 'Crimes Sexuais', icon: <ReportIcon />, link: '/CrimesSexuais' },
-    { text: 'Homofobia', icon: <Diversity2Icon />, link: '/Homofobia' },
-    { text: 'Racismo', icon: <GroupOutlinedIcon />, link: '/Racismo' },
-    { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
-    { text: 'Pessoa armada', icon: <Cancel />, link: '/PessoaArmada' },
-    { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' },
-    { text: 'Cadastrar Usuario', icon: <Man2Icon />, link: '/CadastrarUsuario' },
-  ];
-
+   const nivel = localStorage.getItem('nivel');
 
   const filteredItems = drawerItems.filter(item =>
-    item.text.toLowerCase().includes(searchTerm.toLowerCase())
+    item.text.toLowerCase().includes(searchTerm.toLowerCase()),
+    permissions[nivel]?.includes(drawerItems.text)
   );
 
-  const availableMenus = filteredItems.filter((item) =>
-    permissions[nivel]?.includes(item.text)
+  const filteredItemsSecondary = secondaryDrawerItems.filter(item =>
+    item.text.toLowerCase().includes(searchTerm.toLowerCase()),
+    permissions[nivel]?.includes(secondaryDrawerItems.text)
   );
+
 
   const renderSuggestionDrawer = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
     >
-      {/*<List>
+      {<List>
         <ListItem>
           <ListItemIcon>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -156,7 +93,7 @@ export default function Menu() {
           </ListItemIcon>
           <ListItemText />
         </ListItem>
-      </List>*/}
+      </List>}
     </Box>
   );
 
@@ -189,9 +126,8 @@ export default function Menu() {
           <SearchIcon />
         </IconButton>
       </Paper>
-
       <List>
-        {availableMenus.map((item, index) => (
+        {filteredItemsSecondary.map((item, index) => (
           <React.Fragment key={item?.text || index}>
             {item && (
               <ListItem disablePadding>
@@ -203,10 +139,27 @@ export default function Menu() {
                 </ListItemButton>
               </ListItem>
             )}
-            {item && item.text === 'Cadastrar Usuario ' && <Divider />}
           </React.Fragment>
         ))}
       </List>
+<Divider/>
+      <List>
+        {filteredItems.map((item, index) => (
+          <React.Fragment key={item?.text || index}>
+            {item && (
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to={item.link}>
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              </ListItem>
+            )}
+          </React.Fragment>
+        ))}
+      </List>
+
       <Divider />
       <ListItem disablePadding>
         <ListItemButton onClick={() => window.open('TelefonesUteis', '_blank', 'width=1800,height=950')}>
@@ -225,7 +178,7 @@ export default function Menu() {
     }
   }, [open]);
 
- /* React.useEffect(() => {
+ React.useEffect(() => {
     const fetchIp = async () => {
       try {
         const response = await fetch('http://10.95.91.61:3000/getClientIp');
@@ -268,7 +221,7 @@ export default function Menu() {
     setSnackbarSeverity(severity);
     setOpenSnackbar(true);
   };
-*/
+
   return (
     <>
       <div>
@@ -310,7 +263,7 @@ export default function Menu() {
         ))}
       </div>
 
-     {/* <Snackbar
+     {<Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
@@ -323,7 +276,7 @@ export default function Menu() {
         <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
           {snackbarMessage}
         </Alert>
-      </Snackbar>*/}
+      </Snackbar>}
     </>
   );
 }
