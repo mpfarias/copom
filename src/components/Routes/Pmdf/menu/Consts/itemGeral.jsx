@@ -20,8 +20,6 @@ import Man2Icon from '@mui/icons-material/Man2';
 import { Cancel } from '@mui/icons-material';
 
 export const drawerItems = [
-    { text: 'Home', icon: <HomeIcon />, link: '/Main' },
-    { text: 'Gerar Ocorrência', icon: <DifferenceOutlinedIcon />, link: '/GerarOcorrencia' },
     { text: 'Verificar Pessoa', icon: <SearchIcon />, link: '/BuscarPessoa' },
     { text: 'Verificar Veículo', icon: <SearchIcon />, link: '/BuscarVeiculo' },
     { text: 'Violência doméstica', icon: <Face2Icon />, link: '/ViolenciaDomestica' },
@@ -40,5 +38,4 @@ export const drawerItems = [
     { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
     { text: 'Pessoa armada', icon: <Cancel />, link: '/PessoaArmada' },
     { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' },
-    { text: 'Cadastrar Usuario', icon: <Man2Icon />, link: '/CadastrarUsuario' },
   ].sort((a, b) => a.text.localeCompare(b.text));

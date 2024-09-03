@@ -36,6 +36,7 @@ export default function Menu() {
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
   const [textareaValue, setTextareaValue] = React.useState('');
   const [ip, setIp] = React.useState('');
+  const nivelUsuario = localStorage.getItem('nivel');
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -48,16 +49,16 @@ export default function Menu() {
     setState({ ...state, [anchor]: open });
   };
 
-   const nivel = localStorage.getItem('nivel');
+  const nivel = localStorage.getItem('nivel');
 
   const filteredItems = drawerItems.filter(item =>
-    item.text.toLowerCase().includes(searchTerm.toLowerCase()),
-    permissions[nivel]?.includes(drawerItems.text)
+    item.text.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    permissions[nivel]?.includes(item.text)
   );
 
   const filteredItemsSecondary = secondaryDrawerItems.filter(item =>
-    item.text.toLowerCase().includes(searchTerm.toLowerCase()),
-    permissions[nivel]?.includes(secondaryDrawerItems.text)
+    item.text.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    permissions[nivel]?.includes(item.text)
   );
 
 
@@ -103,7 +104,16 @@ export default function Menu() {
         toggleDrawer(false)();
         setSearchTerm('');
       }
-    }}>
+    }}><Box>
+        <Typography variant="overline" gutterBottom sx={{ display: 'block' }}>
+          {nivelUsuario === 'Administrador' || nivelUsuario === 'Gestor' ? (
+            `${nivelUsuario}`
+          ) : (
+            ``
+          )
+          }
+        </Typography>
+      </Box>
       <Paper
         component="form"
         sx={{
@@ -142,7 +152,7 @@ export default function Menu() {
           </React.Fragment>
         ))}
       </List>
-<Divider/>
+      <Divider />
       <List>
         {filteredItems.map((item, index) => (
           <React.Fragment key={item?.text || index}>
@@ -178,7 +188,7 @@ export default function Menu() {
     }
   }, [open]);
 
- React.useEffect(() => {
+  React.useEffect(() => {
     const fetchIp = async () => {
       try {
         const response = await fetch('http://10.95.91.61:3000/getClientIp');
@@ -263,7 +273,7 @@ export default function Menu() {
         ))}
       </div>
 
-     {<Snackbar
+      {<Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}

@@ -8,5 +8,5 @@ export const secondaryDrawerItems = [
     { text: 'Gerar Ocorrência', icon: <DifferenceOutlinedIcon />, link: '/GerarOcorrencia' },
     { text: 'Verificar Pessoa', icon: <SearchIcon />, link: '/BuscarPessoa' },
     { text: 'Verificar Veículo', icon: <SearchIcon />, link: '/BuscarVeiculo' },
-    { text: 'Cadastrar Usuario', icon: <Man2Icon />, link: '/CadastrarUsuario' },
+    { text: 'Cadastrar Usuário', icon: <Man2Icon />, link: '/CadastrarUsuario' },
   ];
