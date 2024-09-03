@@ -59,16 +59,14 @@ function App() {
         <Grid item xs={12} md={3}>
           <Item><Menu /></Item>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={9}>
           <Item>
             <ContentWrapper>
               <Outlet comentarios={comentarios} />
             </ContentWrapper>
           </Item>
         </Grid>
-        <Grid item xs={12} md={1}>
-          <Item></Item>
-        </Grid>
+
       </Grid>
       <Item component="footer" sx={{ width: '100%' }}>
         <Footer />

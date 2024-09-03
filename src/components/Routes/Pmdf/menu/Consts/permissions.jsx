@@ -5,6 +5,7 @@ export const permissions = {
     'Verificar Pessoa',
     'Verificar Veículo',
     'Cadastrar Usuário',
+    'Relatórios',
     'Violência doméstica',
     'Roubo/Furto',
     'Som automotivo / Perturbação',
@@ -21,6 +22,7 @@ export const permissions = {
     'Suicidio',
     'Pessoa armada',
     'Agressão',
+    'Dano'
   ],
 
   Gestor: ['Home',

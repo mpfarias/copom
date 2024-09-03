@@ -1,6 +1,4 @@
 
-import HomeIcon from '@mui/icons-material/Home';
-import DifferenceOutlinedIcon from '@mui/icons-material/DifferenceOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import Face2Icon from '@mui/icons-material/Face2';
 import SpatialAudioIcon from '@mui/icons-material/SpatialAudio';
@@ -17,6 +15,7 @@ import Diversity2Icon from '@mui/icons-material/Diversity2';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import VolunteerActivismOutlinedIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import Man2Icon from '@mui/icons-material/Man2';
+import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import { Cancel } from '@mui/icons-material';
 
 export const drawerItems = [
@@ -38,4 +37,5 @@ export const drawerItems = [
     { text: 'Suicidio', icon: <VolunteerActivismOutlinedIcon />, link: '/Suicidio' },
     { text: 'Pessoa armada', icon: <Cancel />, link: '/PessoaArmada' },
     { text: 'Agressão', icon: <Man2Icon />, link: '/Agressao' },
+    { text: 'Dano', icon: <MoneyOffIcon />, link: '/DanoAoPatrimonio' },
   ].sort((a, b) => a.text.localeCompare(b.text));
