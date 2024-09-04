@@ -5,7 +5,27 @@ import { Button } from '@mui/material';
 const LogoutButton = () => {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        const usuario = localStorage.getItem('usuario'); // Recupera o nome do usuário do localStorage
+
+        if (usuario) {
+            try {
+                // Faz uma requisição para o backend para registrar o logout
+                const response = await fetch('http://localhost:3001/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ usuario }), // Envia o nome do usuário no corpo da requisição
+                });
+
+                const result = await response.json();
+                console.log(result.message); // Loga a mensagem do backend no console
+            } catch (error) {
+                console.error('Erro ao registrar logout:', error);
+            }
+        }
+
         // Remove o nome do usuário e o ramal do localStorage
         localStorage.removeItem('nome');
         localStorage.removeItem('ramal');
