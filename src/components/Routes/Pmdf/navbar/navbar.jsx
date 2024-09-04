@@ -374,7 +374,7 @@ const stopTimer = () => {
         {isPaused && pauseMessage && (
           <Typography
             sx={{
-              marginLeft: 2, // Alinha ao lado do botão "Sair da Pausa"
+              marginLeft: 2,
               fontSize: '1.2rem', // Aumenta o tamanho da fonte
               color: 'red', // Destaca o texto em vermelho
               fontWeight: 600, // Deixa o texto mais "pesado"
