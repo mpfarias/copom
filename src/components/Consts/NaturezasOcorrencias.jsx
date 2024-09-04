@@ -36,6 +36,7 @@ export const listaNaturezas = [
     { value: 'Roubo a estabelecimento comercial', label: 'Roubo a estabelecimento comercial' },
     { value: 'Roubo de veículo', label: 'Roubo de veículo' },
     { value: 'Suicídio', label: 'Suicídio' },
+    { value: 'Tentativa de suicídio', label: 'Tentativa de suicídio' },
     { value: 'Vias de fato', label: 'Vias de fato' },
     { value: 'Agressão física', label: 'Agressão física' },
     { value: 'Violência doméstica', label: 'Violência doméstica' },
@@ -55,4 +56,6 @@ export const listaNaturezas = [
     { value: 'Remoção de veículo', label: 'Remoção de veículo' },
     { value: 'Furto em interior de veículo', label: 'Furto em interior de veículo' },
     { value: 'Furto', label: 'Furto' },
+    { value: 'Dirigir veículo automotor em via pública sem permissão para dirigir', label: 'Dirigir veículo automotor em via pública sem permissão para dirigir' },
+
 ]

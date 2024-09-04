@@ -31,6 +31,7 @@ import BuscarPessoa from './components/Routes/Pmdf/Search/BuscarPessoa/BuscarPes
 import Login from './components/Routes/Pmdf/login/login.jsx';
 import PrivateRoute from './components/context/privateRoute.jsx';
 import CadastrarUsuario from './components/Routes/Pmdf/form/Cadastro/CadastrarUsuario.jsx';
+import Relatorios from './components/Routes/Pmdf/reports/relatorios.jsx';
 
 const router = createBrowserRouter([
   {
@@ -91,21 +92,86 @@ const router = createBrowserRouter([
             <RouboFurto />
           </PrivateRoute>
       ) },
-      { path: "MausTratos", element: <MausTratos /> },
-      { path: "AlarmeAcionado", element: <AlarmeAcionado /> },
-      { path: "AcidenteTransito", element: <AcidenteTransito /> },
-      { path: "Ameaca", element: <Ameaca /> },
-      { path: "ViasDeFato", element: <ViasDeFato /> },
-      { path: "Drogas", element: <Drogas /> },
-      { path: "DanoAoPatrimonio", element: <DanoPatrimonio /> },
-      { path: "Abandono", element: <Abandono /> },
-      { path: "CrimesSexuais", element: <CrimesSexuais /> },
-      { path: "Homofobia", element: <Homofobia /> },
-      { path: "Racismo", element: <Racismo /> },
-      { path: "Suicidio", element: <Suicidio /> },
-      { path: "PessoaArmada", element: <PessoaArmada /> },
-      { path: "Agressao", element: <Agressao /> },
-      { path: "Admins/Comentarios", element: <Comments /> },
+      { path: "MausTratos", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <MausTratos />
+          </PrivateRoute>
+      ) },
+      { path: "AlarmeAcionado", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <AlarmeAcionado />
+          </PrivateRoute>
+      ) },
+      { path: "AcidenteTransito", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <AcidenteTransito />
+          </PrivateRoute>
+      ) },
+      { path: "Ameaca", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <Ameaca />
+          </PrivateRoute>
+      ) },
+      { path: "ViasDeFato", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <ViasDeFato />
+          </PrivateRoute>
+      ) },
+      { path: "Drogas", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <Drogas />
+          </PrivateRoute>
+      ) },
+      { path: "DanoAoPatrimonio", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <DanoPatrimonio />
+          </PrivateRoute>
+      ) },
+      { path: "Abandono", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <Abandono />
+          </PrivateRoute>
+      ) },
+      { path: "CrimesSexuais", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <CrimesSexuais />
+          </PrivateRoute>
+      ) },
+      { path: "Homofobia", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <Homofobia />
+          </PrivateRoute>
+      ) },
+      { path: "Racismo", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <Racismo />
+          </PrivateRoute>
+      ) },
+      { path: "Suicidio", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <Suicidio />
+          </PrivateRoute>
+      ) },
+      { path: "PessoaArmada", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <PessoaArmada />
+          </PrivateRoute>
+      ) },
+      { path: "Agressao", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+            <Agressao />
+          </PrivateRoute>
+      ) },
+      { path: "Relatorios", element: (
+        <PrivateRoute allowedRoles={['Administrador', 'Gestor']}>
+            <Relatorios />
+          </PrivateRoute>
+      ) },      
+      { path: "Admins/Comentarios", element: (
+        <PrivateRoute allowedRoles={['Administrador']}>
+            <Comments />
+          </PrivateRoute>
+      ) },
       { path: "CadastrarUsuario", element: (
         <PrivateRoute allowedRoles={['Administrador', 'Gestor']}>
             <CadastrarUsuario />
