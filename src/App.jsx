@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import { CallProvider } from "./components/context/CallContext";
 import { Outlet } from 'react-router-dom';
 import Navbar from "./components/Routes/Pmdf/navbar/navbar";
 import Footer from "./components/Routes/Pmdf/footer/footer";
@@ -51,27 +52,31 @@ function App() {
   }, []);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <Item>
-        <Navbar />
-      </Item>
-      <Grid container sx={{ flex: 1 }}>
-        <Grid item xs={12} md={3}>
-          <Item><Menu /></Item>
-        </Grid>
-        <Grid item xs={12} md={9}>
-          <Item>
-            <ContentWrapper>
-              <Outlet comentarios={comentarios} />
-            </ContentWrapper>
-          </Item>
-        </Grid>
+    <CallProvider>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Item>
+          <Navbar />
+        </Item>
+        <Grid container sx={{ flex: 1 }}>
+          <Grid item xs={12} md={3}>
+            <Item><Menu /></Item>
+          </Grid>
+          <Grid item xs={12} md={9}>
+            <Item>
+              <ContentWrapper>
 
-      </Grid>
-      <Item component="footer" sx={{ width: '100%' }}>
-        <Footer />
-      </Item>
-    </Box>
+                <Outlet comentarios={comentarios} />
+
+              </ContentWrapper>
+            </Item>
+          </Grid>
+
+        </Grid>
+        <Item component="footer" sx={{ width: '100%' }}>
+          <Footer />
+        </Item>
+      </Box>
+    </CallProvider>
   );
 }
 

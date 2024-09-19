@@ -32,9 +32,10 @@ import { qtdeIndividuos } from '../RouboFurto/Const/Consts';
 
 import AutoFillPhoneInput from '../../../websocket/conn';
 import { regioesAdministrativas } from '../../../../../Consts/RegioesAdministrativas';
+import { useCall } from '../../../../../context/CallContext';
 
 function GerarOcorrencia() {
-
+  const { callData } = useCall();
   const [matricula, setMatricula] = useState('');
   const [telefone, setTelefone] = useState('');
 
@@ -57,7 +58,13 @@ function GerarOcorrencia() {
   });
 
   const { batalhao, graduacao, nome, natureza, regiaoAdministrativa, endereco, referencia, prefixo, equipe, individuos, deslocarDelegacia, delegacia, narrativa } = state;
-
+  
+  useEffect(() => {
+    if (callData && callData.callerId) {
+      setTelefone(callData.callerId); // Atualiza o campo de telefone com o número do chamador
+    }
+  }, [callData]); // O efeito é executado sempre que callData muda
+  
   const handleChange = (field, value) => {
 
     if (field === 'telefone') {
@@ -109,6 +116,7 @@ ${deslocarDelegacia === 'true' ? 'Equipe deslocou-se para a ' + delegacia : ''}
 
     setState(prevState => ({ ...prevState, narrativa: text }));
   }, [graduacao, nome, endereco, referencia, regiaoAdministrativa, matricula, telefone, batalhao, prefixo, equipe, natureza, qtdeIndividuos, individuos, deslocarDelegacia, delegacia]);
+  
 
   return (
     <>

@@ -7,6 +7,7 @@ const LogoutButton = () => {
 
     const handleLogout = async () => {
         const usuario = localStorage.getItem('usuario'); // Recupera o nome do usuário do localStorage
+        const ramal = localStorage.getItem('ramal'); // Recupera o ramal do localStorage
 
         if (usuario) {
             try {
@@ -16,20 +17,27 @@ const LogoutButton = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ usuario }), // Envia o nome do usuário no corpo da requisição
+                    body: JSON.stringify({ usuario, ramal }), // Envia o nome do usuário e o ramal no corpo da requisição
                 });
 
-                const result = await response.json();
-                console.log(result.message); // Loga a mensagem do backend no console
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(result.message); // Loga a mensagem do backend no console
+                } else {
+                    console.error('Erro ao registrar logout:', await response.text());
+                }
             } catch (error) {
                 console.error('Erro ao registrar logout:', error);
             }
+        } else {
+            console.log('Usuário não encontrado no localStorage.');
         }
 
-        // Remove o nome do usuário e o ramal do localStorage
+        // Remove o nome do usuário, o ramal e o fila_id do localStorage
         localStorage.removeItem('nome');
         localStorage.removeItem('ramal');
         localStorage.removeItem('usuario');
+        localStorage.removeItem('fila_id');
 
         // Redireciona para a página de login
         navigate('/login');

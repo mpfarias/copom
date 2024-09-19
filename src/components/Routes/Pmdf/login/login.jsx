@@ -17,10 +17,10 @@ const Login = () => {
   });
 
   // Define o estado inicial para armazenar a lista de ramais obtidos do backend
-  const [ramais, setRamais] = useState([]); 
+  const [ramais, setRamais] = useState([]);
 
   // Inicializa o hook useNavigate para navegação/roteamento
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Função chamada ao alterar qualquer campo do formulário
   const handleChange = (e) => {
@@ -33,50 +33,44 @@ const Login = () => {
 
   // Função chamada ao submeter o formulário de login
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Previne o comportamento padrão do formulário (recarregar a página)
+    e.preventDefault();  // Previne o comportamento padrão do formulário
 
     try {
       // Faz uma requisição POST para o backend com os dados do formulário
       const response = await fetch('http://localhost:3001/api/login', {
-        method: 'POST', // Método HTTP POST
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Especifica que o conteúdo é JSON
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData), // Converte os dados do userData em JSON e envia no corpo da requisição
+        body: JSON.stringify(userData)  // Envia os dados de login e ramal
       });
 
-      // Converte a resposta do backend em um objeto JavaScript
       const result = await response.json();
 
-      console.log('Resposta do backend:', result); // Loga a resposta do backend no console
-
-      if (response.status === 200) { // Verifica se o status da resposta é 200 (sucesso)
+      if (response.status === 200) {
         // Login bem-sucedido
 
-        // Armazena informações do usuário e ramal no localStorage para acesso futuro
+        // Armazena as informações no localStorage
         localStorage.setItem('agente_id', result.agente_id);
         localStorage.setItem('nome', result.nome);
         localStorage.setItem('ramal', result.ramal);
         localStorage.setItem('usuario', result.usuario);
         localStorage.setItem('nivel_acesso', result.nivel_acesso);
+        localStorage.setItem('fila_id', result.fila_id);
 
-        // Registra o login do agente
-        await fetch('http://localhost:3001/api/log_login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            agente_id: result.agente_id, // ID do agente retornado pelo backend
-            ramal_id: result.ramal_id,   // ID do ramal retornado pelo backend
-            login_time: new Date().toISOString(), // Hora do login
-          }),
+        console.log('Informações armazenadas no localStorage:', {
+          agente_id: result.agente_id,
+          nome: result.nome,
+          ramal: result.ramal,
+          usuario: result.usuario,
+          nivel_acesso: result.nivel_acesso,
+          fila_id: result.fila_id
         });
 
-        // Loga as informações de login no console
         console.log(`Usuário logado: ${result.nome}, Ramal selecionado: ${result.ramal}`);
-        console.log('Armazenando no localStorage:', result.nivel_acesso, result.nome, result.ramal, result.usuario);
-        navigate('/Main'); // Redireciona para a página principal (Main) após login bem-sucedido
+
+        // Redireciona para a página principal (Main) após login bem-sucedido
+        navigate('/Main');
       } else {
         // Caso o login falhe, exibe uma mensagem de alerta com a mensagem do backend
         alert(result.message);
@@ -85,34 +79,6 @@ const Login = () => {
       // Loga qualquer erro que ocorrer durante a tentativa de login e exibe um alerta
       console.error('Erro ao realizar login:', error);
       alert('Erro ao realizar login. Tente novamente mais tarde.');
-    }
-  };
-
-  // Função chamada ao fazer logout
-  const handleLogout = async () => {
-    try {
-      // Pega os dados do agente e do ramal armazenados no localStorage
-      const agente_id = localStorage.getItem('agente_id');
-      const ramal_id = localStorage.getItem('ramal_id');
-
-      // Registra o logout do agente
-      await fetch('http://localhost:3001/api/log_logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          agente_id: agente_id, // ID do agente armazenado
-          ramal_id: ramal_id,   // ID do ramal armazenado
-          logout_time: new Date().toISOString(), // Hora do logout
-        }),
-      });
-
-      // Limpa o localStorage e redireciona para a página de login
-      localStorage.clear();
-      navigate('/login');
-    } catch (error) {
-      console.error('Erro ao realizar logout:', error);
     }
   };
 
