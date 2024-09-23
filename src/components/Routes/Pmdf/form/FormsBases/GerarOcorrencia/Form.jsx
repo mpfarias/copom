@@ -64,12 +64,12 @@ function GerarOcorrencia() {
       setTelefone(callData.callerId); // Atualiza o campo de telefone com o número do chamador
     }
   }, [callData]); // O efeito é executado sempre que callData muda
-  
+
   const handleChange = (field, value) => {
 
     if (field === 'telefone') {
       setTelefone(value);
-    };
+    }
 
     if (field === 'matricula') {
       const uppercasedValue = value.toUpperCase();
