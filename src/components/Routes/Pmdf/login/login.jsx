@@ -7,18 +7,20 @@ import { Container, TextField, Button, Typography, FormControl, InputLabel, Sele
 
 // Declaração do componente funcional Login
 const Login = () => {
+
   // Define o estado inicial do userData com useState, que armazena as informações do formulário de login
   const [userData, setUserData] = useState({
-    usuario: '', // Armazena o nome de usuário
+    cpf: '', // Armazena o nome de usuário
     senha: '', // Armazena a senha do usuário
     ramal: '', // Armazena o ramal selecionado
     nome: '', // Armazena o nome do usuário (preenchido após login)
     nivel_acesso: '' // Armazena o nível de acesso do usuário (preenchido após login)
   });
-
-  // Define o estado inicial para armazenar a lista de ramais obtidos do backend
   const [ramais, setRamais] = useState([]);
-
+  const [showRamalField, setShowRamalField] = useState(false);
+  const [isLoadingRamais, setIsLoadingRamais] = useState(true); // Novo estado para controlar o loading dos ramais
+  const [buttonLabel, setButtonLabel] = useState('Escolher ramal');
+  const [isRamalSelected, setIsRamalSelected] = useState(false);
   // Inicializa o hook useNavigate para navegação/roteamento
   const navigate = useNavigate();
 
@@ -31,52 +33,47 @@ const Login = () => {
     });
   };
 
-  // Função chamada ao submeter o formulário de login
   const handleSubmit = async (e) => {
-    e.preventDefault();  // Previne o comportamento padrão do formulário
+    e.preventDefault();
 
     try {
-      // Faz uma requisição POST para o backend com os dados do formulário
       const response = await fetch('http://localhost:3001/api/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userData)  // Envia os dados de login e ramal
+        body: JSON.stringify({
+          cpf: userData.cpf,
+          senha: userData.senha,
+        }),
       });
 
       const result = await response.json();
 
       if (response.status === 200) {
-        // Login bem-sucedido
+        console.log("Nome retornado do backend:", result.nome);
+        localStorage.setItem('orgao_id', result.orgao_id);
+        localStorage.setItem('nome', result.nome); // Salvando o nome do usuário no localStorage
+        console.log('Nome retornado do backend:', result.nome);
+        console.log('Nome salvo no localStorage:', localStorage.getItem('nome'));
+        localStorage.setItem('cpf', result.cpf);   // Salvando o CPF no localStorage
+        localStorage.setItem('nivel_acesso', result.nivel_acesso.toString()); // Garantir que nivel_acesso seja uma string
 
-        // Armazena as informações no localStorage
-        localStorage.setItem('agente_id', result.agente_id);
-        localStorage.setItem('nome', result.nome);
-        localStorage.setItem('ramal', result.ramal);
-        localStorage.setItem('usuario', result.usuario);
-        localStorage.setItem('nivel_acesso', result.nivel_acesso);
-        localStorage.setItem('fila_id', result.fila_id);
+        setIsLoadingRamais(true);
 
-        console.log('Informações armazenadas no localStorage:', {
-          agente_id: result.agente_id,
-          nome: result.nome,
-          ramal: result.ramal,
-          usuario: result.usuario,
-          nivel_acesso: result.nivel_acesso,
-          fila_id: result.fila_id
-        });
+        const ramaisResponse = await fetch(
+          `http://localhost:3001/api/ramais?orgao_id=${result.orgao_id}`
+        );
+        const ramaisData = await ramaisResponse.json();
 
-        console.log(`Usuário logado: ${result.nome}, Ramal selecionado: ${result.ramal}`);
-
-        // Redireciona para a página principal (Main) após login bem-sucedido
-        navigate('/Main');
+        setRamais(ramaisData);
+        setIsLoadingRamais(false);
+        setShowRamalField(true);
+        setButtonLabel('Entrar'); // Altera o texto do botão
       } else {
-        // Caso o login falhe, exibe uma mensagem de alerta com a mensagem do backend
         alert(result.message);
       }
     } catch (error) {
-      // Loga qualquer erro que ocorrer durante a tentativa de login e exibe um alerta
       console.error('Erro ao realizar login:', error);
       alert('Erro ao realizar login. Tente novamente mais tarde.');
     }
@@ -86,18 +83,80 @@ const Login = () => {
   useEffect(() => {
     const fetchRamais = async () => {
       try {
-        // Faz uma requisição GET para o backend para obter a lista de ramais
-        const response = await fetch('http://localhost:3001/api/ramais');
+        // Obtém o orgao_id do localStorage
+        const orgaoId = localStorage.getItem('orgao_id');
+
+        // Adicione um log para garantir que o orgao_id está correto
+        console.log("orgao_id obtido do localStorage:", orgaoId);
+
+        // Se o orgao_id for nulo ou indefinido, exiba um erro
+        if (!orgaoId) {
+          console.error("Erro: orgao_id não encontrado no localStorage");
+          return;
+        }
+
+        // Faz a requisição GET para o backend para obter a lista de ramais
+        const response = await fetch(`http://localhost:3001/api/ramais?orgao_id=${orgaoId}`);
+
+        // Verifica se a resposta foi bem-sucedida
+        if (!response.ok) {
+          throw new Error(`Erro na requisição de ramais: ${response.statusText}`);
+        }
+
         const ramaisData = await response.json(); // Converte a resposta em um objeto JavaScript
-        setRamais(ramaisData); // Armazena a lista de ramais no estado
+
+        // Armazena a lista de ramais no estado
+        setRamais(ramaisData);
+
+        console.log("Ramais carregados:", ramaisData);
       } catch (error) {
-        // Loga qualquer erro que ocorrer durante a tentativa de buscar os ramais
         console.error('Erro ao buscar ramais:', error);
       }
     };
 
     fetchRamais(); // Chama a função fetchRamais ao montar o componente
-  }, []); // Executa apenas uma vez quando o componente monta
+  }, []);
+
+  // Confirmação de acesso ao sistema
+  const handleRamalSubmit = async (e) => {
+    e.preventDefault();
+
+    // Adicionando log para verificar o ramal no frontend antes de enviar ao backend
+    console.log('Ramal selecionado para envio:', userData.ramal);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/select_ramal', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ramal: userData.ramal })  // Envia o ramal selecionado
+      });
+
+      const result = await response.json();
+
+      if (response.status === 200) {
+        console.log("LOGIN COM RAMAL EFETIVADO COM SUCESSO");
+
+        // Armazena o ramal no localStorage para usar no WebSocket e logout
+        localStorage.setItem('ramal', userData.ramal);
+        localStorage.setItem('cpf', userData.cpf);
+
+        // Após o login bem-sucedido, podemos agora conectar o ramal ao WebSocket ou Asterisk
+        // Função para adicionar o ramal à fila (Você pode ativar isso se for necessário logo após o login)
+        // await addMemberToQueue(userData.ramal, 'nome_da_fila');
+
+        navigate('/Main');  // Redireciona para o sistema
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error('Erro ao selecionar ramal:', error);
+      alert('Erro ao selecionar ramal. Tente novamente mais tarde.');
+    }
+  };
+
+
 
   // Renderiza o formulário de login
   return (
@@ -113,17 +172,17 @@ const Login = () => {
         <Typography component="h1" variant="h5"> {/* Define o título da página como "Login" */}
           Login
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}> {/* Define o formulário que chama handleSubmit no envio */}
+        <Box component="form" onSubmit={showRamalField ? handleRamalSubmit : handleSubmit} sx={{ mt: 1 }}> {/* Define o formulário que chama handleSubmit no envio */}
           <TextField
             margin="normal"
             required
             fullWidth
-            id="usuario"
-            label="Usuário"
-            name="usuario"
-            autoComplete="username"
+            id="cpf"
+            label="CPF"
+            name="cpf"
+            autoComplete="cpf"
             autoFocus
-            value={userData.usuario} // Vincula o valor ao estado userData.usuario
+            value={userData.cpf} // Vincula o valor ao estado userData.cpf
             onChange={handleChange} // Chama handleChange ao modificar o campo
           />
           <TextField
@@ -138,32 +197,43 @@ const Login = () => {
             value={userData.senha} // Vincula o valor ao estado userData.senha
             onChange={handleChange} // Chama handleChange ao modificar o campo
           />
-          <FormControl fullWidth margin="normal"> {/* Componente para selecionar o ramal */}
-            <InputLabel id="ramal-label">Ramal</InputLabel> {/* Label para o campo de seleção de ramal */}
-            <Select
-              labelId="ramal-label"
-              id="ramal"
-              name="ramal"
-              value={userData.ramal} // Vincula o valor ao estado userData.ramal
-              label="Ramal"
-              onChange={handleChange} // Chama handleChange ao modificar o campo
-              required
-            >
-              {/* Mapeia a lista de ramais e cria um MenuItem para cada ramal */}
-              {ramais.map((ramal) => (
-                <MenuItem key={ramal.ramal_id} value={ramal.ramal}>
-                  {ramal.ramal} {/* Exibe o número do ramal */}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          {/* Exibe o select dos ramais após a autenticação */}
+          {showRamalField && (
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="ramal-label">Ramal</InputLabel>
+              <Select
+                labelId="ramal-label"
+                id="ramal"
+                name="ramal"
+                value={userData.ramal}
+                label="Ramal"
+                onChange={(e) => {
+                  handleChange(e);
+                  setIsRamalSelected(true);  // Habilita o botão após a seleção de ramal
+                }}
+                required
+              >
+                {Array.isArray(ramais) && ramais.length > 0 ? (
+                  ramais.map((ramal) => (
+                    <MenuItem key={ramal.ramal_id} value={ramal.ramal}>
+                      {ramal.ramal}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>Nenhum ramal disponível</MenuItem>
+                )}
+              </Select>
+            </FormControl>
+          )}
+          {/* O botão muda de "Escolher ramal" para "Entrar" */}
           <Button
             type="submit"
             fullWidth
-            variant="contained" // Estilo do botão como "contained" (preenchido)
-            sx={{ mt: 3, mb: 2 }} // Define margens superior e inferior para o botão
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={showRamalField && !isRamalSelected}  // O botão "Entrar" fica desabilitado até que um ramal seja selecionado
           >
-            Entrar
+            {buttonLabel}  {/* Texto dinâmico do botão */}
           </Button>
         </Box>
       </Box>

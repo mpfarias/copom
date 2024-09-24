@@ -45,7 +45,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
+      <PrivateRoute allowedRoles={[1, 2, 3, 4]}>
         <App />
       </PrivateRoute>
     ),
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       { path: "Main", element: <Home /> },
       {
         path: "GerarOcorrencia", element: (
-          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+          <PrivateRoute allowedRoles={[1, 2, 4]}>
             <GerarOcorrencia />
           </PrivateRoute>
         )
@@ -62,118 +62,118 @@ const router = createBrowserRouter([
 
       {
         path: "BuscarVeiculo", element: (
-          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
+          <PrivateRoute allowedRoles={[1, 2, 3, 4]}>
             <BuscarVeiculo />
           </PrivateRoute>
         )
       },
       {
         path: "BuscarPessoa", element: (
-          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
+          <PrivateRoute allowedRoles={[1, 2, 3, 4]}>
             <BuscarPessoa />
           </PrivateRoute>
         )
       },
       {
         path: "ViolenciaDomestica", element: (
-          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+          <PrivateRoute allowedRoles={[1, 2, 4]}>
             <FormularioViolenciaDomestica />
           </PrivateRoute>)
       },
       {
         path: "SomAlto", element: (
-          <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+          <PrivateRoute allowedRoles={[1, 2, 4]}>
             <SomAlto />
           </PrivateRoute>
         )
       },
       { path: "RouboFurto", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <RouboFurto />
           </PrivateRoute>
       ) },
       { path: "MausTratos", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <MausTratos />
           </PrivateRoute>
       ) },
       { path: "AlarmeAcionado", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <AlarmeAcionado />
           </PrivateRoute>
       ) },
       { path: "AcidenteTransito", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <AcidenteTransito />
           </PrivateRoute>
       ) },
       { path: "Ameaca", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <Ameaca />
           </PrivateRoute>
       ) },
       { path: "ViasDeFato", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <ViasDeFato />
           </PrivateRoute>
       ) },
       { path: "Drogas", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <Drogas />
           </PrivateRoute>
       ) },
       { path: "DanoAoPatrimonio", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <DanoPatrimonio />
           </PrivateRoute>
       ) },
       { path: "Abandono", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <Abandono />
           </PrivateRoute>
       ) },
       { path: "CrimesSexuais", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <CrimesSexuais />
           </PrivateRoute>
       ) },
       { path: "Homofobia", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <Homofobia />
           </PrivateRoute>
       ) },
       { path: "Racismo", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <Racismo />
           </PrivateRoute>
       ) },
       { path: "Suicidio", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <Suicidio />
           </PrivateRoute>
       ) },
       { path: "PessoaArmada", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <PessoaArmada />
           </PrivateRoute>
       ) },
       { path: "Agressao", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Usuario']}>
+        <PrivateRoute allowedRoles={[1, 2, 4]}>
             <Agressao />
           </PrivateRoute>
       ) },
       { path: "Relatorios", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor']}>
+        <PrivateRoute allowedRoles={[1, 2]}>
             <Relatorios />
           </PrivateRoute>
       ) },      
       { path: "Admins/Comentarios", element: (
-        <PrivateRoute allowedRoles={['Administrador']}>
+        <PrivateRoute allowedRoles={[1]}>
             <Comments />
           </PrivateRoute>
       ) },
       { path: "CadastrarUsuario", element: (
-        <PrivateRoute allowedRoles={['Administrador', 'Gestor']}>
+        <PrivateRoute allowedRoles={[1, 2]}>
             <CadastrarUsuario />
           </PrivateRoute>
       ) },
@@ -183,7 +183,7 @@ const router = createBrowserRouter([
   {
     path: "TelefonesUteis",
     element: (
-      <PrivateRoute allowedRoles={['Administrador', 'Gestor', 'Comando', 'Usuario']}>
+      <PrivateRoute allowedRoles={[1, 2, 3, 4]}>
         <NoMenuLayout />
       </PrivateRoute>
     ),

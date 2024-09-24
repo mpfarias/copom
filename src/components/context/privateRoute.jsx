@@ -2,22 +2,27 @@ import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const PrivateRoute = ({ allowedRoles, children }) => {
-  const nomeUsuario = localStorage.getItem('usuario');
-  const nivelUsuario = localStorage.getItem('nivel'); // Pegue o nível do usuário do localStorage
-  console.log('Nome do usuário no PrivateRoute:', nomeUsuario);
+  const nomeCpf = localStorage.getItem('cpf');
+  const nivelUsuario = Number(localStorage.getItem('nivel_acesso')); 
+  const nomeUsuario = localStorage.getItem('nome'); // Mantendo como string
+
+  console.log('Nome do usuário no PrivateRoute:', nomeCpf);
   console.log('Nível do usuário no PrivateRoute:', nivelUsuario);
+  console.log('Nome do usuário no PrivateRoute:', nomeUsuario);
 
-  if (!nomeUsuario) {
-    // Se o usuário não estiver logado, redirecione para a página de login
-    return <Navigate to="/login" />;
+  // Verificar se o CPF ou nível de acesso não estão definidos
+  if (!nomeCpf || !nivelUsuario) {
+    console.error('Usuário não está logado ou nível de acesso não encontrado.');
+    return <Navigate to="/login" />; // Redireciona para login se não estiver autenticado
   }
 
-  if (!allowedRoles.includes(nivelUsuario)) {
-    // Se o usuário não tem permissão, redirecione para uma página de acesso negado
-    return <Navigate to="/acesso-negado" />;
+  // Verifica se o nível de acesso do usuário está entre os níveis permitidos
+  if (!allowedRoles || !allowedRoles.includes(nivelUsuario)) {
+    console.error('Usuário não tem permissão de acesso.');
+    return <Navigate to="/login" />; // Redireciona para página de acesso negado
   }
 
-  // Se o usuário estiver logado e tiver o nível de acesso permitido, renderize o componente filho
+  // Se o usuário estiver autenticado e com as permissões corretas, renderiza o conteúdo
   return children ? children : <Outlet />;
 };
 
