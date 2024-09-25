@@ -58,7 +58,8 @@ const Login = () => {
         console.log('Nome salvo no localStorage:', localStorage.getItem('nome'));
         localStorage.setItem('cpf', result.cpf);   // Salvando o CPF no localStorage
         localStorage.setItem('nivel_acesso', result.nivel_acesso.toString()); // Garantir que nivel_acesso seja uma string
-
+        localStorage.setItem('agente_id', result.agente_id);   // Agente ID
+        console.log('Agente_id retornado do backend:', result.agente_id);
         setIsLoadingRamais(true);
 
         const ramaisResponse = await fetch(
@@ -156,8 +157,6 @@ const Login = () => {
     }
   };
 
-
-
   // Renderiza o formulário de login
   return (
     <Container maxWidth="xs"> {/* Define o container com um tamanho máximo "xs" (extra pequeno) */}
@@ -240,6 +239,8 @@ const Login = () => {
     </Container>
   );
 };
+
+
 
 // Exporta o componente Login como padrão, para que possa ser importado em outros arquivos
 export default Login;

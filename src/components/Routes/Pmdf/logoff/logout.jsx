@@ -34,11 +34,7 @@ const LogoutButton = () => {
         }
     
         // Remove o nome do usuário, o ramal e o CPF do localStorage
-        localStorage.removeItem('nome');
-        localStorage.removeItem('ramal');
-        localStorage.removeItem('cpf');
-        localStorage.removeItem('fila_id');
-    
+        localStorage.clear();
         // Redireciona para a página de login
         navigate('/login');
     };
