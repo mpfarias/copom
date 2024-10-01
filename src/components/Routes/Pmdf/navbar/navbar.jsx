@@ -4,8 +4,8 @@ import LogoutButton from '../logoff/logout';
 import { useCall } from '../../../context/CallContext';
 
 const Navbar = () => {
-  const { callData, setCallData } = useCall();
-  const [isCallActive, setIsCallActive] = useState(false);
+  const { isCallActive, setIsCallActive, callData, setCallData } = useCall();
+  
   const [isPaused, setIsPaused] = useState(false);
   const [ws, setWs] = useState(null);
   const [showPauseModal, setShowPauseModal] = useState(false);
@@ -28,37 +28,50 @@ const Navbar = () => {
     const websocket = new WebSocket('ws://localhost:8080'); // Criando uma nova conexão WebSocket
     setWs(websocket); // Armazenando a conexão WebSocket no estado
 
+    websocket.onopen = () => {
+        const agente_id = localStorage.getItem('agente_id'); // Pegue o agente_id do localStorage
+        if (agente_id) {
+            websocket.send(JSON.stringify({ agente_id })); // Envie o agente_id via WebSocket
+            console.log('Enviando agente_id via WebSocket:', agente_id);
+        } else {
+          console.error('Agente ID não encontrado no localStorage.');
+        }
+    };
+
     // Definindo o comportamento quando o WebSocket receber uma mensagem
     websocket.onmessage = (event) => {
-      const data = JSON.parse(event.data); // Convertendo a mensagem recebida em objeto JSON
+        const data = JSON.parse(event.data); // Convertendo a mensagem recebida em objeto JSON
 
-      console.log('Mensagem recebida no frontend:', data); // Verifica o conteúdo de `data`
+        console.log('Mensagem recebida no frontend:', data); // Verifica o conteúdo de `data`
 
-      if (data && data.callerId && data.channel) {
-        setCallData(data); // Armazena os dados da chamada no estado
-        setIsCallActive(true); // Marca a chamada como ativa
-        console.log('Chamada ativa. Ativando botões')
-      }
-      // Verifica se a chamada foi encerrada
-      else if (data && data.callEnded) {
-        console.log('Chamada encerrada, desativando botões:', data.callEnded); // Certifique-se de que este log está sendo atingido
-        setCallData(null); // Limpa os dados da chamada
-        setIsCallActive(false); // Marca a chamada como inativa
-      }
+        if (data && data.callerId && data.channel) {
+            setCallData(data); // Armazena os dados da chamada no estado
+            setIsCallActive(true); // Marca a chamada como ativa
+            console.log('Chamada ativa. Ativando botões');
+        }
+        // Verifica se a chamada foi encerrada
+        else if (data && data.callEnded) {
+            console.log('Chamada encerrada, desativando botões:', data.callEnded); // Certifique-se de que este log está sendo atingido
+            setCallData(null); // Limpa os dados da chamada
+            setIsCallActive(false); // Marca a chamada como inativa
+        }
     };
 
-    websocket.onopen = () => {
-      const agente_id = localStorage.getItem('agente_id'); // Obtém o agente_id do localStorage
-      if (agente_id) {
-        websocket.send(JSON.stringify({ agente_id })); // Envia o agente_id ao backend
-        console.log('Enviando agente_id via WebSocket:', agente_id);
-      }
-    };
+
+    websocket.onclose = () => {
+      console.log('Conexão WebSocket fechada. Tentando reconectar...');
+      setTimeout(() => {
+          setWs(new WebSocket('ws://localhost:8080')); // Tentativa de reconexão
+      }, 5000); // Espera 5 segundos antes de tentar reconectar
+  };
+
     // Função de limpeza que fecha o WebSocket quando o componente é desmontado
     return () => {
-      websocket.close();
+        websocket.close();
+        console.log("Conexão WebSocket fechada.");
     };
-  }, [setCallData]); // O array vazio como segundo argumento garante que este useEffect execute apenas uma vez, ao montar o componente
+}, [setCallData]); // O array vazio como segundo argumento garante que este useEffect execute apenas uma vez, ao montar o componente
+
 
   useEffect(() => {
     if (!callData) {
@@ -101,6 +114,15 @@ const Navbar = () => {
 
   // Função para confirmar a pausa
   const handlePauseConfirm = async () => {
+
+    const agente_id = localStorage.getItem('agente_id');  // Certifique-se de que está armazenado
+  const motivo = "SeuMotivoDePausa";  // Isso pode ser selecionado pelo usuário ou enviado dinamicamente
+
+  if (!agente_id) {
+    console.error('Agente ID não encontrado no localStorage.');
+    return;
+  }
+
     try {
       const response = await fetch('http://localhost:3001/api/pausar', {
         method: 'POST',
@@ -317,9 +339,10 @@ const Navbar = () => {
             padding: "6px 12px",
             textTransform: "uppercase",
             letterSpacing: "0.05em",
+            
           }}
           onClick={handlePauseClick}
-
+          disabled={isCallActive} // Este botão deve ser desativado quando `isCallActive` for false
         >
           {isPaused ? 'Sair da Pausa' : 'Pausar'}
         </Button>

@@ -5,10 +5,12 @@ const PrivateRoute = ({ allowedRoles, children }) => {
   const nomeCpf = localStorage.getItem('cpf');
   const nivelUsuario = Number(localStorage.getItem('nivel_acesso')); 
   const nomeUsuario = localStorage.getItem('nome'); // Mantendo como string
+  const usuarioID = localStorage.getItem('agente_id');
 
   console.log('Nome do usuário no PrivateRoute:', nomeCpf);
   console.log('Nível do usuário no PrivateRoute:', nivelUsuario);
   console.log('Nome do usuário no PrivateRoute:', nomeUsuario);
+  console.log('agente ID PrivateRoute:', usuarioID);
 
   // Verificar se o CPF ou nível de acesso não estão definidos
   if (!nomeCpf || !nivelUsuario) {
